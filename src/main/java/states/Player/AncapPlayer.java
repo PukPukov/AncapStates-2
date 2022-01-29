@@ -274,7 +274,7 @@ public class AncapPlayer implements BalanceHolder {
 
     public City getCityAtPosition() {
         Location loc = this.getPlayer().getLocation();
-        return CityMap.getCity(loc);
+        return AncapStates.getCityMap().getCity(loc);
     }
 
     public PrivateChunk[] getPrivateChunks() {
@@ -575,9 +575,9 @@ public class AncapPlayer implements BalanceHolder {
 
     public void checkCityMove() {
         City city = this.getCityAtPosition();
-        City cityLast = CityMap.getPositionsMap().get(this.getID());
+        City cityLast = AncapStates.getCityMap().getPositionsMap().get(this.getID());
         if (!Objects.equals(city,cityLast)) {
-            CityMap.getPositionsMap().put(this.getID(), city);
+            AncapStates.getCityMap().getPositionsMap().put(this.getID(), city);
             this.sendJoinTitle(city);
         }
     }

@@ -54,12 +54,18 @@ public class AncapStates extends JavaPlugin {
 
     private static DynmapAPI dynmap = (DynmapAPI) Bukkit.getServer().getPluginManager().getPlugin("Dynmap");
 
+    private static CityMap cityMap = new CityMap();
+
     public static final MinecraftHexagonalGrid grid = new MinecraftHexagonalGrid(Orientation.FLAT, new Point(0D,0D), new Point(100D, 100D), new Morton64(2L, 32L));
 
     public static HashMap<String, City> playerLocations = new HashMap<>();
 
     public static AncapTop getTop() {
         return new AncapTop();
+    }
+
+    public static CityMap getCityMap() {
+        return cityMap;
     }
 
     private static class SingletonHolder {
@@ -172,7 +178,7 @@ public class AncapStates extends JavaPlugin {
         return AddonCore.getInstance();
     }
     public static boolean canDamageBeDealedIn(Location loc1, Location loc2) {
-        if (CityMap.getCity(loc1) != null || CityMap.getCity(loc2) != null) {
+        if (getCityMap().getCity(loc1) != null || getCityMap().getCity(loc2) != null) {
             return false;
         }
         return true;
@@ -220,14 +226,14 @@ public class AncapStates extends JavaPlugin {
     }
 
     private static void grabNationTaxes() {
-        Nation[] nations = CityMap.getNations();
+        Nation[] nations = AncapStates.getCityMap().getNations();
         for (Nation nation : nations) {
             nation.grabTaxes();
         }
     }
 
     private static void grabCitiesTaxes() {
-        City[] cities = CityMap.getCities();
+        City[] cities = AncapStates.getCityMap().getCities();
         for (City city : cities) {
             city.grabTaxes();
         }
@@ -239,14 +245,14 @@ public class AncapStates extends JavaPlugin {
     }
 
     private static void collectNationTaxes() {
-        Nation[] nations = CityMap.getNations();
+        Nation[] nations = getCityMap().getNations();
         for (Nation nation : nations) {
             nation.collectTaxes();
         }
     }
 
     private static void collectCityTaxes() {
-        City[] cities = CityMap.getCities();
+        City[] cities = getCityMap().getCities();
         for (City city : cities) {
                 city.collectTaxes();
             }
@@ -289,7 +295,7 @@ public class AncapStates extends JavaPlugin {
     }
 
     public static boolean canInteract(AncapPlayer player, Location loc) {
-        City city = CityMap.getCity(loc);
+        City city = getCityMap().getCity(loc);
         if (city == null) {
             return true;
         }

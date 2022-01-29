@@ -211,7 +211,7 @@ public class City implements BalanceHolder {
             allHexagons.add(AncapStates.getInstance().getGrid().getHexagon(hexagonCodes[i]));
         }
         for (int i = 0; i<allHexagons.size(); i++) {
-            if (Objects.equals(CityMap.getCity(allHexagons.get(i)), this)) {
+            if (Objects.equals(AncapStates.getCityMap().getCity(allHexagons.get(i)), this)) {
                 hexagons.add(allHexagons.get(i));
             }
         }

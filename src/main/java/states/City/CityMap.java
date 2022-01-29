@@ -19,7 +19,7 @@ public class CityMap {
 
     private static HashMap<String, City> positionsMap = new HashMap<>();
 
-    public static City getCity(Location loc) {
+    public City getCity(Location loc) {
         Hexagon hexagon = AncapStates.grid.getHexagon(loc);
         OutpostChunk outpostChunk = new OutpostChunk(loc);
         String cityIDString = statesDB.getString("states.hexagons."+hexagon.toString()+".owner");
@@ -29,12 +29,12 @@ public class CityMap {
         return getCity(cityIDString);
     }
 
-    public static City getOutpostChunkOwner(Location loc) {
+    public City getOutpostChunkOwner(Location loc) {
         OutpostChunk outpostChunk = new OutpostChunk(loc);
         return outpostChunk.getOwner();
     }
 
-    public static City getCity(Hexagon hexagon) {
+    public City getCity(Hexagon hexagon) {
         String idString = statesDB.getString("states.hexagons."+hexagon+".owner");
         if (idString == null) {
             return null;
@@ -42,14 +42,14 @@ public class CityMap {
         return new City(idString);
     }
 
-    private static City getCity(String cityIDString) {
+    private City getCity(String cityIDString) {
         if (cityIDString == null) {
             return null;
         }
         return new City(cityIDString);
     }
 
-    public static City[] getCities() {
+    public City[] getCities() {
         String[] ids = statesDB.getStringList("states.city");
         ArrayList<City> cities = new ArrayList<>();
         for (int i = 0; i<ids.length; i++) {
@@ -61,18 +61,18 @@ public class CityMap {
         return cities.toArray(new City[0]);
     }
 
-    public static AncapPlayer getPrivateChunkOwner(Location loc) {
+    public AncapPlayer getPrivateChunkOwner(Location loc) {
         City city = getCity(loc);
         PrivateChunk privateChunk = new PrivateChunk(city, getChunkID(loc));
         return privateChunk.getOwner();
     }
 
-    public static String getChunkID(Location loc) {
+    public String getChunkID(Location loc) {
         Chunk chunk = loc.getChunk();
         return chunk.getX()+";"+chunk.getZ();
     }
 
-    public static Nation[] getNations() {
+    public Nation[] getNations() {
         String[] ids = statesDB.getStringList("states.nation");
         Nation[] nations = new Nation[ids.length];
         for (int i = 0; i<ids.length; i++) {
@@ -81,7 +81,7 @@ public class CityMap {
         return nations;
     }
 
-    public static HashMap<String, City> getPositionsMap() {
+    public HashMap<String, City> getPositionsMap() {
         return positionsMap;
     }
 }

@@ -1128,7 +1128,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             Hexagon hexagon = AncapStates.grid.getHexagon(player);
-            if (CityMap.getCity(hexagon) != null) {
+            if (AncapStates.getCityMap().getCity(hexagon) != null) {
                 Message message = ErrorMessage.HEXAGON_IS_ALREADY_CLAIMED;
                 player.sendMessage(message);
                 return true;
@@ -1156,7 +1156,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             Hexagon hexagon = AncapStates.grid.getHexagon(player);
-            if (!Objects.equals(CityMap.getCity(hexagon), player.getCity())) {
+            if (!Objects.equals(AncapStates.getCityMap().getCity(hexagon), player.getCity())) {
                 Message message = ErrorMessage.ITS_NOT_YOUR_CITY_HEXAGON;
                 player.sendMessage(message);
                 return true;

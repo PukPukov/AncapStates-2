@@ -1,5 +1,6 @@
 package states.Here;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import states.City.City;
@@ -7,6 +8,7 @@ import states.City.CityMap;
 import states.Message.InfoMessage;
 import states.Message.Message;
 import states.Player.AncapPlayer;
+import states.States.AncapStates;
 
 public class HereInfo {
 
@@ -19,15 +21,17 @@ public class HereInfo {
     private String privateChunkOwnerStatus;
 
     public HereInfo(Location loc) {
+        AncapStates ancapStates = (AncapStates) Bukkit.getPluginManager().getPlugin("AncapStates");
+        CityMap cityMap = ancapStates.getCityMap();
         Chunk hereChunk = loc.getChunk();
         this.chunk = hereChunk.getX()+";"+hereChunk.getZ();
-        this.city = CityMap.getCity(loc);
+        this.city = cityMap.getCity(loc);
         if (city == null) {
             this.cityName = "пустошь";
         } else {
             cityName = city.getName();
         }
-        this.outpostChunkOwner = CityMap.getOutpostChunkOwner(loc);
+        this.outpostChunkOwner = cityMap.getOutpostChunkOwner(loc);
         this.outpostChunkOwnerStatus = "пустошь";
         if (city != null) {
             outpostChunkOwnerStatus = "домен";
@@ -35,7 +39,7 @@ public class HereInfo {
                 outpostChunkOwnerStatus = "внешние владения";
             }
         }
-        this.privateChunkOwner = CityMap.getPrivateChunkOwner(loc);
+        this.privateChunkOwner = cityMap.getPrivateChunkOwner(loc);
         this.privateChunkOwnerStatus = "пустошь";
         if (city != null) {
             privateChunkOwnerStatus = "городской чанк";

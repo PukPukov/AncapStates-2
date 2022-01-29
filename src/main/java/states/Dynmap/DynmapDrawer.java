@@ -97,7 +97,7 @@ public class DynmapDrawer {
     }
 
     public void drawAllCities() {
-        City[] cities = CityMap.getCities();
+        City[] cities = AncapStates.getCityMap().getCities();
         if (cities.length == 0) {
             return;
         }

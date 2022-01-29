@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import states.City.CityMap;
+import states.States.AncapStates;
 
 public class PVPListener implements Listener {
     @EventHandler
@@ -20,7 +21,7 @@ public class PVPListener implements Listener {
         }
         Location loc0 = e.getEntity().getLocation();
         Location loc1 = e.getDamager().getLocation();
-        if (CityMap.getCity(loc0) != null || CityMap.getCity(loc1) != null) {
+        if (AncapStates.getCityMap().getCity(loc0) != null || AncapStates.getCityMap().getCity(loc1) != null) {
             e.setCancelled(true);
         }
     }
@@ -39,7 +40,7 @@ public class PVPListener implements Listener {
         Player player = (Player) projectile.getShooter();
         Location loc0 = e.getEntity().getLocation();
         Location loc1 = player.getLocation();
-        if (CityMap.getCity(loc0) != null || CityMap.getCity(loc1) != null) {
+        if (AncapStates.getCityMap().getCity(loc0) != null || AncapStates.getCityMap().getCity(loc1) != null) {
             e.setCancelled(true);
         }
     }
