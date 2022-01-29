@@ -57,7 +57,7 @@
 #### Base API
 Базовое API представлено примерно 200 методами у объектов City, Nation и AncapStates.
 ```java
-`Player p = e.getPlayer();
+Player p = e.getPlayer();
 CityMap cityMap = AncapStates.getCityMap();
 City city = cityMap.getCity(p.getLocation());
 city.sendMessage("В вашем городе гуляет игрок "+p.getName())`
