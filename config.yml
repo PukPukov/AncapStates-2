@@ -1,0 +1,8 @@
+safeTimers:
+  taxesEnabled: false
+fastTimers:
+  secondTimer:
+    cityMoveTimerEnabled: false
+  tenMinutesTimer:
+    dynmapRedrawingTimerEnabled: false
+    safeCityTimerCheckEnabled: true

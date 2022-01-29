@@ -1,0 +1,6 @@
+fees:
+  hexagon_claiming_fee: 3
+  hexagon_unclaiming_repayment: 1
+  nation_creation_fee: 9
+  citySpawnTeleport: 1
+  city_creation_fee: 1
