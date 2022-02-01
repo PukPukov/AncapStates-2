@@ -1,8 +1,7 @@
 package states.Chunk;
 
-import states.City.City;
+import states.States.City.City;
 import states.Database.Database;
-import states.ID.ID;
 import states.Player.AncapPlayer;
 
 public class PrivateChunk  {

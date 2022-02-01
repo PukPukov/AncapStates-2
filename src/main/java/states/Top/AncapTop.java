@@ -1,8 +1,7 @@
 package states.Top;
 
-import states.City.City;
-import states.Nation.Nation;
-import states.States.AncapStates;
+import states.States.City.City;
+import states.States.Nation.Nation;
 
 import java.util.*;
 

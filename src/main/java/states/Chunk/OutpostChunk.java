@@ -3,7 +3,7 @@ package states.Chunk;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import states.City.City;
+import states.States.City.City;
 import states.Database.Database;
 
 public class OutpostChunk {

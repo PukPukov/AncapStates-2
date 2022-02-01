@@ -4,8 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
-import states.City.CityMap;
-import states.States.AncapStates;
+import states.Main.AncapStates;
 
 public class ExplodeListener implements Listener {
     @EventHandler

@@ -3,12 +3,12 @@ package states.Here;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import states.City.City;
-import states.City.CityMap;
+import states.States.City.City;
+import states.States.City.CityMap;
 import states.Message.InfoMessage;
 import states.Message.Message;
 import states.Player.AncapPlayer;
-import states.States.AncapStates;
+import states.Main.AncapStates;
 
 public class HereInfo {
 

@@ -2,8 +2,8 @@ package states.Migration;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import states.API.SMassiveAPI;
-import states.States.AncapStates;
-import states.City.City;
+import states.Main.AncapStates;
+import states.States.City.City;
 import states.ID.ID;
 
 public class LegacyCity {

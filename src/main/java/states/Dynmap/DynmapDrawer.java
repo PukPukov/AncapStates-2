@@ -10,9 +10,8 @@ import org.bukkit.Bukkit;
 import org.dynmap.DynmapAPI;
 import org.dynmap.markers.*;
 import states.API.SMassiveAPI;
-import states.States.AncapStates;
-import states.City.City;
-import states.City.CityMap;
+import states.Main.AncapStates;
+import states.States.City.City;
 
 public class DynmapDrawer {
 
@@ -102,7 +101,9 @@ public class DynmapDrawer {
             return;
         }
         for (int i = 0; i<cities.length; i++) {
+            Bukkit.broadcastMessage(cities[i].getName());
             cities[i].draw();
+            Bukkit.broadcastMessage(cities[i].getName());
         }
     }
 

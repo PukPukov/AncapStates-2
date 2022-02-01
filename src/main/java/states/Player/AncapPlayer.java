@@ -7,21 +7,20 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import states.API.SMassiveAPI;
-import states.States.AncapStates;
+import states.Main.AncapStates;
 import states.Chunk.AncapChunk;
 import states.Chunk.OutpostChunk;
 import states.Chunk.PrivateChunk;
-import states.City.City;
-import states.City.CityMap;
-import states.City.LimitType;
+import states.States.City.City;
+import states.States.City.LimitType;
 import states.Config.Config;
 import states.Database.Database;
 import states.Economy.Balance;
-import states.Economy.BalanceHolder;
+import states.States.BalanceHolder;
 import states.Message.ErrorMessage;
 import states.Message.Message;
 import states.Message.StateMessage;
-import states.Nation.Nation;
+import states.States.Nation.Nation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -383,7 +382,8 @@ public class AncapPlayer implements BalanceHolder {
     }
 
     public boolean isLicentiate() {
-        return this.haveFlag("LICENTIATE");
+        boolean b = this.getPlayer().hasPermission("ancapstates.licentiate");
+        return b;
     }
 
     private boolean haveFlag(String string) {
@@ -584,5 +584,15 @@ public class AncapPlayer implements BalanceHolder {
 
     public Hexagon getHexagon() {
         return AncapStates.grid.getHexagon(this);
+    }
+
+    @Override
+    public void setMeta(String field, String str) {
+        statesDB.write("states.player."+this.getID()+"."+field, str);
+    }
+
+    @Override
+    public String getMeta(String field) {
+        return statesDB.getString("states.player."+this.getID()+"."+field);
     }
 }

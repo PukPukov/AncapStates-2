@@ -3,7 +3,7 @@ package states.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import states.States.AncapStates;
+import states.Main.AncapStates;
 
 import java.io.File;
 import java.io.IOException;

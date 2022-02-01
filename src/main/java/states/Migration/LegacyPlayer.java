@@ -1,7 +1,7 @@
 package states.Migration;
 
 import org.bukkit.configuration.file.FileConfiguration;
-import states.States.AncapStates;
+import states.Main.AncapStates;
 import states.Player.AncapPlayer;
 
 public class LegacyPlayer {

@@ -1,6 +1,6 @@
 package states.Timer.Heartbeat;
 
-import states.States.AncapStates;
+import states.Main.AncapStates;
 import states.Timer.AncapTimer;
 import states.Timer.Heartbeat.Exceptions.AncapHeartbeatAlreadyStartedException;
 

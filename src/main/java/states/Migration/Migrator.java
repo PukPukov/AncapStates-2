@@ -4,10 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import states.API.SMassiveAPI;
-import states.States.AncapStates;
-import states.City.City;
+import states.Main.AncapStates;
+import states.States.City.City;
 import states.Database.Database;
-import states.Nation.Nation;
+import states.States.Nation.Nation;
 import states.Player.AncapPlayer;
 
 import java.util.ArrayList;

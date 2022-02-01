@@ -2,7 +2,7 @@ package states.Listeners.PrimalListeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import states.States.AncapStates;
+import states.Main.AncapStates;
 import states.Player.AncapPlayer;
 import states.Timer.Heartbeat.AncapHeartbeatEvent;
 

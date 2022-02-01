@@ -10,17 +10,7 @@ public class Name {
     }
 
     public static String getName(String[] args) {
-        ArrayList<String> list = new ArrayList<>();
-        Collections.addAll(list, args);
-        list.remove(0);
-        String name = list.get(0);
-        list.remove(0);
-        if (list.size() > 0){
-            for (String str : list) {
-                name = name+"_"+str;
-            }
-        }
-        return name;
+        return Name.getName(args, 1);
     }
 
     public static String getName(String[] args, int t) {

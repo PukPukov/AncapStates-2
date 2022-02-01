@@ -1,11 +1,10 @@
 package states.Player;
 
-import states.API.SMassiveAPI;
-import states.City.City;
+import states.States.City.City;
 import states.Economy.Balance;
 import states.Message.InfoMessage;
 import states.Message.Message;
-import states.Nation.Nation;
+import states.States.Nation.Nation;
 
 public class AncapPlayerInfo {
 

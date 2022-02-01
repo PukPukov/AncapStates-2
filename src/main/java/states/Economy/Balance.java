@@ -1,9 +1,9 @@
 package states.Economy;
 
-import states.City.City;
+import states.States.City.City;
 import states.Database.Database;
 import states.Message.Message;
-import states.Nation.Nation;
+import states.States.Nation.Nation;
 import states.Player.AncapPlayer;
 
 public class Balance {

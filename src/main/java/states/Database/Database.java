@@ -1,16 +1,15 @@
 package states.Database;
 
-import java.io.InputStream;
-import java.io.IOException;
 import org.bukkit.Bukkit;
-import java.nio.file.Files;
-
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.FileConfiguration;
-import states.States.AncapStates;
+import org.bukkit.configuration.file.YamlConfiguration;
+import states.Main.AncapStates;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 
 public class Database {
 

@@ -1,18 +1,22 @@
 package states.Listeners.PrimalListeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.*;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import states.States.AncapStates;
+import states.Main.AncapStates;
+import states.Main.AncapStatesEvents.AncapStatesWorldInteractEvent;
 import states.Player.AncapPlayer;
 
 public class ProtectListener implements Listener {
@@ -23,9 +27,8 @@ public class ProtectListener implements Listener {
         }
         Location interacted = e.getEntity().getLocation();
         AncapPlayer player = new AncapPlayer(e.getDamager().getName());
-        if (!AncapStates.canInteract(player, interacted)) {
-            e.setCancelled(true);
-        }
+        Event event = new AncapStatesWorldInteractEvent(e, player, interacted);
+        Bukkit.getPluginManager().callEvent(event);
     }
     @EventHandler (priority = EventPriority.LOW)
     public void abuseDamageArrow(EntityDamageByEntityEvent e) {
@@ -39,9 +42,8 @@ public class ProtectListener implements Listener {
         }
         Location interacted = e.getEntity().getLocation();
         AncapPlayer player = new AncapPlayer(((Player) a.getShooter()).getName());
-        if (!AncapStates.canInteract(player, interacted)) {
-            e.setCancelled(true);
-        }
+        Event event = new AncapStatesWorldInteractEvent(e, player, interacted);
+        Bukkit.getPluginManager().callEvent(event);
     }
     @EventHandler (priority = EventPriority.LOW)
     public void abuseDamageSpectralArrow(EntityDamageByEntityEvent e) {
@@ -55,9 +57,8 @@ public class ProtectListener implements Listener {
         }
         Location interacted = e.getEntity().getLocation();
         AncapPlayer player = new AncapPlayer(((Player) a.getShooter()).getName());
-        if (!AncapStates.canInteract(player, interacted)) {
-            e.setCancelled(true);
-        }
+        Event event = new AncapStatesWorldInteractEvent(e, player, interacted);
+        Bukkit.getPluginManager().callEvent(event);
     }
     @EventHandler (priority = EventPriority.LOW)
     public void abuseDamageSnowball(EntityDamageByEntityEvent e) {
@@ -71,9 +72,8 @@ public class ProtectListener implements Listener {
         }
         Location interacted = e.getEntity().getLocation();
         AncapPlayer player = new AncapPlayer(((Player) a.getShooter()).getName());
-        if (!AncapStates.canInteract(player, interacted)) {
-            e.setCancelled(true);
-        }
+        Event event = new AncapStatesWorldInteractEvent(e, player, interacted);
+        Bukkit.getPluginManager().callEvent(event);
     }
     @EventHandler (priority = EventPriority.LOW)
     public void abuseDamageTrident(EntityDamageByEntityEvent e) {
@@ -87,25 +87,22 @@ public class ProtectListener implements Listener {
         }
         Location interacted = e.getEntity().getLocation();
         AncapPlayer player = new AncapPlayer(((Player) a.getShooter()).getName());
-        if (!AncapStates.canInteract(player, interacted)) {
-            e.setCancelled(true);
-        }
+        Event event = new AncapStatesWorldInteractEvent(e, player, interacted);
+        Bukkit.getPluginManager().callEvent(event);
     }
     @EventHandler (priority = EventPriority.LOW)
     public void blockBreak(BlockBreakEvent e) {
         Location interacted = e.getBlock().getLocation();
         AncapPlayer player = new AncapPlayer(e.getPlayer().getName());
-        if (!AncapStates.canInteract(player, interacted)) {
-            e.setCancelled(true);
-        }
+        Event event = new AncapStatesWorldInteractEvent(e, player, interacted);
+        Bukkit.getPluginManager().callEvent(event);
     }
     @EventHandler (priority = EventPriority.LOW)
     public void blockPlayer(BlockPlaceEvent e) {
         Location interacted = e.getBlock().getLocation();
         AncapPlayer player = new AncapPlayer(e.getPlayer().getName());
-        if (!AncapStates.canInteract(player, interacted)) {
-            e.setCancelled(true);
-        }
+        Event event = new AncapStatesWorldInteractEvent(e, player, interacted);
+        Bukkit.getPluginManager().callEvent(event);
     }
     @EventHandler (priority = EventPriority.LOW)
     public void blockPlayer(PlayerInteractEvent e) {
@@ -115,9 +112,8 @@ public class ProtectListener implements Listener {
         }
         Location interacted = b.getLocation();
         AncapPlayer player = new AncapPlayer(e.getPlayer().getName());
-        if (!AncapStates.canInteract(player, interacted)) {
-            e.setCancelled(true);
-        }
+        Event event = new AncapStatesWorldInteractEvent(e, player, interacted);
+        Bukkit.getPluginManager().callEvent(event);
     }
     @EventHandler (priority = EventPriority.LOW)
     public void projectileLaunch(ProjectileLaunchEvent e) {
@@ -127,9 +123,8 @@ public class ProtectListener implements Listener {
         }
         Location interacted = e.getLocation();
         AncapPlayer player = new AncapPlayer(((Player) e.getEntity().getShooter()).getName());
-        if (!AncapStates.canInteract(player, interacted)) {
-            e.setCancelled(true);
-        }
+        Event event = new AncapStatesWorldInteractEvent(e, player, interacted);
+        Bukkit.getPluginManager().callEvent(event);
     }
 
     @EventHandler (priority = EventPriority.LOW)
@@ -178,10 +173,8 @@ public class ProtectListener implements Listener {
         for (int i = 0; i<entities.length; i++) {
             Location interacted = entities[i].getLocation();
             AncapPlayer player = new AncapPlayer(((Player) potion.getShooter()).getName());
-            if (!AncapStates.canInteract(player, interacted)) {
-                e.setCancelled(true);
-                break;
-            }
+            Event event = new AncapStatesWorldInteractEvent(e, player, interacted);
+            Bukkit.getPluginManager().callEvent(event);
         }
     }
 }

@@ -1,6 +1,6 @@
 package states.Timer;
 
-import states.States.AncapStates;
+import states.Main.AncapStates;
 
 public class AncapTimer {
 

@@ -7,8 +7,7 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import states.City.CityMap;
-import states.States.AncapStates;
+import states.Main.AncapStates;
 
 public class PVPListener implements Listener {
     @EventHandler

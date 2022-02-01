@@ -6,10 +6,8 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import states.Player.AncapPlayer;
 import states.Wars.AncapWars.AncapWars;
-import states.Wars.ForbiddenStatementsManagers.EffectsManager;
 import states.Wars.ForbiddenStatementsManagers.ForbiddenStatementsThread;
-
-import java.util.Collection;
+import states.Wars.WarHexagons.WarHexagon;
 
 public class AncapWarrior extends AncapPlayer {
 
@@ -19,6 +17,15 @@ public class AncapWarrior extends AncapPlayer {
 
     public AncapWarrior(Player player) {
         super(player);
+    }
+
+    public AncapWarrior(AncapPlayer player) {
+        this(player.getID());
+    }
+
+    @Override
+    public WarHexagon getHexagon() {
+        return new WarHexagon(super.getHexagon());
     }
 
     public void prepareToWar() {
@@ -44,5 +51,17 @@ public class AncapWarrior extends AncapPlayer {
         for (PotionEffect effect : effectsToRemove) {
             p.removePotionEffect(effect.getType());
         }
+    }
+
+    public boolean canDeclareWar(WarHexagon hexagon) {
+        return false;
+    }
+
+    public boolean canOfferPeace(WarHexagon hexagon) {
+        return false;
+    }
+
+    public boolean canAttack(WarHexagon hexagon) {
+        return false;
     }
 }
