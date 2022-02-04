@@ -1,4 +1,8 @@
 package states.StatesExceptions;
 
-public class CityException {
+public class CityException extends RuntimeException {
+
+    public CityException(String msg) {
+        super(msg);
+    }
 }

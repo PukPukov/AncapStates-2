@@ -134,6 +134,7 @@ public class AncapStates extends JavaPlugin {
     private void registerEventsListeners() {
         getServer().getPluginManager().registerEvents(new ProtectListener(), this);
         getServer().getPluginManager().registerEvents(new PVPListener(), this);
+        getServer().getPluginManager().registerEvents(new SelfDestructListener(), this);
         getServer().getPluginManager().registerEvents(new CityMoveListener(), this);
         getServer().getPluginManager().registerEvents(new ExplodeListener(), this);
         getServer().getPluginManager().registerEvents(new AncapStatesEventsListener(), this);

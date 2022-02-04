@@ -28,6 +28,10 @@ public class AncapStatesExplodeEvent extends Event implements Cancellable, Inter
         this.event = event;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     public Location getLocation() {
         return this.loc;
     }

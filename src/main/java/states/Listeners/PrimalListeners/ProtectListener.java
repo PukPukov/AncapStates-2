@@ -9,20 +9,48 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.FluidLevelChangeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerBucketEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import states.Main.AncapStates;
 import states.Main.AncapStatesEvents.AncapStatesWorldInteractEvent;
 import states.Player.AncapPlayer;
 
 public class ProtectListener implements Listener {
+
+    @EventHandler
+    public void bucket(PlayerBucketFillEvent e) {
+        Block b = e.getBlock();
+        Location interacted = b.getLocation();
+        AncapPlayer player = new AncapPlayer(e.getPlayer().getName());
+        Event event = new AncapStatesWorldInteractEvent(e, player, interacted);
+        Bukkit.getPluginManager().callEvent(event);
+    }
+
+    @EventHandler
+    public void bucket(PlayerBucketEmptyEvent e) {
+        Block b = e.getBlock();
+        Location interacted = b.getLocation();
+        AncapPlayer player = new AncapPlayer(e.getPlayer().getName());
+        Event event = new AncapStatesWorldInteractEvent(e, player, interacted);
+        Bukkit.getPluginManager().callEvent(event);
+    }
+
     @EventHandler (priority = EventPriority.LOW)
     public void damage(EntityDamageByEntityEvent e) {
         if(!(e.getDamager().getType() == EntityType.PLAYER)){
+            return;
+        }
+        Entity entity = e.getEntity();
+        if (entity instanceof Monster || entity instanceof Boss) {
             return;
         }
         Location interacted = e.getEntity().getLocation();
@@ -30,6 +58,7 @@ public class ProtectListener implements Listener {
         Event event = new AncapStatesWorldInteractEvent(e, player, interacted);
         Bukkit.getPluginManager().callEvent(event);
     }
+
     @EventHandler (priority = EventPriority.LOW)
     public void abuseDamageArrow(EntityDamageByEntityEvent e) {
         EntityType type = e.getDamager().getType();

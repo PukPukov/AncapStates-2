@@ -1,6 +1,7 @@
 package states.States.City;
 
 import library.Hexagon;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import states.Main.AncapStates;
@@ -9,9 +10,11 @@ import states.Chunk.PrivateChunk;
 import states.Database.Database;
 import states.States.Nation.Nation;
 import states.Player.AncapPlayer;
+import states.StatesExceptions.CityException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class CityMap {
 
@@ -87,5 +90,29 @@ public class CityMap {
 
     public HashMap<String, City> getPositionsMap() {
         return positionsMap;
+    }
+
+    public boolean isAtSameCity(Location[] locations) {
+        if (locations.length == 0) {
+            throw new CityException("Locations list cant be empty!");
+        }
+        City city = this.getCity(locations[0]);
+        for (Location location : locations) {
+            City city1 = this.getCity(location);
+            if (!Objects.equals(city, city1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isAtCity(Location[] locations) {
+        for (Location location : locations) {
+            City city = this.getCity(location);
+            if (city == null) {
+                return false;
+            }
+        }
+        return true;
     }
 }

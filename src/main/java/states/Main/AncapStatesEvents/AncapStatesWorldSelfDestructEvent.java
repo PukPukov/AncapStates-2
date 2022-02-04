@@ -4,20 +4,22 @@ import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.jetbrains.annotations.NotNull;
 import states.Main.Interceptable;
 
-public class AncapStatesPVPEvent extends Event implements Interceptable, Cancellable {
+public class AncapStatesWorldSelfDestructEvent extends Event implements Cancellable, Interceptable {
 
     private Location[] locations = new Location[2];
     private Cancellable event;
     private boolean intercepted;
+
     public static final HandlerList handlers = new HandlerList();
 
-    public AncapStatesPVPEvent(Cancellable event, Location loc0, Location loc1) {
-        this.locations[0] = loc0;
-        this.locations[1] = loc1;
-        this.event = event;
+    public AncapStatesWorldSelfDestructEvent(Cancellable e, Location interacted, Location interacting) {
+        event = e;
+        locations[0] = interacted;
+        locations[1] = interacting;
     }
 
     public static HandlerList getHandlerList() {

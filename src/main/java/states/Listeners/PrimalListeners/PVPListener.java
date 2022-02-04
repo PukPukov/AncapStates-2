@@ -1,13 +1,16 @@
 package states.Listeners.PrimalListeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import states.Main.AncapStates;
+import states.Main.AncapStatesEvents.AncapStatesPVPEvent;
 
 public class PVPListener implements Listener {
     @EventHandler
@@ -20,9 +23,8 @@ public class PVPListener implements Listener {
         }
         Location loc0 = e.getEntity().getLocation();
         Location loc1 = e.getDamager().getLocation();
-        if (AncapStates.getCityMap().getCity(loc0) != null || AncapStates.getCityMap().getCity(loc1) != null) {
-            e.setCancelled(true);
-        }
+        Event event = new AncapStatesPVPEvent(e, loc0, loc1);
+        Bukkit.getPluginManager().callEvent(event);
     }
     @EventHandler
     public void damageAbuse(EntityDamageByEntityEvent e) {
@@ -39,8 +41,7 @@ public class PVPListener implements Listener {
         Player player = (Player) projectile.getShooter();
         Location loc0 = e.getEntity().getLocation();
         Location loc1 = player.getLocation();
-        if (AncapStates.getCityMap().getCity(loc0) != null || AncapStates.getCityMap().getCity(loc1) != null) {
-            e.setCancelled(true);
-        }
+        Event event = new AncapStatesPVPEvent(e, loc0, loc1);
+        Bukkit.getPluginManager().callEvent(event);
     }
 }

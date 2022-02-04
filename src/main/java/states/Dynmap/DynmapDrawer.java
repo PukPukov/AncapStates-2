@@ -101,9 +101,11 @@ public class DynmapDrawer {
             return;
         }
         for (int i = 0; i<cities.length; i++) {
-            Bukkit.broadcastMessage(cities[i].getName());
-            cities[i].draw();
-            Bukkit.broadcastMessage(cities[i].getName());
+            try {
+                cities[i].draw();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
