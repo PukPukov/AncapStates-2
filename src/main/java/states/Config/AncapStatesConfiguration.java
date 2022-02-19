@@ -16,6 +16,14 @@ public class AncapStatesConfiguration {
     }
 
     public boolean isCityMoveTimerEnabled() {
-        return config.getString("fastTimers.secondTimer.cityMoveTimerEnabled").equals("true");
+        return this.isEnabled("fastTimers.secondTimer.cityMoveTimerEnabled");
+    }
+
+    public boolean isEnabled(String path) {
+        String statement = config.getString(path);
+        if (statement == null) {
+            return false;
+        }
+        return statement.equals("true");
     }
 }

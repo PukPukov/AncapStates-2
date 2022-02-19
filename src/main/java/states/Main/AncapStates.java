@@ -82,6 +82,7 @@ public class AncapStates extends JavaPlugin {
     public void onEnable() {
         this.setInstance();
         this.setUpDBs();
+        this.setUpConfig();
         this.registerCommands();
         this.registerEventsListeners();
         this.registerMetrics();
@@ -99,6 +100,10 @@ public class AncapStates extends JavaPlugin {
 
     private void registerMetrics() {
         Metrics metrics = new Metrics(this, pluginId);
+    }
+
+    private void setUpConfig() {
+        this.saveDefaultConfig();
     }
 
     private void setUpDBs() {
