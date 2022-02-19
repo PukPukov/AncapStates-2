@@ -112,6 +112,12 @@
       <version>1.0</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>ru.pukpukov</groupId>
+      <artifactId>AncapLibrary</artifactId>
+      <version>1.0-SNAPSHOT.1</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <properties>
     <maven.compiler.target>16</maven.compiler.target>

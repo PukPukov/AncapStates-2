@@ -1,6 +1,6 @@
 name: AncapStates
 main: states.Main.AncapStates
-version: beta 1.0
+version: 2.3-beta-SNAPSHOT.1
 api-version: 1.16
 
 softdepend:
