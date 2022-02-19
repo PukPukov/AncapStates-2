@@ -1,35 +1,27 @@
 package states.Main;
 
-import library.*;
+import AncapLibrary.Message.Message;
+import library.HexagonalGrid;
+import library.Morton64;
+import library.Orientation;
+import library.Point;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapAPI;
-import states.Addons.AddonCore;
-import states.Chunk.PrivateChunk;
-import states.Commands.AncapStatesCommand;
-import states.Listeners.AncapStatesEventsListeners.AncapStatesEventsListener;
-import states.States.City.City;
-import states.Commands.CityCommand;
-import states.States.City.CityMap;
+import states.Commands.*;
+import states.Config.AncapStatesConfiguration;
 import states.Database.Database;
 import states.Dynmap.DynmapDrawer;
-import states.Commands.HereCommand;
 import states.Hexagons.AncapHexagonalGrid;
-import states.Listeners.PrimalListeners.*;
-import states.Message.ErrorMessage;
-import states.Message.Message;
-import states.Metrics.Metrics;
-import states.Commands.MigrationCommand;
-import states.States.Nation.Nation;
-import states.Commands.NationCommand;
-import states.Player.AncapPlayer;
+import states.Listeners.AncapStatesEventsListeners.AncapStatesEventsListener;
+import states.Listeners.TimerListeners.TimerListener;
+import states.Player.AncapStatesPlayer;
 import states.Player.PlayerCommand;
-import states.Commands.TestCommand;
-import states.Timer.Heartbeat.AncapHeartbeat;
+import states.States.City.City;
+import states.States.CityMap;
+import states.States.Nation.Nation;
 import states.Top.AncapTop;
 import states.Wars.Listeners.TimerListeners.HeartbeatListener;
 
@@ -38,6 +30,7 @@ import java.util.logging.Logger;
 
 public class AncapStates extends JavaPlugin {
 
+    private static AncapStates INSTANCE;
 
     private static final int pluginId = 13812;
 
@@ -69,32 +62,20 @@ public class AncapStates extends JavaPlugin {
         return cityMap;
     }
 
-    private static class SingletonHolder {
-        public static AncapStates HOLDER_INSTANCE;
+    public static AncapStatesConfiguration getConfiguration() {
+        return AncapStatesConfiguration.getInstance();
+    }
+
+    public static AncapStatesStatesPlayerMap getPlayerMap() {
+        return AncapStatesStatesPlayerMap.getInstance();
+    }
+
+    public HexagonalGrid getGrid() {
+        return grid;
     }
 
     public static AncapStates getInstance() {
-        return SingletonHolder.HOLDER_INSTANCE;
-    }
-
-
-
-    public static City[] getCities() {
-        String[] keys = statesDB.getStringList("states.city");
-        City[] cities = new City[keys.length];
-        for (int i = 0; i< cities.length; i++) {
-            cities[i] = new City(keys[i]);
-        }
-        return cities;
-    }
-
-    public static Nation[] getNations() {
-        String[] keys = statesDB.getStringList("states.nation");
-        Nation[] nations = new Nation[keys.length];
-        for (int i = 0; i< nations.length; i++) {
-            nations[i] = new Nation(keys[i]);
-        }
-        return nations;
+        return INSTANCE;
     }
 
     @Override
@@ -104,17 +85,16 @@ public class AncapStates extends JavaPlugin {
         this.registerCommands();
         this.registerEventsListeners();
         this.registerMetrics();
-        this.startHeartbeat();
         this.registerCityMap();
         log.info("Done!");
     }
 
+    @Override
+    public void onDisable() {
+    }
+
     private void registerCityMap() {
         cityMap = new CityMap();
-    }
-    private void startHeartbeat() {
-        AncapHeartbeat heartbeat = new AncapHeartbeat();
-        heartbeat.start();
     }
 
     private void registerMetrics() {
@@ -128,17 +108,13 @@ public class AncapStates extends JavaPlugin {
     }
 
     private void setInstance() {
-        SingletonHolder.HOLDER_INSTANCE = this;
+        INSTANCE = this;
     }
 
     private void registerEventsListeners() {
-        getServer().getPluginManager().registerEvents(new ProtectListener(), this);
-        getServer().getPluginManager().registerEvents(new PVPListener(), this);
-        getServer().getPluginManager().registerEvents(new SelfDestructListener(), this);
-        getServer().getPluginManager().registerEvents(new CityMoveListener(), this);
-        getServer().getPluginManager().registerEvents(new ExplodeListener(), this);
         getServer().getPluginManager().registerEvents(new AncapStatesEventsListener(), this);
         getServer().getPluginManager().registerEvents(new HeartbeatListener(), this);
+        getServer().getPluginManager().registerEvents(new TimerListener(), this);
     }
 
     private void registerCommands() {
@@ -157,54 +133,16 @@ public class AncapStates extends JavaPlugin {
         getServer().getPluginCommand("migration").setExecutor(new MigrationCommand());
     }
 
-
-
-    @Override
-    public void onDisable() {
-    }
-
     public boolean isTest() {
         return test;
     }
+
     public void enableTest() {
         test = true;
     }
+
     public void disableTest() {
         test = false;
-    }
-    public static AncapPlayer[] getOnlinePlayers() {
-        Player[] bukkitPlayers = Bukkit.getOnlinePlayers().toArray(new Player[0]);
-        AncapPlayer[] players = new AncapPlayer[bukkitPlayers.length];
-        for (int i = 0; i<players.length; i++) {
-            players[i] = new AncapPlayer(bukkitPlayers[i].getName());
-        }
-        return players;
-    }
-
-    public static AddonCore getAddonCore() {
-        return AddonCore.getInstance();
-    }
-    public static boolean canDamageBeDealedIn(Location loc1, Location loc2) {
-        if (getCityMap().getCity(loc1) != null || getCityMap().getCity(loc2) != null) {
-            return false;
-        }
-        return true;
-    }
-
-    public static void clearDynMap() {
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "dmarker deleteset id:ancap world:world");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "dmarker addset Государства id:ancap world:world");
-    }
-
-    public static void redrawDynmap() {
-        AncapStates.clearDynMap();
-        long time0 = System.currentTimeMillis();
-        Logger log = Bukkit.getLogger();
-        DynmapDrawer drawer = new DynmapDrawer();
-        drawer.drawAllCities();
-        long time1 = System.currentTimeMillis();
-        long estimatedTime = time1-time0;
-        log.info("Dynmap redrawed. Estimated time: "+estimatedTime);
     }
 
     public static DynmapAPI getDynmap() {
@@ -212,13 +150,9 @@ public class AncapStates extends JavaPlugin {
     }
 
     public static void sendMessage(Message message) {
-        Player[] players = Bukkit.getOnlinePlayers().toArray(new Player[0]);
-        AncapPlayer[] ancapPlayers = new AncapPlayer[players.length];
-        for (int i = 0; i<players.length; i++) {
-            ancapPlayers[i] = new AncapPlayer(players[i]);
-        }
-        for (int i = 0; i< ancapPlayers.length; i++) {
-            ancapPlayers[i].sendMessage(message);
+        AncapStatesPlayer[] ancapStatesPlayers = AncapStates.getPlayerMap().getOnlinePlayers();
+        for (int i = 0; i< ancapStatesPlayers.length; i++) {
+            ancapStatesPlayers[i].sendMessage(message);
         }
     }
 
@@ -265,74 +199,7 @@ public class AncapStates extends JavaPlugin {
             }
         }
 
-    public String convertLocation(String string) {
-        return string.replace(",", ";");
-    }
-
-    public Location getOldLocation(String string) {
-        try {
-            String[] locationString = string.split(",");
-            World world = Bukkit.getWorld(locationString[0]);
-            double x = Double.valueOf(locationString[1]);
-            double y = Double.valueOf(locationString[2]);
-            double z = Double.valueOf(locationString[3]);
-            Location loc = new Location(world, x, y, z);
-            return loc;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    public Location getLocation(String string) {
-        String[] locationString = string.split(";");
-        World world = Bukkit.getWorld(locationString[0]);
-        double x = Double.valueOf(locationString[1]);
-        double y = Double.valueOf(locationString[2]);
-        double z = Double.valueOf(locationString[3]);
-        Location loc = new Location(world, x, y, z);
-        return loc;
-    }
-
-    public String getStringFrom(Location location) {
-        return location.getWorld().getName()+";"+location.getBlockX()+";"+location.getBlockY()+";"+location.getBlockZ();
-    }
-
-    public HexagonalGrid getGrid() {
-        return this.grid;
-    }
-
-    public static boolean canInteract(AncapPlayer player, Location loc) {
-        try {
-            City city = getCityMap().getCity(loc);
-            if (city == null) {
-                return true;
-            }
-            PrivateChunk chunk = city.getPrivateChunk(loc);
-            int remoteness = city.getRemoteness(player);
-            int allowLevel = city.getAllowLevel().getInt();
-            Message message = ErrorMessage.CANT_INTERACT_THIS_BLOCK;
-            if (chunk.getOwner() == null) {
-                if (remoteness>allowLevel) {
-                    player.sendMessage(message);
-                    return false;
-                }
-                return true;
-            }
-            if (remoteness>allowLevel) {
-                player.sendMessage(message);
-                return false;
-            }
-            if (chunk.getOwner() != null && !chunk.getOwner().equals(player) && !chunk.getOwner().isFriendOf(player)) {
-                player.sendMessage(message);
-                return false;
-            }
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
     public static AncapStatesInfo getInfo() {
         return new AncapStatesInfo();
     }
-    }
+}

@@ -1,14 +1,15 @@
 package states.Migration;
 
+import AncapLibrary.API.SMassiveAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import states.API.SMassiveAPI;
-import states.Main.AncapStates;
-import states.States.City.City;
 import states.Database.Database;
+import states.Location.LegacyLocation;
+import states.Main.AncapStates;
+import states.Player.AncapStatesPlayer;
+import states.States.City.City;
 import states.States.Nation.Nation;
-import states.Player.AncapPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +89,7 @@ public class Migrator {
     }
 
     private void migratePlayer(LegacyPlayer legacyPlayer) {
-        AncapPlayer player = legacyPlayer.getMigratedPlayer();
+        AncapStatesPlayer player = legacyPlayer.getMigratedPlayer();
         statesDB.writeNoSave("states.player."+player.getID()+".name", legacyPlayer.getName());
         String cityID = null;
         LegacyCity legacyCity = legacyPlayer.getCity();
@@ -104,11 +105,11 @@ public class Migrator {
         statesDB.writeNoSave("states.city."+city.getID()+".name", legacyCity.getName());
         statesDB.writeNoSave("states.city."+city.getID()+".board", legacyCity.getBoard());
         statesDB.writeNoSave("states.city."+city.getID()+".mayor", legacyCity.getLeader().getMigratedPlayer().getName());
-        statesDB.writeNoSave("states.city."+city.getID()+".home", AncapStates.getInstance().convertLocation(legacyCity.getHome()));
+        statesDB.writeNoSave("states.city."+city.getID()+".home", new LegacyLocation(legacyCity.getHome()).getLocation().toString());
         String residentsString = "";
         LegacyPlayer[] legacyResidents = legacyCity.getResidents();
         for (int i = 0; i<legacyResidents.length; i++) {
-            AncapPlayer resident = legacyResidents[i].getMigratedPlayer();
+            AncapStatesPlayer resident = legacyResidents[i].getMigratedPlayer();
             residentsString = residentsString+", "+resident.getID();
         }
         if (residentsString.equals("")) {
@@ -118,7 +119,7 @@ public class Migrator {
         String assistantsString = "";
         LegacyPlayer[] legacyAssistants = legacyCity.getAssistants();
         for (int i = 0; i<legacyAssistants.length; i++) {
-            AncapPlayer assistant = legacyAssistants[i].getMigratedPlayer();
+            AncapStatesPlayer assistant = legacyAssistants[i].getMigratedPlayer();
             assistantsString = assistantsString+", "+assistant.getID();
         }
         if (assistantsString.equals("")) {
@@ -155,7 +156,7 @@ public class Migrator {
         String ministersString = "";
         LegacyPlayer[] legacyMinisters = legacyNation.getMinisters();
         for (int i = 0; i<legacyMinisters.length; i++) {
-            AncapPlayer minister = legacyMinisters[i].getMigratedPlayer();
+            AncapStatesPlayer minister = legacyMinisters[i].getMigratedPlayer();
             ministersString = ministersString+", "+minister.getID();
         }
         if (ministersString.equals("")) {

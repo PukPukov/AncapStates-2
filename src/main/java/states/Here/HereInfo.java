@@ -1,14 +1,14 @@
 package states.Here;
 
+import AncapLibrary.Message.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import states.States.City.City;
-import states.States.City.CityMap;
-import states.Message.InfoMessage;
-import states.Message.Message;
-import states.Player.AncapPlayer;
 import states.Main.AncapStates;
+import states.Message.InfoMessage;
+import states.Player.AncapStatesPlayer;
+import states.States.City.City;
+import states.States.CityMap;
 
 public class HereInfo {
 
@@ -17,7 +17,7 @@ public class HereInfo {
     private String cityName;
     private City outpostChunkOwner;
     private String outpostChunkOwnerStatus;
-    private AncapPlayer privateChunkOwner;
+    private AncapStatesPlayer privateChunkOwner;
     private String privateChunkOwnerStatus;
 
     public HereInfo(Location loc) {

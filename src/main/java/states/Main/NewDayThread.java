@@ -1,7 +1,7 @@
 package states.Main;
 
+import AncapLibrary.Message.Message;
 import org.bukkit.Bukkit;
-import states.Message.Message;
 import states.Message.StateMessage;
 
 import java.util.logging.Logger;

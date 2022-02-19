@@ -16,10 +16,10 @@ import states.Main.AncapStates;
 import states.Database.Database;
 import states.Dynmap.DynmapDrawer;
 import states.Hexagons.AncapHexagonalGrid;
-import states.Player.AncapPlayer;
+import states.Player.AncapStatesPlayer;
 import states.Wars.AncapWars.AncapWars;
 import states.Wars.ForbiddenStatementsManagers.InventoryManager;
-import states.Wars.WarPlayers.AncapWarrior;
+import states.Wars.WarPlayers.AncapStatesWarrior;
 
 public class TestCommand implements CommandExecutor {
 
@@ -27,7 +27,7 @@ public class TestCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        AncapPlayer player = new AncapPlayer(sender.getName());
+        AncapStatesPlayer player = new AncapStatesPlayer(sender.getName());
         Player p = (Player) sender;
         InventoryManager manager = AncapWars.getInventoryManager();
         if (!sender.isOp()) {
@@ -40,7 +40,7 @@ public class TestCommand implements CommandExecutor {
         }
         if (args[0].equals("warpreparetest")) {
             long time0 = System.currentTimeMillis();
-            AncapWarrior warrior = new AncapWarrior(player.getID());
+            AncapStatesWarrior warrior = new AncapStatesWarrior(player.getID());
             warrior.prepareToWar();
             long time1 = System.currentTimeMillis();
             long timeElapsed = time1-time0;
@@ -128,7 +128,7 @@ public class TestCommand implements CommandExecutor {
             new Database("Database.yml");
         }
         if (args[0].equals("redraw")) {
-            AncapStates.redrawDynmap();
+            DynmapDrawer.redrawDynmap();
             return true;
         }
         if (args[0].equals("chunk")) {

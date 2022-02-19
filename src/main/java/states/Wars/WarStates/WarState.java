@@ -1,6 +1,6 @@
 package states.Wars.WarStates;
 
-import states.States.AncapState;
+import AncapLibrary.Library.AncapState;
 
 public interface WarState extends AncapState {
 

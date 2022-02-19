@@ -2,7 +2,7 @@ package states.Chunk;
 
 import states.States.City.City;
 import states.Database.Database;
-import states.Player.AncapPlayer;
+import states.Player.AncapStatesPlayer;
 
 public class PrivateChunk  {
 
@@ -14,7 +14,7 @@ public class PrivateChunk  {
         this.id = id;
     }
 
-    public AncapPlayer getOwner() {
+    public AncapStatesPlayer getOwner() {
         if (city == null) {
             return null;
         }
@@ -23,7 +23,7 @@ public class PrivateChunk  {
         if (player == null) {
             return null;
         }
-        AncapPlayer owner = new AncapPlayer(player);
+        AncapStatesPlayer owner = new AncapStatesPlayer(player);
         return owner;
     }
 

@@ -1,5 +1,8 @@
 package states.Commands;
 
+import AncapLibrary.Economy.Balance;
+import AncapLibrary.Message.Message;
+import AncapLibrary.Timer.Heartbeat.Exceptions.Chunk.AncapChunk;
 import library.Hexagon;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
@@ -8,21 +11,18 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
-import states.Main.AncapStates;
 import states.Board.Board;
-import states.Chunk.AncapChunk;
 import states.Chunk.OutpostChunk;
-import states.Economy.Balance;
 import states.ID.ID;
+import states.Main.AncapStates;
 import states.Message.ErrorMessage;
-import states.Message.Message;
 import states.Message.StateMessage;
 import states.Name.Name;
+import states.Player.AncapStatesPlayer;
 import states.States.City.AllowLevel;
 import states.States.City.City;
 import states.States.City.LimitType;
 import states.States.Nation.Nation;
-import states.Player.AncapPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +33,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        AncapPlayer player = new AncapPlayer(sender.getName());
+        AncapStatesPlayer player = new AncapStatesPlayer(sender.getName());
         List<String> subcommands = new ArrayList(Arrays.asList(
                 "info",
                 "new",
@@ -64,9 +64,9 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 "flag",
                 "taxes"
         ));
-        List<AncapPlayer> onlinePlayers = List.of(AncapStates.getOnlinePlayers());
-        List<City> cities = List.of(AncapStates.getCities());
-        List<Nation> nations = List.of(AncapStates.getNations());
+        List<AncapStatesPlayer> onlinePlayers = List.of(AncapStates.getPlayerMap().getOnlinePlayers());
+        List<City> cities = List.of(AncapStates.getCityMap().getCities());
+        List<Nation> nations = List.of(AncapStates.getCityMap().getNations());
         List<String> citiesNames = new ArrayList<>();
         List<String> nationsNames = new ArrayList<>();
         List<String> onlinePlayersNames = new ArrayList<>();
@@ -76,8 +76,8 @@ public class CityCommand implements CommandExecutor, TabCompleter {
         for (Nation nation : nations) {
             nationsNames.add(nation.getName());
         }
-        for (AncapPlayer ancapPlayer : onlinePlayers) {
-            onlinePlayersNames.add(ancapPlayer.getName());
+        for (AncapStatesPlayer ancapStatesPlayer : onlinePlayers) {
+            onlinePlayersNames.add(ancapStatesPlayer.getName());
         }
         if (args.length == 1) {
             return subcommands;
@@ -106,9 +106,9 @@ public class CityCommand implements CommandExecutor, TabCompleter {
             if (player.isFree()) {
                 return List.of("");
             }
-            List<AncapPlayer> cityResidents = Arrays.asList(player.getCity().getResidents());
+            List<AncapStatesPlayer> cityResidents = Arrays.asList(player.getCity().getResidents());
             List<String> residentsNames = new ArrayList<>();
-            for (AncapPlayer resident : cityResidents) {
+            for (AncapStatesPlayer resident : cityResidents) {
                 residentsNames.add(resident.getName());
             }
             return residentsNames;
@@ -128,9 +128,9 @@ public class CityCommand implements CommandExecutor, TabCompleter {
             if (player.isFree()) {
                 return List.of("");
             }
-            List<AncapPlayer> requestingPlayers = Arrays.asList(player.getCity().getRequestingPlayers());
+            List<AncapStatesPlayer> requestingPlayers = Arrays.asList(player.getCity().getRequestingPlayers());
             List<String> requestingNames = new ArrayList<>();
-            for (AncapPlayer requesting : requestingPlayers) {
+            for (AncapStatesPlayer requesting : requestingPlayers) {
                 requestingNames.add(requesting.getName());
             }
             return requestingNames;
@@ -139,9 +139,9 @@ public class CityCommand implements CommandExecutor, TabCompleter {
             if (player.isFree()) {
                 return List.of("");
             }
-            AncapPlayer[] residents = player.getCity().getResidents();
+            AncapStatesPlayer[] residents = player.getCity().getResidents();
             List<String> residentsNames = new ArrayList<>();
-            for (AncapPlayer resident : residents) {
+            for (AncapStatesPlayer resident : residents) {
                 residentsNames.add(resident.getName());
             }
             onlinePlayersNames.removeAll(residentsNames);
@@ -159,9 +159,9 @@ public class CityCommand implements CommandExecutor, TabCompleter {
             if (player.isFree()) {
                 return List.of("");
             }
-            List<AncapPlayer> invitedPlayers = Arrays.asList(player.getCity().getInvitedPlayers());
+            List<AncapStatesPlayer> invitedPlayers = Arrays.asList(player.getCity().getInvitedPlayers());
             List<String> invitedNames = new ArrayList<>();
-            for (AncapPlayer invited : invitedPlayers) {
+            for (AncapStatesPlayer invited : invitedPlayers) {
                 invitedNames.add(invited.getName());
             }
             return invitedNames;
@@ -180,14 +180,14 @@ public class CityCommand implements CommandExecutor, TabCompleter {
             if (args.length == 2) {
                 return assistantSubcommands;
             }
-            AncapPlayer[] residents = player.getCity().getResidents();
+            AncapStatesPlayer[] residents = player.getCity().getResidents();
             List<String> residentsNames = new ArrayList<>();
-            for (AncapPlayer resident : residents) {
+            for (AncapStatesPlayer resident : residents) {
                 residentsNames.add(resident.getName());
             }
-            AncapPlayer[] assistants = player.getCity().getAssistants();
+            AncapStatesPlayer[] assistants = player.getCity().getAssistants();
             List<String> assistantsNames = new ArrayList<>();
-            for (AncapPlayer assistant : assistants) {
+            for (AncapStatesPlayer assistant : assistants) {
                 assistantsNames.add(assistant.getName());
             }
             if (args[1].equals("set")) {
@@ -259,9 +259,9 @@ public class CityCommand implements CommandExecutor, TabCompleter {
             if (args.length == 2) {
                 return friendSubCommands;
             }
-            List<AncapPlayer> friends = List.of(player.getFriends());
+            List<AncapStatesPlayer> friends = List.of(player.getFriends());
             List<String> friendsNames = new ArrayList<>();
-            for (AncapPlayer friend : friends) {
+            for (AncapStatesPlayer friend : friends) {
                 friendsNames.add(friend.getName());
             }
             if (args[1].equals("add")) {
@@ -276,9 +276,9 @@ public class CityCommand implements CommandExecutor, TabCompleter {
             if (player.isFree()) {
                 return List.of("");
             }
-            AncapPlayer[] cityResidents = player.getCity().getResidents();
+            AncapStatesPlayer[] cityResidents = player.getCity().getResidents();
             List<String> residentsNames = new ArrayList<>();
-            for (AncapPlayer resident : cityResidents) {
+            for (AncapStatesPlayer resident : cityResidents) {
                 residentsNames.add(resident.getName());
             }
             residentsNames.remove(player.getCity().getMayor().getName());
@@ -323,7 +323,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public synchronized boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        AncapPlayer player = new AncapPlayer(sender.getName());
+        AncapStatesPlayer player = new AncapStatesPlayer(sender.getName());
         if (args.length == 0) {
             if (player.isFree()) {
                 Message message = ErrorMessage.FREE;
@@ -549,7 +549,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage(message);
                 return true;
             }
-            AncapPlayer kicked = new AncapPlayer(args[1]);
+            AncapStatesPlayer kicked = new AncapStatesPlayer(args[1]);
             if (!kicked.isResidentOf(city)) {
                 Message message = ErrorMessage.NOT_RESIDENT;
                 player.sendMessage(message);
@@ -642,7 +642,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage(message);
                 return true;
             }
-            AncapPlayer accepted = new AncapPlayer(args[1]);
+            AncapStatesPlayer accepted = new AncapStatesPlayer(args[1]);
             if (!accepted.isAskingToJoinIn(city)) {
                 Message message = ErrorMessage.NOT_ASKING_TO_JOIN_IN_CITY;
                 player.sendMessage(message);
@@ -670,7 +670,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage(message);
                 return true;
             }
-            AncapPlayer declined = new AncapPlayer(args[1]);
+            AncapStatesPlayer declined = new AncapStatesPlayer(args[1]);
             if (!declined.isAskingToJoinIn(city)) {
                 Message message = ErrorMessage.NOT_ASKING_TO_JOIN_IN_CITY;
                 player.sendMessage(message);
@@ -725,7 +725,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage(message);
                 return true;
             }
-            AncapPlayer invited = new AncapPlayer(name);
+            AncapStatesPlayer invited = new AncapStatesPlayer(name);
             if (!invited.isFree()) {
                 Message message = ErrorMessage.HE_ISNT_FREE;
                 player.sendMessage(message);
@@ -766,7 +766,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage(message);
                 return true;
             }
-            AncapPlayer invited = new AncapPlayer(name);
+            AncapStatesPlayer invited = new AncapStatesPlayer(name);
             City city = player.getCity();
             if (!invited.isInvitedTo(city)) {
                 Message message = ErrorMessage.HE_ISNT_INVITED;
@@ -826,7 +826,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage(message);
                 return true;
             }
-            AncapPlayer assistant = new AncapPlayer(name);
+            AncapStatesPlayer assistant = new AncapStatesPlayer(name);
             if (!assistant.isResidentOf(city)) {
                 Message message = ErrorMessage.HE_ISNT_RESIDENT_OF_YOUR_CITY;
                 player.sendMessage(message);
@@ -959,7 +959,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
 
-                AncapPlayer limited = new AncapPlayer(args[2]);
+                AncapStatesPlayer limited = new AncapStatesPlayer(args[2]);
                 if (!NumberUtils.isNumber(args[3])) {
                     Message message = ErrorMessage.ILLEGAL_ARGS;
                     player.sendMessage(message);
@@ -1035,7 +1035,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                         player.sendMessage(message);
                         return true;
                     }
-                    AncapPlayer owner = player.getPrivateChunk().getOwner();
+                    AncapStatesPlayer owner = player.getPrivateChunk().getOwner();
                     if (!owner.equals(player)) {
                         Message message = ErrorMessage.ITS_NOT_YOUR_CHUNK;
                         player.sendMessage(message);
@@ -1098,7 +1098,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage(message);
                 return true;
             }
-            AncapPlayer friend = new AncapPlayer(args[2]);
+            AncapStatesPlayer friend = new AncapStatesPlayer(args[2]);
             if (args[1].equals("add")) {
                 player.addFriend(friend);
                 Message message = StateMessage.PLAYER_NEW_FRIEND(friend.getName());
@@ -1203,7 +1203,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage(message);
                 return true;
             }
-            AncapPlayer mayor = new AncapPlayer(name);
+            AncapStatesPlayer mayor = new AncapStatesPlayer(name);
             if (!mayor.isResidentOf(city)) {
                 Message message = ErrorMessage.HE_ISNT_RESIDENT_OF_YOUR_CITY;
                 player.sendMessage(message);

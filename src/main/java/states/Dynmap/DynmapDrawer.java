@@ -1,6 +1,7 @@
 package states.Dynmap;
 
 
+import AncapLibrary.API.SMassiveAPI;
 import com.fasterxml.uuid.Generators;
 import library.Hexagon;
 import library.HexagonComponents.HexagonSide;
@@ -8,10 +9,14 @@ import library.HexagonalGrid;
 import library.Point;
 import org.bukkit.Bukkit;
 import org.dynmap.DynmapAPI;
-import org.dynmap.markers.*;
-import states.API.SMassiveAPI;
+import org.dynmap.markers.AreaMarker;
+import org.dynmap.markers.Marker;
+import org.dynmap.markers.MarkerSet;
+import org.dynmap.markers.PolyLineMarker;
 import states.Main.AncapStates;
 import states.States.City.City;
+
+import java.util.logging.Logger;
 
 public class DynmapDrawer {
 
@@ -138,5 +143,21 @@ public class DynmapDrawer {
 
     private String generateDescriptionLine(String[] strings) {
         return SMassiveAPI.toString(strings, "<br>");
+    }
+
+    public static void clearDynMap() {
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "dmarker deleteset id:ancap world:world");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "dmarker addset Государства id:ancap world:world");
+    }
+
+    public static void redrawDynmap() {
+        DynmapDrawer.clearDynMap();
+        long time0 = System.currentTimeMillis();
+        Logger log = Bukkit.getLogger();
+        DynmapDrawer drawer = new DynmapDrawer();
+        drawer.drawAllCities();
+        long time1 = System.currentTimeMillis();
+        long estimatedTime = time1-time0;
+        log.info("Dynmap redrawed. Estimated time: "+estimatedTime);
     }
 }

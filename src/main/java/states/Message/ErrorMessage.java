@@ -1,5 +1,6 @@
 package states.Message;
 
+import AncapLibrary.Message.Message;
 import states.Config.Config;
 
 public class ErrorMessage extends Message {

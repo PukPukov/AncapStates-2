@@ -1,32 +1,37 @@
 package states.Listeners.AncapStatesEventsListeners;
 
-import org.bukkit.Bukkit;
+import AncapLibrary.AncapEvents.AncapExplodeEvent;
+import AncapLibrary.AncapEvents.AncapPVPEvent;
+import AncapLibrary.AncapEvents.AncapWorldInteractEvent;
+import AncapLibrary.AncapEvents.AncapWorldSelfDestructEvent;
 import org.bukkit.Location;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import states.Main.AncapStates;
-import states.Main.AncapStatesEvents.AncapStatesExplodeEvent;
-import states.Main.AncapStatesEvents.AncapStatesPVPEvent;
-import states.Main.AncapStatesEvents.AncapStatesWorldInteractEvent;
-import states.Main.AncapStatesEvents.AncapStatesWorldSelfDestructEvent;
-import states.Player.AncapPlayer;
+import states.Player.AncapStatesPlayer;
 
 public class AncapStatesEventsListener implements Listener {
 
     @EventHandler
-    public void onWorldInteract(AncapStatesWorldInteractEvent e) {
+    public void onWorldInteract(AncapWorldInteractEvent e) {
         if (e.isIntercepted()) {
             return;
         }
-        AncapPlayer player = e.getPlayer();
+        AncapStatesPlayer player = new AncapStatesPlayer(e.getPlayer().getName());
         Location loc = e.getLocation();
-        if (!AncapStates.canInteract(player, loc)) {
+        if (!player.canInteract(loc)) {
             e.setCancelled(true);
+        }
+        Cancellable bukkitEvent = e.getBukkitEvent();
+        if (bukkitEvent instanceof ProjectileHitEvent) {
+            ((ProjectileHitEvent) bukkitEvent).getEntity().remove();
         }
     }
 
     @EventHandler
-    public void onPVP(AncapStatesPVPEvent e) {
+    public void onPVP(AncapPVPEvent e) {
         if (e.isIntercepted()) {
             return;
         }
@@ -36,7 +41,7 @@ public class AncapStatesEventsListener implements Listener {
     }
 
     @EventHandler
-    public void onExplode(AncapStatesExplodeEvent e) {
+    public void onExplode(AncapExplodeEvent e) {
         if (e.isIntercepted()) {
             return;
         }
@@ -47,7 +52,7 @@ public class AncapStatesEventsListener implements Listener {
     }
 
     @EventHandler
-    public void onSelfDestruct(AncapStatesWorldSelfDestructEvent e) {
+    public void onSelfDestruct(AncapWorldSelfDestructEvent e) {
         if (e.isIntercepted()) {
             return;
         }

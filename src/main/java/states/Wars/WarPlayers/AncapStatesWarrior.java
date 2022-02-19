@@ -4,22 +4,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
-import states.Player.AncapPlayer;
+import states.Player.AncapStatesPlayer;
 import states.Wars.AncapWars.AncapWars;
 import states.Wars.ForbiddenStatementsManagers.ForbiddenStatementsThread;
 import states.Wars.WarHexagons.WarHexagon;
 
-public class AncapWarrior extends AncapPlayer {
+public class AncapStatesWarrior extends AncapStatesPlayer {
 
-    public AncapWarrior(String string) {
+    public AncapStatesWarrior(String string) {
         super(string);
     }
 
-    public AncapWarrior(Player player) {
+    public AncapStatesWarrior(Player player) {
         super(player);
     }
 
-    public AncapWarrior(AncapPlayer player) {
+    public AncapStatesWarrior(AncapStatesPlayer player) {
         this(player.getID());
     }
 

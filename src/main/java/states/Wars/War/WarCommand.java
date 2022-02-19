@@ -5,12 +5,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import states.Wars.WarHexagons.WarHexagon;
-import states.Wars.WarPlayers.AncapWarrior;
+import states.Wars.WarPlayers.AncapStatesWarrior;
 
 public class WarCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        AncapWarrior warrior = new AncapWarrior(sender.getName());
+        AncapStatesWarrior warrior = new AncapStatesWarrior(sender.getName());
         WarHexagon hexagon = warrior.getHexagon();
         if (args.length == 0) {
 

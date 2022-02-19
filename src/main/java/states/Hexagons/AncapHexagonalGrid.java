@@ -3,7 +3,7 @@ package states.Hexagons;
 import library.*;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import states.Player.AncapPlayer;
+import states.Player.AncapStatesPlayer;
 
 public class AncapHexagonalGrid extends HexagonalGrid {
 
@@ -18,8 +18,8 @@ public class AncapHexagonalGrid extends HexagonalGrid {
         return this.getHexagon(loc);
     }
 
-    public Hexagon getHexagon(AncapPlayer ancapPlayer) {
-        Player p = ancapPlayer.getPlayer();
+    public Hexagon getHexagon(AncapStatesPlayer ancapStatesPlayer) {
+        Player p = ancapStatesPlayer.getPlayer();
         return this.getHexagon(p);
     }
 

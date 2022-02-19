@@ -1,12 +1,12 @@
 package states.Player;
 
-import states.States.City.City;
-import states.Economy.Balance;
+import AncapLibrary.Economy.Balance;
+import AncapLibrary.Message.Message;
 import states.Message.InfoMessage;
-import states.Message.Message;
+import states.States.City.City;
 import states.States.Nation.Nation;
 
-public class AncapPlayerInfo {
+public class AncapStatesPlayerInfo {
 
     String name;
     City city;
@@ -18,7 +18,7 @@ public class AncapPlayerInfo {
     String invitingNames;
     String requestingNames;
 
-    public AncapPlayerInfo(AncapPlayer player) {
+    public AncapStatesPlayerInfo(AncapStatesPlayer player) {
         this.name = player.getName();
         this.city = player.getCity();
         if (this.city != null) {

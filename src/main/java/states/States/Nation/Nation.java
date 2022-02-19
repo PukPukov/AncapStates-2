@@ -1,15 +1,16 @@
 package states.States.Nation;
 
+import AncapLibrary.API.SMassiveAPI;
+import AncapLibrary.Economy.Balance;
+import AncapLibrary.Library.AncapState;
+import AncapLibrary.Message.Message;
 import library.Hexagon;
 import org.bukkit.Bukkit;
-import states.API.SMassiveAPI;
 import states.Database.Database;
-import states.Economy.Balance;
+import states.Dynmap.DynmapDrawer;
 import states.Main.AncapStates;
-import states.Message.Message;
 import states.Message.StateMessage;
-import states.Player.AncapPlayer;
-import states.States.AncapState;
+import states.Player.AncapStatesPlayer;
 import states.States.City.City;
 
 import java.awt.*;
@@ -41,7 +42,7 @@ public class Nation implements AncapState {
         statesDB.write("states.nation."+this.id+".capital", creator.getID());
         statesDB.write("states.nation."+this.id+".cities", creator.getID());
         statesDB.write("states.city."+creator.getID()+".nation", this.getID());
-        AncapStates.redrawDynmap();
+        DynmapDrawer.redrawDynmap();
     }
 
     public City[] getCities() {
@@ -64,21 +65,21 @@ public class Nation implements AncapState {
         idDB.write("ids.nation_"+name, this.id);
     }
 
-    public AncapPlayer[] getMinisters() {
+    public AncapStatesPlayer[] getMinisters() {
         String[] names = SMassiveAPI.toMassive(statesDB.getString("states.nation."+this.id+".ministers"));
-        AncapPlayer[] ministers = new AncapPlayer[names.length];
+        AncapStatesPlayer[] ministers = new AncapStatesPlayer[names.length];
         for (int i = 0; i<names.length; i++) {
-            ministers[i] = new AncapPlayer(names[i]);
+            ministers[i] = new AncapStatesPlayer(names[i]);
         }
         return ministers;
     }
 
-    public void addMinister(AncapPlayer ancapPlayer) {
-        statesDB.write("states.nation."+this.id+".ministers", SMassiveAPI.add(statesDB.getString("states.nation."+this.id+".ministers"), ancapPlayer.getID()));
+    public void addMinister(AncapStatesPlayer ancapStatesPlayer) {
+        statesDB.write("states.nation."+this.id+".ministers", SMassiveAPI.add(statesDB.getString("states.nation."+this.id+".ministers"), ancapStatesPlayer.getID()));
     }
 
-    public void removeMinister(AncapPlayer ancapPlayer) {
-        statesDB.write("states.nation."+this.id+".ministers", SMassiveAPI.remove(statesDB.getString("states.nation."+this.id+".ministers"), ancapPlayer.getID()));
+    public void removeMinister(AncapStatesPlayer ancapStatesPlayer) {
+        statesDB.write("states.nation."+this.id+".ministers", SMassiveAPI.remove(statesDB.getString("states.nation."+this.id+".ministers"), ancapStatesPlayer.getID()));
     }
 
     public City getCapital() {
@@ -335,16 +336,16 @@ public class Nation implements AncapState {
         return cities;
     }
 
-    public AncapPlayer[] getResidents() {
-        List<AncapPlayer> residents = new ArrayList<>();
+    public AncapStatesPlayer[] getResidents() {
+        List<AncapStatesPlayer> residents = new ArrayList<>();
         City[] cities = this.getCities();
         for (City city : cities) {
-            AncapPlayer[] cityResidents = city.getResidents();
-            for (AncapPlayer cityResident : cityResidents) {
+            AncapStatesPlayer[] cityResidents = city.getResidents();
+            for (AncapStatesPlayer cityResident : cityResidents) {
                 residents.add(cityResident);
             }
         }
-        return residents.toArray(new AncapPlayer[0]);
+        return residents.toArray(new AncapStatesPlayer[0]);
     }
 
     public String[] getFlags() {

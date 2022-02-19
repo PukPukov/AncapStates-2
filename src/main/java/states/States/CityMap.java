@@ -1,15 +1,15 @@
-package states.States.City;
+package states.States;
 
 import library.Hexagon;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import states.Main.AncapStates;
 import states.Chunk.OutpostChunk;
 import states.Chunk.PrivateChunk;
 import states.Database.Database;
+import states.Player.AncapStatesPlayer;
+import states.States.City.City;
 import states.States.Nation.Nation;
-import states.Player.AncapPlayer;
 import states.StatesExceptions.CityException;
 
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class CityMap {
         return cities.toArray(new City[0]);
     }
 
-    public AncapPlayer getPrivateChunkOwner(Location loc) {
+    public AncapStatesPlayer getPrivateChunkOwner(Location loc) {
         City city = getCity(loc);
         PrivateChunk privateChunk = new PrivateChunk(city, getChunkID(loc));
         return privateChunk.getOwner();

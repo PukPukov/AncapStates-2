@@ -1,11 +1,11 @@
 package states.Wars.AncapWars;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import states.Player.AncapPlayer;
+import states.Player.AncapStatesPlayer;
 import states.Main.AncapStates;
 import states.Wars.ForbiddenStatementsManagers.EffectsManager;
 import states.Wars.ForbiddenStatementsManagers.InventoryManager;
-import states.Wars.WarPlayers.AncapWarrior;
+import states.Wars.WarPlayers.AncapStatesWarrior;
 
 public class AncapWars extends JavaPlugin {
 
@@ -21,11 +21,11 @@ public class AncapWars extends JavaPlugin {
         return effectsManager;
     }
 
-    public static AncapWarrior[] getOnlinePlayers() {
-        AncapPlayer[] players = AncapStates.getOnlinePlayers();
-        AncapWarrior[] warriors = new AncapWarrior[players.length];
+    public static AncapStatesWarrior[] getOnlinePlayers() {
+        AncapStatesPlayer[] players = AncapStates.getPlayerMap().getOnlinePlayers();
+        AncapStatesWarrior[] warriors = new AncapStatesWarrior[players.length];
         for (int i = 0; i<players.length; i++) {
-            warriors[i] = new AncapWarrior(players[i]);
+            warriors[i] = new AncapStatesWarrior(players[i]);
         }
         return warriors;
     }

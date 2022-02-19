@@ -1,11 +1,11 @@
 package states.States.City;
 
+import AncapLibrary.Economy.Balance;
+import AncapLibrary.Message.Message;
 import states.Dynmap.DynmapDescription;
-import states.Economy.Balance;
 import states.Message.InfoMessage;
-import states.Message.Message;
+import states.Player.AncapStatesPlayer;
 import states.States.Nation.Nation;
-import states.Player.AncapPlayer;
 
 public class CityInfo {
 
@@ -13,8 +13,8 @@ public class CityInfo {
 
     private String name;
     private int residentsAmount;
-    private AncapPlayer mayor;
-    private AncapPlayer[] residents;
+    private AncapStatesPlayer mayor;
+    private AncapStatesPlayer[] residents;
     private Nation nation;
     private String nationName;
     private String residentsNames;

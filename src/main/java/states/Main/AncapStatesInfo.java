@@ -1,8 +1,8 @@
 package states.Main;
 
+import AncapLibrary.Message.Message;
 import org.bukkit.Bukkit;
 import states.Message.InfoMessage;
-import states.Message.Message;
 
 public class AncapStatesInfo {
 

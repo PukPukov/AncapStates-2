@@ -22,6 +22,8 @@ public class Config {
 
     public static Config VALUES_CONFIGURATION = new Config("Values.yml");
 
+    public static Config BASE_CONFIG = new Config("config.yml");
+
     private Config(String fileName) {
         this.cfgFile = new File(AncapStates.getInstance().getDataFolder(), fileName);
         this.fileName = fileName;

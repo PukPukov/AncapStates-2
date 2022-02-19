@@ -1,25 +1,24 @@
 package states.Player;
 
+import AncapLibrary.API.SMassiveAPI;
+import AncapLibrary.Economy.Balance;
+import AncapLibrary.Message.Message;
+import AncapLibrary.Player.AncapPlayer;
+import AncapLibrary.Timer.Heartbeat.Exceptions.Chunk.AncapChunk;
 import library.Hexagon;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import states.API.SMassiveAPI;
-import states.Main.AncapStates;
-import states.Chunk.AncapChunk;
 import states.Chunk.OutpostChunk;
 import states.Chunk.PrivateChunk;
-import states.States.City.City;
-import states.States.City.LimitType;
 import states.Config.Config;
 import states.Database.Database;
-import states.Economy.Balance;
-import states.States.BalanceHolder;
+import states.Main.AncapStates;
 import states.Message.ErrorMessage;
-import states.Message.Message;
 import states.Message.StateMessage;
+import states.States.City.City;
+import states.States.City.LimitType;
 import states.States.Nation.Nation;
 
 import java.util.ArrayList;
@@ -27,62 +26,21 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public class AncapPlayer implements BalanceHolder {
-
-    private String id;
-
-    private String name;
+public class AncapStatesPlayer extends AncapPlayer {
 
     private Database statesDB = Database.STATES_DATABASE;
-
     public static Logger log = Bukkit.getLogger();
 
-    public AncapPlayer(Player player) {
-        this.name = player.getName();
-        this.id = name.toLowerCase();
-        this.create();
+    public AncapStatesPlayer(Player player) {
+        super(player);
     }
 
-    public void create() {
-        if (!this.created()) {
-            statesDB.write("states.player."+this.id+".name", id);
-            if (this.name != null) {
-                statesDB.write("states.player."+this.id+".name", name);
-            }
-        }
-    }
-
-    public void setUp() {
-        statesDB.write("states.player."+this.id+".name", this.getPlayer().getName());
-    }
-
-    public boolean created() {
-        return statesDB.isSet("states.player."+this.id+".name");
-    }
-
-    public void updateName() {
-        statesDB.write("states.player."+this.id+".name", this.getPlayer().getName());
-    }
-
-    public AncapPlayer(String name) {
-        this.id = name.toLowerCase();
-        this.create();
-    }
-
-    public Player getPlayer() {
-        return Bukkit.getPlayer(this.id);
-    }
-
-    public String getName() {
-        return statesDB.getString("states.player."+id+".name");
-    }
-
-    public String getID() {
-        return this.id;
+    public AncapStatesPlayer(String name) {
+        super(name);
     }
 
     public City getCity() {
-        String cityID = statesDB.getString("states.player."+id+".city");
+        String cityID = statesDB.getString("states.player."+this.getID()+".city");
         if (cityID == null) {
             return null;
         }
@@ -110,36 +68,6 @@ public class AncapPlayer implements BalanceHolder {
         statesDB.write("states.player."+this.getID()+".requestsToCities", SMassiveAPI.remove(statesDB.getString("states.player."+this.getID()+".requestsToCities"), city.getID()));
     }
 
-    public void sendMessage(Message message) {
-        String[] messages = message.getStrings();
-        for (int i = 0; i<messages.length; i++) {
-            if (messages[i] == null) {
-                continue;
-            }
-            this.sendMessage(messages[i].replace("&", "§"));
-        }
-        if (message instanceof ErrorMessage) {
-            this.playSound(Sound.BLOCK_ANVIL_LAND);
-        }
-        if (message instanceof StateMessage) {
-            this.playSound(Sound.BLOCK_BUBBLE_COLUMN_BUBBLE_POP);
-        }
-    }
-
-    public void sendMessage(String string) {
-        try {
-            Player p = this.getPlayer();
-            p.sendMessage(string.replace("&","§"));
-        } catch (Exception ignored) {}
-    }
-
-    public void playSound(Sound sound) {
-        try {
-            Player p = this.getPlayer();
-            p.playSound(p.getLocation(), sound, 1000, 1);
-        } catch (Exception ignored) {}
-    }
-
     public boolean isFree() {
         return !statesDB.isSet("states.player."+this.getID()+".city");
     }
@@ -148,13 +76,9 @@ public class AncapPlayer implements BalanceHolder {
         return this.getBalance().getNetherite()>=1;
     }
 
-    public Balance getBalance() {
-        return new Balance(this);
-    }
-
     public boolean isMayor() {
         City city = this.getCity();
-        return new AncapPlayer(statesDB.getString("states.city."+city.getID()+".mayor")).equals(this);
+        return new AncapStatesPlayer(statesDB.getString("states.city."+city.getID()+".mayor")).equals(this);
     }
 
     public void grabCityCreationFee() {
@@ -163,13 +87,6 @@ public class AncapPlayer implements BalanceHolder {
         int fee = Integer.parseInt(values.getString("fees.city_creation_fee"));
         balance.removeNetherite(fee);
         this.setBalance(balance);
-    }
-
-    public void setBalance(Balance balance) {
-        statesDB.write("states.player."+this.getID()+".balance.iron", String.valueOf(balance.getIron()));
-        statesDB.write("states.player."+this.getID()+".balance.diamond", String.valueOf(balance.getDiamond()));
-        statesDB.write("states.player."+this.getID()+".balance.netherite", String.valueOf(balance.getNetherite()));
-        return;
     }
 
     public boolean isInvitedTo(City city) {
@@ -189,13 +106,13 @@ public class AncapPlayer implements BalanceHolder {
     public void dropCityMayoring() {
         if (!this.isFree()) {
             City city = this.getCity();
-            AncapPlayer[] players = city.getResidents();
+            AncapStatesPlayer[] players = city.getResidents();
             if (players.length == 1) {
                 city.remove();
                 Message message = StateMessage.CITY_REMOVE(city.getName());
                 AncapStates.sendMessage(message);
             } else {
-                AncapPlayer newMayor = players[0];
+                AncapStatesPlayer newMayor = players[0];
                 if (newMayor.equals(this)) {
                     newMayor = players[1];
                 }
@@ -241,7 +158,7 @@ public class AncapPlayer implements BalanceHolder {
 
     @Override
     public String toString() {
-        return "AncapPlayer{"+this.getID()+"}";
+        return "AncapStatesPlayer{"+this.getID()+"}";
     }
 
     @Override
@@ -249,10 +166,10 @@ public class AncapPlayer implements BalanceHolder {
         if (obj == null) {
             return false;
         }
-        if (!AncapPlayer.class.isAssignableFrom(obj.getClass())) {
+        if (!AncapStatesPlayer.class.isAssignableFrom(obj.getClass())) {
             return false;
         }
-        AncapPlayer other = (AncapPlayer) obj;
+        AncapStatesPlayer other = (AncapStatesPlayer) obj;
         return other.getID().equals(this.getID());
     }
 
@@ -322,16 +239,16 @@ public class AncapPlayer implements BalanceHolder {
         return new OutpostChunk(this.getPlayer());
     }
 
-    public void addFriend(AncapPlayer friend) {
+    public void addFriend(AncapStatesPlayer friend) {
         statesDB.write("states.player."+this.getID()+".friends", SMassiveAPI.add(statesDB.getString("states.player."+this.getID()+".friends"), friend.getID()));
     }
 
-    public void removeFriend(AncapPlayer friend) {
+    public void removeFriend(AncapStatesPlayer friend) {
         statesDB.write("states.player."+this.getID()+".friends", SMassiveAPI.remove(statesDB.getString("states.player."+this.getID()+".friends"), friend.getID()));
     }
 
-    public AncapPlayerInfo getInfo() {
-        return new AncapPlayerInfo(this);
+    public AncapStatesPlayerInfo getInfo() {
+        return new AncapStatesPlayerInfo(this);
     }
 
     public boolean isLeader() {
@@ -367,8 +284,8 @@ public class AncapPlayer implements BalanceHolder {
     public boolean isCitizenOf(Nation nation) {
         City[] cities = nation.getCities();
         for (City city : cities) {
-            AncapPlayer[] players = city.getResidents();
-            for (AncapPlayer resident : players) {
+            AncapStatesPlayer[] players = city.getResidents();
+            for (AncapStatesPlayer resident : players) {
                 if (this.equals(resident)) {
                     return true;
                 }
@@ -377,17 +294,9 @@ public class AncapPlayer implements BalanceHolder {
         return false;
     }
 
-    public Location getLocation() {
-        return this.getPlayer().getLocation();
-    }
-
     public boolean isLicentiate() {
         boolean b = this.getPlayer().hasPermission("ancapstates.licentiate");
         return b;
-    }
-
-    private boolean haveFlag(String string) {
-        return SMassiveAPI.contain(statesDB.getString("states.player."+this.getID()+".flags"), string);
     }
 
     public void declineInviteFrom(City city) {
@@ -395,11 +304,11 @@ public class AncapPlayer implements BalanceHolder {
         statesDB.write("states.city."+city.getID()+".invitesToPlayers", SMassiveAPI.remove(statesDB.getString("states.city."+city.getID()+".invitesToPlayers"), this.getID()));
     }
 
-    public AncapPlayer[] getFriends() {
+    public AncapStatesPlayer[] getFriends() {
         String[] names = SMassiveAPI.toMassive(statesDB.getString("states.player."+this.getID()+".friends"));
-        AncapPlayer[] players = new AncapPlayer[names.length];
+        AncapStatesPlayer[] players = new AncapStatesPlayer[names.length];
         for (int i = 0; i<names.length; i++) {
-            players[i] = new AncapPlayer(names[i]);
+            players[i] = new AncapStatesPlayer(names[i]);
         }
         return players;
     }
@@ -455,7 +364,7 @@ public class AncapPlayer implements BalanceHolder {
         this.getPlayer().sendTitle("Ты забрёл в ничейные земли","Осторожно, тут опасно.", 30, 30, 30);
     }
 
-    public void transferMoney(AncapPlayer recipient, double amount, String type) {
+    public void transferMoney(AncapStatesPlayer recipient, double amount, String type) {
         Balance playerBalance = this.getBalance();
         Balance recipientBalance = recipient.getBalance();
         if (type.equals("iron")) {
@@ -550,7 +459,7 @@ public class AncapPlayer implements BalanceHolder {
         this.setBalance(playerBalance);
     }
 
-    public boolean isFriendOf(AncapPlayer player) {
+    public boolean isFriendOf(AncapStatesPlayer player) {
         String friendsNames = this.getFriendsNames();
         if (SMassiveAPI.contain(friendsNames, player.getID())) {
             return true;
@@ -586,13 +495,34 @@ public class AncapPlayer implements BalanceHolder {
         return AncapStates.grid.getHexagon(this);
     }
 
-    @Override
-    public void setMeta(String field, String str) {
-        statesDB.write("states.player."+this.getID()+"."+field, str);
-    }
-
-    @Override
-    public String getMeta(String field) {
-        return statesDB.getString("states.player."+this.getID()+"."+field);
+    public boolean canInteract(Location loc) {
+        try {
+            City city = AncapStates.getCityMap().getCity(loc);
+            if (city == null) {
+                return true;
+            }
+            PrivateChunk chunk = city.getPrivateChunk(loc);
+            int remoteness = city.getRemoteness(this);
+            int allowLevel = city.getAllowLevel().getInt();
+            Message message = ErrorMessage.CANT_INTERACT_THIS_BLOCK;
+            if (chunk.getOwner() == null) {
+                if (remoteness>allowLevel) {
+                    this.sendMessage(message);
+                    return false;
+                }
+                return true;
+            }
+            if (remoteness>allowLevel) {
+                this.sendMessage(message);
+                return false;
+            }
+            if (chunk.getOwner() != null && !chunk.getOwner().equals(this) && !chunk.getOwner().isFriendOf(this)) {
+                this.sendMessage(message);
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

@@ -1,9 +1,9 @@
 package states.Migration;
 
+import AncapLibrary.API.SMassiveAPI;
 import org.bukkit.configuration.file.FileConfiguration;
-import states.API.SMassiveAPI;
-import states.Main.AncapStates;
 import states.ID.ID;
+import states.Main.AncapStates;
 import states.States.Nation.Nation;
 
 public class LegacyNation {

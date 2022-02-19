@@ -1,5 +1,7 @@
 package states.Commands;
 
+import AncapLibrary.Economy.Balance;
+import AncapLibrary.Message.Message;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -10,15 +12,14 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import states.Main.AncapStates;
-import states.States.City.City;
 import states.Database.Database;
-import states.Economy.Balance;
+import states.Dynmap.DynmapDrawer;
+import states.Main.AncapStates;
 import states.Message.ErrorMessage;
-import states.Message.Message;
 import states.Message.StateMessage;
+import states.Player.AncapStatesPlayer;
+import states.States.City.City;
 import states.States.Nation.Nation;
-import states.Player.AncapPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,9 +32,9 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        List<AncapPlayer> onlinePlayers = List.of(AncapStates.getOnlinePlayers());
-        List<City> cities = List.of(AncapStates.getCities());
-        List<Nation> nations = List.of(AncapStates.getNations());
+        List<AncapStatesPlayer> onlinePlayers = List.of(AncapStates.getPlayerMap().getOnlinePlayers());
+        List<City> cities = List.of(AncapStates.getCityMap().getCities());
+        List<Nation> nations = List.of(AncapStates.getCityMap().getNations());
         List<String> citiesNames = new ArrayList<>();
         List<String> nationsNames = new ArrayList<>();
         List<String> onlinePlayersNames = new ArrayList<>();
@@ -103,14 +104,14 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public synchronized boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        AncapPlayer player = new AncapPlayer(sender.getName());
+        AncapStatesPlayer player = new AncapStatesPlayer(sender.getName());
         if (args.length == 0) {
             player.sendMessage(AncapStates.getInfo().getMessage());
             return true;
         }
         if (sender.isOp()) {
             if (args[0].equals("redraw")) {
-                AncapStates.redrawDynmap();
+                DynmapDrawer.redrawDynmap();
                 return true;
             }
             if (args[0].equals("newday")) {
@@ -163,7 +164,7 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             double amount = Double.parseDouble(args[3]);
-            AncapPlayer recipient = new AncapPlayer(args[1]);
+            AncapStatesPlayer recipient = new AncapStatesPlayer(args[1]);
             if (player.getBalance().getAmountForType(type) < amount) {
                 Message message = ErrorMessage.NOT_ENOUGH_MONEY;
                 player.sendMessage(message);
@@ -237,8 +238,8 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(border);
             sender.sendMessage("§6Статистика плагина AncapStates");
             sender.sendMessage("");
-            sender.sendMessage("§6Всего городов§8: §7"+AncapStates.getCities().length);
-            sender.sendMessage("§6Всего наций§8: §7"+AncapStates.getNations().length);
+            sender.sendMessage("§6Всего городов§8: §7"+AncapStates.getCityMap().getCities().length);
+            sender.sendMessage("§6Всего наций§8: §7"+AncapStates.getCityMap().getNations().length);
             sender.sendMessage(border);
             return true;
         }

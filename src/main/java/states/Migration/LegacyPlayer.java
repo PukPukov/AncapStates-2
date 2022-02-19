@@ -2,7 +2,7 @@ package states.Migration;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import states.Main.AncapStates;
-import states.Player.AncapPlayer;
+import states.Player.AncapStatesPlayer;
 
 public class LegacyPlayer {
 
@@ -24,7 +24,7 @@ public class LegacyPlayer {
         return new LegacyCity(this.city);
     }
 
-    public AncapPlayer getMigratedPlayer() {
-        return new AncapPlayer(this.name);
+    public AncapStatesPlayer getMigratedPlayer() {
+        return new AncapStatesPlayer(this.name);
     }
 }

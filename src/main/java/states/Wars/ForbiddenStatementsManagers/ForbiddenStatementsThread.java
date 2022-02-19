@@ -1,12 +1,12 @@
 package states.Wars.ForbiddenStatementsManagers;
 
-import states.Wars.WarPlayers.AncapWarrior;
+import states.Wars.WarPlayers.AncapStatesWarrior;
 
 public class ForbiddenStatementsThread extends Thread {
 
-    AncapWarrior warrior;
+    AncapStatesWarrior warrior;
 
-    public ForbiddenStatementsThread(AncapWarrior warrior) {
+    public ForbiddenStatementsThread(AncapStatesWarrior warrior) {
         this.warrior = warrior;
     }
 

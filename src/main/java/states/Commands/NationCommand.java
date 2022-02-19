@@ -1,22 +1,22 @@
 package states.Commands;
 
+import AncapLibrary.API.StringAPI;
+import AncapLibrary.Economy.Balance;
+import AncapLibrary.Message.Message;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
-import states.API.StringAPI;
-import states.Main.AncapStates;
 import states.Board.Board;
-import states.States.City.City;
-import states.Economy.Balance;
 import states.ID.ID;
+import states.Main.AncapStates;
 import states.Message.ErrorMessage;
-import states.Message.Message;
 import states.Message.StateMessage;
 import states.Name.Name;
-import states.Player.AncapPlayer;
+import states.Player.AncapStatesPlayer;
+import states.States.City.City;
 import states.States.Nation.Nation;
 import states.States.Nation.NationColor;
 
@@ -28,7 +28,7 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        AncapPlayer player = new AncapPlayer(sender.getName());
+        AncapStatesPlayer player = new AncapStatesPlayer(sender.getName());
         List<String> subcommands = new ArrayList(Arrays.asList(
                 "info",
                 "new",
@@ -49,9 +49,9 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
                 "flag",
                 "taxes"
         ));
-        List<AncapPlayer> onlinePlayers = List.of(AncapStates.getOnlinePlayers());
-        List<City> cities = List.of(AncapStates.getCities());
-        List<Nation> nations = List.of(AncapStates.getNations());
+        List<AncapStatesPlayer> onlinePlayers = List.of(AncapStates.getPlayerMap().getOnlinePlayers());
+        List<City> cities = List.of(AncapStates.getCityMap().getCities());
+        List<Nation> nations = List.of(AncapStates.getCityMap().getNations());
         List<String> citiesNames = new ArrayList<>();
         List<String> nationsNames = new ArrayList<>();
         List<String> onlinePlayersNames = new ArrayList<>();
@@ -61,8 +61,8 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
         for (Nation nation : nations) {
             nationsNames.add(nation.getName());
         }
-        for (AncapPlayer ancapPlayer : onlinePlayers) {
-            onlinePlayersNames.add(ancapPlayer.getName());
+        for (AncapStatesPlayer ancapStatesPlayer : onlinePlayers) {
+            onlinePlayersNames.add(ancapStatesPlayer.getName());
         }
         if (args.length == 1) {
             return subcommands;
@@ -150,14 +150,14 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
             if (args.length == 2) {
                 return ministerSubcommands;
             }
-            AncapPlayer[] residents = city.getNation().getResidents();
+            AncapStatesPlayer[] residents = city.getNation().getResidents();
             List<String> residentsNames = new ArrayList<>();
-            for (AncapPlayer resident : residents) {
+            for (AncapStatesPlayer resident : residents) {
                 residentsNames.add(resident.getName());
             }
-            AncapPlayer[] ministers = city.getNation().getMinisters();
+            AncapStatesPlayer[] ministers = city.getNation().getMinisters();
             List<String> ministersNames = new ArrayList<>();
-            for (AncapPlayer minister : ministers) {
+            for (AncapStatesPlayer minister : ministers) {
                 ministersNames.add(minister.getName());
             }
             if (args[1].equals("set")) {
@@ -222,7 +222,7 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public synchronized boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        AncapPlayer player = new AncapPlayer(sender.getName());
+        AncapStatesPlayer player = new AncapStatesPlayer(sender.getName());
         if (args.length == 0) {
             if (player.isFree()) {
                 Message message = ErrorMessage.FREE;
@@ -759,7 +759,7 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             Nation nation = player.getNation();
-            AncapPlayer minister = new AncapPlayer(args[2]);
+            AncapStatesPlayer minister = new AncapStatesPlayer(args[2]);
             if (!minister.isCitizenOf(nation)) {
                 Message message = ErrorMessage.HE_ISNT_CITIZEN_OF_YOUR_NATION;
                 player.sendMessage(message);

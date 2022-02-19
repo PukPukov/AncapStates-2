@@ -1,5 +1,6 @@
 package states.Message;
 
+import AncapLibrary.Message.Message;
 import states.Config.Config;
 
 import java.util.ArrayList;

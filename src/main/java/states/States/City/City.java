@@ -1,24 +1,25 @@
 package states.States.City;
 
+import AncapLibrary.API.SMassiveAPI;
+import AncapLibrary.Economy.Balance;
+import AncapLibrary.Library.AncapState;
+import AncapLibrary.Message.Message;
+import AncapLibrary.Timer.Heartbeat.Exceptions.Chunk.AncapChunk;
 import library.Hexagon;
 import library.Point;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import states.API.SMassiveAPI;
-import states.Chunk.AncapChunk;
 import states.Chunk.OutpostChunk;
 import states.Chunk.PrivateChunk;
 import states.Config.Config;
 import states.Database.Database;
 import states.Dynmap.DynmapDescription;
 import states.Dynmap.DynmapDrawer;
-import states.Economy.Balance;
+import states.Location.AncapLocation;
 import states.Main.AncapStates;
-import states.Message.Message;
 import states.Message.StateMessage;
-import states.Player.AncapPlayer;
-import states.States.AncapState;
+import states.Player.AncapStatesPlayer;
 import states.States.Nation.Nation;
 
 import java.util.ArrayList;
@@ -42,23 +43,23 @@ public class City implements AncapState {
     }
 
     public void sendMessage(Message message) {
-        AncapPlayer[] players = this.getResidents();
-        for (AncapPlayer player : players) {
+        AncapStatesPlayer[] players = this.getResidents();
+        for (AncapStatesPlayer player : players) {
             player.sendMessage(message);
         }
     }
 
-    public void create(AncapPlayer creator, String name) {
+    public void create(AncapStatesPlayer creator, String name) {
         creator.prepareToJoinInCity();
         String mayorName = creator.getID();
-        String home = AncapStates.getInstance().getStringFrom(creator.getPlayer().getLocation());
+        String home = new AncapLocation(creator.getPlayer().getLocation()).toString();
         statesDB.write("states.player."+creator.getID()+".city", this.id);
         statesDB.write("states.city."+this.id+".name", name);
         statesDB.write("states.city."+this.id+".mayor", mayorName);
         statesDB.write("states.city."+this.id+".residents", mayorName);
         statesDB.write("states.city."+this.id+".home", home);
         statesDB.write("states.hexagons."+AncapStates.grid.getHexagon(creator).toString()+".owner", this.id);
-        AncapStates.redrawDynmap();
+        DynmapDrawer.redrawDynmap();
     }
 
     public void remove() {
@@ -93,7 +94,7 @@ public class City implements AncapState {
     }
 
     public void kickAllResidents() {
-        AncapPlayer[] players = this.getResidents();
+        AncapStatesPlayer[] players = this.getResidents();
         for (int i = 0; i<players.length; i++) {
             this.removeResidentNoChecks(players[i]);
         }
@@ -118,40 +119,40 @@ public class City implements AncapState {
         idDB.write("ids.city_"+name, this.id);
     }
 
-    public AncapPlayer[] getResidents() {
+    public AncapStatesPlayer[] getResidents() {
         String[] names = SMassiveAPI.toMassive(statesDB.getString("states.city."+this.id+".residents"));
-        AncapPlayer[] players = new AncapPlayer[names.length];
+        AncapStatesPlayer[] players = new AncapStatesPlayer[names.length];
         for (int i = 0; i<names.length; i++) {
-            players[i] = new AncapPlayer(names[i]);
+            players[i] = new AncapStatesPlayer(names[i]);
         }
         return players;
     }
 
-    public AncapPlayer[] getAssistants() {
+    public AncapStatesPlayer[] getAssistants() {
         String[] names = SMassiveAPI.toMassive(statesDB.getString("states.city."+this.id+".assistants"));
-        AncapPlayer[] assistants = new AncapPlayer[names.length];
+        AncapStatesPlayer[] assistants = new AncapStatesPlayer[names.length];
         for (int i = 0; i<names.length; i++) {
-            assistants[i] = new AncapPlayer(names[i]);
+            assistants[i] = new AncapStatesPlayer(names[i]);
         }
         return assistants;
     }
 
-    public void addAssistant(AncapPlayer ancapPlayer) {
-        statesDB.write("states.city."+this.id+".assistants", SMassiveAPI.add(statesDB.getString("states.city."+this.id+".assistants"), ancapPlayer.getID()));
+    public void addAssistant(AncapStatesPlayer ancapStatesPlayer) {
+        statesDB.write("states.city."+this.id+".assistants", SMassiveAPI.add(statesDB.getString("states.city."+this.id+".assistants"), ancapStatesPlayer.getID()));
     }
 
-    public void removeAssistant(AncapPlayer ancapPlayer) {
-        statesDB.write("states.city."+this.id+".assistants", SMassiveAPI.remove(statesDB.getString("states.city."+this.id+".assistants"), ancapPlayer.getID()));
+    public void removeAssistant(AncapStatesPlayer ancapStatesPlayer) {
+        statesDB.write("states.city."+this.id+".assistants", SMassiveAPI.remove(statesDB.getString("states.city."+this.id+".assistants"), ancapStatesPlayer.getID()));
     }
 
-    public AncapPlayer getMayor() {
+    public AncapStatesPlayer getMayor() {
         String name = statesDB.getString("states.city."+this.id+".mayor");
-        AncapPlayer mayor = new AncapPlayer(name);
+        AncapStatesPlayer mayor = new AncapStatesPlayer(name);
         return mayor;
     }
 
-    public void setMayor(AncapPlayer ancapPlayer) {
-        statesDB.write("states.city."+this.id+".mayor", ancapPlayer.getID());
+    public void setMayor(AncapStatesPlayer ancapStatesPlayer) {
+        statesDB.write("states.city."+this.id+".mayor", ancapStatesPlayer.getID());
     }
 
     public Balance getBalance() {
@@ -225,13 +226,13 @@ public class City implements AncapState {
         return statesDB.isSet("states.city."+this.id+".name");
     }
 
-    public void addResident(AncapPlayer player) {
+    public void addResident(AncapStatesPlayer player) {
         player.prepareToJoinInCity();
         statesDB.write("states.city."+this.id+".residents", SMassiveAPI.add(statesDB.getString("states.city."+this.id+".residents"), player.getID()));
         statesDB.write("states.player."+player.getID()+".city", this.id);
     }
 
-    public void removeResident(AncapPlayer player) {
+    public void removeResident(AncapStatesPlayer player) {
         if (this.getResidents().length == 1) {
             Message message = StateMessage.CITY_DESTROYED_BY_CORRUPTION(this.getName());
             AncapStates.sendMessage(message);
@@ -243,17 +244,17 @@ public class City implements AncapState {
         statesDB.write("states.player."+player.getID()+".city", null);
     }
 
-    public void removeResidentNoChecks(AncapPlayer player) {
+    public void removeResidentNoChecks(AncapStatesPlayer player) {
         statesDB.write("states.city."+this.id+".residents", SMassiveAPI.remove(statesDB.getString("states.city."+this.id+".residents"), player.getID()));
         statesDB.write("states.player."+player.getID()+".city", null);
     }
 
-    public void addInviteTo(AncapPlayer player) {
+    public void addInviteTo(AncapStatesPlayer player) {
         statesDB.write("states.city."+this.id+".invitesToPlayers", SMassiveAPI.add(statesDB.getString("states.city."+this.id+".invitesToPlayers"), player.getID()));
         statesDB.write("states.player."+player.getID()+".invitesFromCities", SMassiveAPI.add(statesDB.getString("states.player."+player.getID()+".invitesFromCities"), this.getID()));
     }
 
-    public void removeInviteTo(AncapPlayer player) {
+    public void removeInviteTo(AncapStatesPlayer player) {
         statesDB.write("states.city."+this.id+".invitesToPlayers", SMassiveAPI.remove(statesDB.getString("states.city."+this.id+".invitesToPlayers"), player.getID()));
         statesDB.write("states.player."+player.getID()+".invitesFromCities", SMassiveAPI.remove(statesDB.getString("states.player."+player.getID()+".invitesFromCities"), this.id));
     }
@@ -268,7 +269,7 @@ public class City implements AncapState {
         statesDB.write("states.nation."+nation.getIDString()+".requestsFromCities", SMassiveAPI.remove(statesDB.getString("states.nation."+nation.getIDString()+".requestsFromCities"), this.id));
     }
 
-    public void declineRequestFrom(AncapPlayer player) {
+    public void declineRequestFrom(AncapStatesPlayer player) {
         statesDB.write("states.city."+this.id+".requestsFromPlayers", SMassiveAPI.remove(statesDB.getString("states.city."+this.id+".requestsFromPlayers"), player.getID()));
         statesDB.write("states.player."+player.getID()+".requestsToCities", SMassiveAPI.remove(statesDB.getString("states.player."+player.getID()+".requestsToCities"), this.id));
     }
@@ -311,7 +312,7 @@ public class City implements AncapState {
         return other.toString().equals(this.toString());
     }
 
-    public void setLimit(AncapPlayer limited, int limit) {
+    public void setLimit(AncapStatesPlayer limited, int limit) {
         statesDB.write("states.city."+this.id+".limit.personal."+limited.getID(), String.valueOf(limit));
     }
 
@@ -319,7 +320,7 @@ public class City implements AncapState {
         statesDB.write("states.city."+this.id+".limit."+limitType.toString(), String.valueOf(limit));
     }
 
-    public void addPrivateChunk(AncapPlayer player, AncapChunk ancapChunk) {
+    public void addPrivateChunk(AncapStatesPlayer player, AncapChunk ancapChunk) {
         statesDB.write("states.city."+this.id+".chunks."+ancapChunk.toString(), player.getID());
     }
     public void removePrivateChunk(AncapChunk ancapChunk) {
@@ -381,7 +382,7 @@ public class City implements AncapState {
     }
 
     public Hexagon getHomeHexagon() {
-        return AncapStates.grid.getHexagon(AncapStates.getInstance().getLocation(statesDB.getString("states.city."+this.id+".home")));
+        return AncapStates.grid.getHexagon(new AncapLocation(statesDB.getString("states.city."+this.id+".home")).getLocation());
     }
 
     public void giveHexagonUnclaimingRepayment() {
@@ -394,18 +395,18 @@ public class City implements AncapState {
         statesDB.write("states.hexagons."+hexagon.toString()+".owner", null);
     }
 
-    public AncapPlayer[] getRequestingPlayers() {
+    public AncapStatesPlayer[] getRequestingPlayers() {
         String[] requestingPlayerNames = SMassiveAPI.toMassive(statesDB.getString("states.city."+this.getID()+".requestsFromPlayers"));
-        AncapPlayer[] players = new AncapPlayer[requestingPlayerNames.length];
+        AncapStatesPlayer[] players = new AncapStatesPlayer[requestingPlayerNames.length];
         for (int i = 0; i<requestingPlayerNames.length; i++) {
-            players[i] = new AncapPlayer(requestingPlayerNames[i]);
+            players[i] = new AncapStatesPlayer(requestingPlayerNames[i]);
         }
         return players;
     }
 
-    public int getRemoteness(AncapPlayer player) {
+    public int getRemoteness(AncapStatesPlayer player) {
         City playerCity = player.getCity();
-        AncapPlayer cityLeader = this.getMayor();
+        AncapStatesPlayer cityLeader = this.getMayor();
         if (player.equals(cityLeader)) {
             return 1;
         }
@@ -498,7 +499,7 @@ public class City implements AncapState {
     }
 
     public Location getHome() {
-        return AncapStates.getInstance().getLocation(statesDB.getString("states.city."+this.id+".home"));
+        return new AncapLocation(statesDB.getString("states.city."+this.id+".home")).getLocation();
     }
 
     public PrivateChunk[] getPrivateChunks() {
@@ -510,7 +511,7 @@ public class City implements AncapState {
         return chunks;
     }
 
-    public boolean isInviting(AncapPlayer player) {
+    public boolean isInviting(AncapStatesPlayer player) {
         return player.isInvitedTo(this);
     }
 
@@ -583,9 +584,9 @@ public class City implements AncapState {
     public void collectTaxes() {
         log.info("Collecting "+this.getName()+" taxes");
         Balance tax = this.getTax();
-        AncapPlayer[] residents = this.getResidents();
+        AncapStatesPlayer[] residents = this.getResidents();
         Balance cityBalance = this.getBalance();
-        for (AncapPlayer resident : residents) {
+        for (AncapStatesPlayer resident : residents) {
             Balance balance = resident.getBalance();
             if (balance.have(tax)) {
                 balance.remove(tax);
@@ -653,7 +654,7 @@ public class City implements AncapState {
     }
 
     public void askForResque() {
-        AncapPlayer mayor = this.getMayor();
+        AncapStatesPlayer mayor = this.getMayor();
         mayor.resqueCity();
     }
 
@@ -676,11 +677,11 @@ public class City implements AncapState {
         this.transferMoney(nation, balance);
     }
 
-    public AncapPlayer[] getInvitedPlayers() {
+    public AncapStatesPlayer[] getInvitedPlayers() {
         String[] invitingPlayersNames = SMassiveAPI.toMassive(statesDB.getString("states.city."+this.getID()+".invitesToPlayers"));
-        AncapPlayer[] players = new AncapPlayer[invitingPlayersNames.length];
+        AncapStatesPlayer[] players = new AncapStatesPlayer[invitingPlayersNames.length];
         for (int i = 0; i<invitingPlayersNames.length; i++) {
-            players[i] = new AncapPlayer(invitingPlayersNames[i]);
+            players[i] = new AncapStatesPlayer(invitingPlayersNames[i]);
         }
         return players;
     }

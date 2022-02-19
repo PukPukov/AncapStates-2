@@ -1,9 +1,9 @@
 package states.States.Nation;
 
-import states.States.City.City;
-import states.Economy.Balance;
+import AncapLibrary.Economy.Balance;
+import AncapLibrary.Message.Message;
 import states.Message.InfoMessage;
-import states.Message.Message;
+import states.States.City.City;
 
 public class NationInfo {
 
