@@ -1,8 +1,9 @@
 package states.Chunk;
 
-import states.States.City.City;
-import states.Database.Database;
+import Database.Database;
+import states.Main.AncapStates;
 import states.Player.AncapStatesPlayer;
+import states.States.City.City;
 
 public class PrivateChunk  {
 
@@ -18,7 +19,7 @@ public class PrivateChunk  {
         if (city == null) {
             return null;
         }
-        Database statesBD = Database.STATES_DATABASE;
+        Database statesBD = AncapStates.getMainDatabase();
         String player = statesBD.getString("states.city."+this.city.getID()+".chunks."+this.id);
         if (player == null) {
             return null;

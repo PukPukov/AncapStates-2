@@ -1186,7 +1186,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage(message);
                 return true;
             }
-            if (player.isAssistant() && !player.isMayor()) {
+            if (!player.isMayor()) {
                 Message message = ErrorMessage.NO_PERMS;
                 player.sendMessage(message);
                 return true;

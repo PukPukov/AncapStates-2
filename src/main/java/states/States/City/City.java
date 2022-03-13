@@ -2,9 +2,10 @@ package states.States.City;
 
 import AncapLibrary.API.SMassiveAPI;
 import AncapLibrary.Economy.Balance;
-import AncapLibrary.Library.AncapState;
+import AncapLibrary.Location.AncapLocation;
 import AncapLibrary.Message.Message;
 import AncapLibrary.Timer.Heartbeat.Exceptions.Chunk.AncapChunk;
+import Database.Database;
 import library.Hexagon;
 import library.Point;
 import org.bukkit.Bukkit;
@@ -13,13 +14,13 @@ import org.bukkit.Location;
 import states.Chunk.OutpostChunk;
 import states.Chunk.PrivateChunk;
 import states.Config.Config;
-import states.Database.Database;
 import states.Dynmap.DynmapDescription;
 import states.Dynmap.DynmapDrawer;
-import states.Location.AncapLocation;
 import states.Main.AncapStates;
+import states.Main.AncapStatesDatabaseType;
 import states.Message.StateMessage;
 import states.Player.AncapStatesPlayer;
+import states.States.AncapState;
 import states.States.Nation.Nation;
 
 import java.util.ArrayList;
@@ -32,7 +33,9 @@ public class City implements AncapState {
 
     public static Logger log = Bukkit.getLogger();
 
-    private Database statesDB = Database.STATES_DATABASE;
+    private Database statesDB = AncapStates.getMainDatabase();
+
+    private Database idDB = AncapStates.getAncapStatesDatabase(AncapStatesDatabaseType.IDLINK_DATABASE);
 
     public String getID() {
         return this.id;
@@ -53,7 +56,7 @@ public class City implements AncapState {
         creator.prepareToJoinInCity();
         String mayorName = creator.getID();
         String home = new AncapLocation(creator.getPlayer().getLocation()).toString();
-        statesDB.write("states.player."+creator.getID()+".city", this.id);
+        this.statesDB.write("states.player."+creator.getID()+".city", this.id);
         statesDB.write("states.city."+this.id+".name", name);
         statesDB.write("states.city."+this.id+".mayor", mayorName);
         statesDB.write("states.city."+this.id+".residents", mayorName);
@@ -112,7 +115,6 @@ public class City implements AncapState {
     }
 
     public void setName(String name) {
-        Database idDB = Database.IDLINK_DATABASE;
         String oldName = statesDB.getString("states.city."+this.id+".name");
         statesDB.write("states.city."+this.id+".name", name);
         idDB.write("ids.city_"+oldName, null);
@@ -204,7 +206,7 @@ public class City implements AncapState {
     }
 
     public Hexagon[] getTerritories() {
-        String[] hexagonCodes = statesDB.getStringList("states.hexagons");
+        String[] hexagonCodes = statesDB.getKeys("states.hexagons");
         ArrayList<Hexagon> allHexagons = new ArrayList<>();
         ArrayList<Hexagon> hexagons = new ArrayList<>();
         for (int i = 0; i<hexagonCodes.length; i++) {
@@ -332,7 +334,7 @@ public class City implements AncapState {
     }
 
     public AncapChunk[] getOutpostChunks() {
-        String[] outpostChunks = statesDB.getStringList("states.chunks");
+        String[] outpostChunks = statesDB.getKeys("states.chunks");
         ArrayList<String> list = new ArrayList<>();
         for (String chunk : outpostChunks) {
             if (new OutpostChunk(chunk).getOwner().equals(this)) {
@@ -503,7 +505,7 @@ public class City implements AncapState {
     }
 
     public PrivateChunk[] getPrivateChunks() {
-        String[] ids = statesDB.getStringList("states.city."+this.id+".chunks");
+        String[] ids = statesDB.getKeys("states.city."+this.id+".chunks");
         PrivateChunk[] chunks = new PrivateChunk[ids.length];
         for (int i = 0; i<ids.length; i++) {
             chunks[i] = new PrivateChunk(this, ids[i]);

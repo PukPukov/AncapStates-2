@@ -5,6 +5,7 @@ import AncapLibrary.Economy.Balance;
 import AncapLibrary.Message.Message;
 import AncapLibrary.Player.AncapPlayer;
 import AncapLibrary.Timer.Heartbeat.Exceptions.Chunk.AncapChunk;
+import Database.Database;
 import library.Hexagon;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -13,7 +14,6 @@ import org.bukkit.entity.Player;
 import states.Chunk.OutpostChunk;
 import states.Chunk.PrivateChunk;
 import states.Config.Config;
-import states.Database.Database;
 import states.Main.AncapStates;
 import states.Message.ErrorMessage;
 import states.Message.StateMessage;
@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 
 public class AncapStatesPlayer extends AncapPlayer {
 
-    private Database statesDB = Database.STATES_DATABASE;
+    private Database statesDB = AncapStates.getMainDatabase();
     public static Logger log = Bukkit.getLogger();
 
     public AncapStatesPlayer(Player player) {

@@ -1,10 +1,11 @@
 package states.Chunk;
 
+import Database.Database;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import states.Main.AncapStates;
 import states.States.City.City;
-import states.Database.Database;
 
 public class OutpostChunk {
 
@@ -27,7 +28,7 @@ public class OutpostChunk {
     }
 
     public City getOwner() {
-        Database statesBD = Database.STATES_DATABASE;
+        Database statesBD = AncapStates.getMainDatabase();
         String cityID = statesBD.getString("states.chunks."+this.id);
         if (cityID == null) {
             return null;

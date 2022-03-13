@@ -1,6 +1,9 @@
 package states.Main;
 
+import AncapLibrary.Library.AncapLibrary;
 import AncapLibrary.Message.Message;
+import Database.Database;
+import Database.Databases.BukkitConfigDatabase.BukkitConfigDatabase;
 import library.HexagonalGrid;
 import library.Morton64;
 import library.Orientation;
@@ -12,7 +15,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapAPI;
 import states.Commands.*;
 import states.Config.AncapStatesConfiguration;
-import states.Database.Database;
 import states.Dynmap.DynmapDrawer;
 import states.Hexagons.AncapHexagonalGrid;
 import states.Listeners.AncapStatesEventsListeners.AncapStatesEventsListener;
@@ -23,7 +25,6 @@ import states.States.City.City;
 import states.States.CityMap;
 import states.States.Nation.Nation;
 import states.Top.AncapTop;
-import states.Wars.Listeners.TimerListeners.HeartbeatListener;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -43,6 +44,8 @@ public class AncapStates extends JavaPlugin {
     private static boolean test;
 
     private static Database statesDB;
+
+    private static Database idDB;
 
     private static DynmapDrawer drawer = new DynmapDrawer();
 
@@ -70,6 +73,19 @@ public class AncapStates extends JavaPlugin {
         return AncapStatesStatesPlayerMap.getInstance();
     }
 
+    public static Database getMainDatabase() {
+        return statesDB;
+    }
+
+    public static Database getAncapStatesDatabase(AncapStatesDatabaseType type) {
+        switch (type) {
+            case IDLINK_DATABASE -> {
+                return idDB;
+            }
+        }
+        return null;
+    }
+
     public HexagonalGrid getGrid() {
         return grid;
     }
@@ -87,7 +103,12 @@ public class AncapStates extends JavaPlugin {
         this.registerEventsListeners();
         this.registerMetrics();
         this.registerCityMap();
-        log.info("Done!");
+        this.drawDynMap();
+        this.log.info("Done!");
+    }
+
+    private void drawDynMap() {
+        DynmapDrawer.redrawDynmap();
     }
 
     @Override
@@ -107,9 +128,8 @@ public class AncapStates extends JavaPlugin {
     }
 
     private void setUpDBs() {
-        Database.setUp();
-        statesDB = Database.STATES_DATABASE;
-        saveDefaultConfig();
+        statesDB = AncapLibrary.getConfiguredDatabase();
+        idDB = new BukkitConfigDatabase("IDLinkDatabase.yml");
     }
 
     private void setInstance() {
@@ -117,9 +137,8 @@ public class AncapStates extends JavaPlugin {
     }
 
     private void registerEventsListeners() {
-        getServer().getPluginManager().registerEvents(new AncapStatesEventsListener(), this);
-        getServer().getPluginManager().registerEvents(new HeartbeatListener(), this);
-        getServer().getPluginManager().registerEvents(new TimerListener(), this);
+        this.getServer().getPluginManager().registerEvents(new AncapStatesEventsListener(), this);
+        this.getServer().getPluginManager().registerEvents(new TimerListener(), this);
     }
 
     private void registerCommands() {
@@ -132,10 +151,10 @@ public class AncapStates extends JavaPlugin {
         PluginCommand ancapstates = Bukkit.getServer().getPluginCommand("ancapstates");
         ancapstates.setExecutor(new AncapStatesCommand());
         ancapstates.setTabCompleter(new AncapStatesCommand());
-        getServer().getPluginCommand("test").setExecutor(new TestCommand());
-        getServer().getPluginCommand("player").setExecutor(new PlayerCommand());
-        getServer().getPluginCommand("here").setExecutor(new HereCommand());
-        getServer().getPluginCommand("migration").setExecutor(new MigrationCommand());
+        this.getServer().getPluginCommand("test").setExecutor(new TestCommand());
+        this.getServer().getPluginCommand("player").setExecutor(new PlayerCommand());
+        this.getServer().getPluginCommand("here").setExecutor(new HereCommand());
+        this.getServer().getPluginCommand("migration").setExecutor(new MigrationCommand());
     }
 
     public boolean isTest() {

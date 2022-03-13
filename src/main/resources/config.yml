@@ -2,7 +2,7 @@ safeTimers:
   taxesEnabled: false
 fastTimers:
   secondTimer:
-    cityMoveTimerEnabled: false
+    cityMoveTimerEnabled: true
   tenMinutesTimer:
-    dynmapRedrawingTimerEnabled: false
+    dynmapRedrawingTimerEnabled: true
     safeCityTimerCheckEnabled: true

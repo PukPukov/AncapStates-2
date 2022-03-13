@@ -1,11 +1,11 @@
 package states.Migration;
 
 import AncapLibrary.API.SMassiveAPI;
+import AncapLibrary.Location.LegacyLocation;
+import Database.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import states.Database.Database;
-import states.Location.LegacyLocation;
 import states.Main.AncapStates;
 import states.Player.AncapStatesPlayer;
 import states.States.City.City;
@@ -21,10 +21,10 @@ public class Migrator {
 
     private static FileConfiguration oldDB = AncapStates.getInstance().getConfig();
 
-    private Database statesDB = Database.STATES_DATABASE;
+    private Database statesDB = AncapStates.getMainDatabase();;
 
     public void startMigration() {
-        LegacyPlayer[] legacyPlayers = getLegacyPlayers();
+        LegacyPlayer[] legacyPlayers = this.getLegacyPlayers();
         logger.info("[MIGRATING TOOL] PlayerMigratingTask started");
         for (int i = 0; i<legacyPlayers.length; i++) {
             try {
@@ -35,7 +35,7 @@ public class Migrator {
             }
         }
         logger.info("[MIGRATING TOOL] PlayerMigratingTask done");
-        LegacyCity[] legacyCities = getLegacyCities();
+        LegacyCity[] legacyCities = this.getLegacyCities();
         logger.info("[MIGRATING TOOL] CityMigratingTask started");
         for (int i = 0; i<legacyCities.length; i++) {
             try {
@@ -46,7 +46,7 @@ public class Migrator {
             }
         }
         logger.info("[MIGRATING TOOL] CityMigratingTask done");
-        LegacyNation[] legacyNations = getLegacyNations();
+        LegacyNation[] legacyNations = this.getLegacyNations();
         logger.info("[MIGRATING TOOL] NationMigratingTask started");
         for (int i = 0; i<legacyNations.length; i++) {
             try {
@@ -56,7 +56,7 @@ public class Migrator {
                 e.printStackTrace();
             }
         }
-        statesDB.save();
+        this.statesDB.save();
         logger.info("[MIGRATING TOOL] NationMigratingTask done");
     }
 
@@ -90,22 +90,22 @@ public class Migrator {
 
     private void migratePlayer(LegacyPlayer legacyPlayer) {
         AncapStatesPlayer player = legacyPlayer.getMigratedPlayer();
-        statesDB.writeNoSave("states.player."+player.getID()+".name", legacyPlayer.getName());
+        statesDB.write("states.player."+player.getID()+".name", legacyPlayer.getName());
         String cityID = null;
         LegacyCity legacyCity = legacyPlayer.getCity();
         if (legacyCity != null) {
             cityID = legacyCity.getMigratedCity().getID();
         }
-        statesDB.writeNoSave("states.player."+player.getID()+".city", cityID);
+        statesDB.write("states.player."+player.getID()+".city", cityID);
         logger.info("[MIGRATING TOOL] Player "+player.getName()+" was migrated");
     }
 
     private void migrateCity(LegacyCity legacyCity) {
         City city = legacyCity.getMigratedCity();
-        statesDB.writeNoSave("states.city."+city.getID()+".name", legacyCity.getName());
-        statesDB.writeNoSave("states.city."+city.getID()+".board", legacyCity.getBoard());
-        statesDB.writeNoSave("states.city."+city.getID()+".mayor", legacyCity.getLeader().getMigratedPlayer().getName());
-        statesDB.writeNoSave("states.city."+city.getID()+".home", new LegacyLocation(legacyCity.getHome()).getLocation().toString());
+        statesDB.write("states.city."+city.getID()+".name", legacyCity.getName());
+        statesDB.write("states.city."+city.getID()+".board", legacyCity.getBoard());
+        statesDB.write("states.city."+city.getID()+".mayor", legacyCity.getLeader().getMigratedPlayer().getName());
+        statesDB.write("states.city."+city.getID()+".home", new LegacyLocation(legacyCity.getHome()).getLocation().toString());
         String residentsString = "";
         LegacyPlayer[] legacyResidents = legacyCity.getResidents();
         for (int i = 0; i<legacyResidents.length; i++) {
@@ -115,7 +115,7 @@ public class Migrator {
         if (residentsString.equals("")) {
             residentsString = null;
         }
-        statesDB.writeNoSave("states.city."+city.getID()+".residents", residentsString);
+        statesDB.write("states.city."+city.getID()+".residents", residentsString);
         String assistantsString = "";
         LegacyPlayer[] legacyAssistants = legacyCity.getAssistants();
         for (int i = 0; i<legacyAssistants.length; i++) {
@@ -125,24 +125,24 @@ public class Migrator {
         if (assistantsString.equals("")) {
             assistantsString = null;
         }
-        statesDB.writeNoSave("states.city."+city.getID()+".assistants", assistantsString);
+        statesDB.write("states.city."+city.getID()+".assistants", assistantsString);
         LegacyNation legacyNation = legacyCity.getNation();
         String nationID = null;
         if (legacyNation != null) {
             nationID = legacyNation.getMigratedNation().getID();
         }
-        statesDB.writeNoSave("states.city."+city.getID()+".nation", nationID);
-        statesDB.writeNoSave("states.city."+city.getID()+".allowlevel", String.valueOf(legacyCity.getAllowLevel()));
+        statesDB.write("states.city."+city.getID()+".nation", nationID);
+        statesDB.write("states.city."+city.getID()+".allowlevel", String.valueOf(legacyCity.getAllowLevel()));
         city.reclaimHomeHexagon();
         logger.info("[MIGRATING TOOL] City "+city.getName()+" was migrated");
     }
 
     private void migrateNation(LegacyNation legacyNation) {
         Nation nation = legacyNation.getMigratedNation();
-        statesDB.writeNoSave("states.nation."+nation.getID()+".name", legacyNation.getName());
-        statesDB.writeNoSave("states.nation."+nation.getID()+".capital", legacyNation.getCapital().getMigratedCity().getID());
-        statesDB.writeNoSave("states.nation."+nation.getID()+".board", legacyNation.getBoard());
-        statesDB.writeNoSave("states.nation."+nation.getID()+".color", "#"+legacyNation.getColor());
+        statesDB.write("states.nation."+nation.getID()+".name", legacyNation.getName());
+        statesDB.write("states.nation."+nation.getID()+".capital", legacyNation.getCapital().getMigratedCity().getID());
+        statesDB.write("states.nation."+nation.getID()+".board", legacyNation.getBoard());
+        statesDB.write("states.nation."+nation.getID()+".color", "#"+legacyNation.getColor());
         String citiesString = "";
         LegacyCity[] legacyCities = legacyNation.getCities();
         for (int i = 0; i<legacyCities.length; i++) {
@@ -152,7 +152,7 @@ public class Migrator {
         if (citiesString.equals("")) {
             citiesString = null;
         }
-        statesDB.writeNoSave("states.nation."+nation.getID()+".cities", citiesString);
+        statesDB.write("states.nation."+nation.getID()+".cities", citiesString);
         String ministersString = "";
         LegacyPlayer[] legacyMinisters = legacyNation.getMinisters();
         for (int i = 0; i<legacyMinisters.length; i++) {
@@ -162,7 +162,7 @@ public class Migrator {
         if (ministersString.equals("")) {
             ministersString = null;
         }
-        statesDB.writeNoSave("states.nation."+nation.getID()+".ministers", ministersString);
+        statesDB.write("states.nation."+nation.getID()+".ministers", ministersString);
         logger.info("[MIGRATING TOOL] Nation "+nation.getName()+" was migrated");
     }
 

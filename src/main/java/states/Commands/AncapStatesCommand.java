@@ -2,6 +2,7 @@ package states.Commands;
 
 import AncapLibrary.Economy.Balance;
 import AncapLibrary.Message.Message;
+import Database.Database;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -12,7 +13,6 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import states.Database.Database;
 import states.Dynmap.DynmapDrawer;
 import states.Main.AncapStates;
 import states.Message.ErrorMessage;
@@ -27,7 +27,7 @@ import java.util.List;
 
 public class AncapStatesCommand implements CommandExecutor, TabCompleter {
 
-    private Database statesDB = Database.STATES_DATABASE;
+    private Database statesDB = AncapStates.getMainDatabase();;
 
     @Nullable
     @Override
@@ -119,7 +119,6 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             if (args[0].equals("savedb")) {
-                statesDB.save();
             }
         }
         if (args[0].equals("info")) {

@@ -1,12 +1,12 @@
 package states.States;
 
+import Database.Database;
 import library.Hexagon;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import states.Main.AncapStates;
 import states.Chunk.OutpostChunk;
 import states.Chunk.PrivateChunk;
-import states.Database.Database;
+import states.Main.AncapStates;
 import states.Player.AncapStatesPlayer;
 import states.States.City.City;
 import states.States.Nation.Nation;
@@ -23,7 +23,7 @@ public class CityMap {
     private HashMap<String, City> positionsMap = new HashMap<>();
 
     public CityMap() {
-        statesDB = Database.STATES_DATABASE;
+        statesDB = AncapStates.getMainDatabase();
     }
 
     public City getCity(Location loc) {
@@ -57,7 +57,7 @@ public class CityMap {
     }
 
     public City[] getCities() {
-        String[] ids = statesDB.getStringList("states.city");
+        String[] ids = statesDB.getKeys("states.city");
         ArrayList<City> cities = new ArrayList<>();
         for (int i = 0; i<ids.length; i++) {
             if (!statesDB.isSet("states.city."+ids[i]+".name")) {
@@ -80,7 +80,7 @@ public class CityMap {
     }
 
     public Nation[] getNations() {
-        String[] ids = statesDB.getStringList("states.nation");
+        String[] ids = statesDB.getKeys("states.nation");
         Nation[] nations = new Nation[ids.length];
         for (int i = 0; i<ids.length; i++) {
             nations[i] = new Nation(ids[i]);

@@ -2,15 +2,16 @@ package states.States.Nation;
 
 import AncapLibrary.API.SMassiveAPI;
 import AncapLibrary.Economy.Balance;
-import AncapLibrary.Library.AncapState;
 import AncapLibrary.Message.Message;
+import Database.Database;
 import library.Hexagon;
 import org.bukkit.Bukkit;
-import states.Database.Database;
 import states.Dynmap.DynmapDrawer;
 import states.Main.AncapStates;
+import states.Main.AncapStatesDatabaseType;
 import states.Message.StateMessage;
 import states.Player.AncapStatesPlayer;
+import states.States.AncapState;
 import states.States.City.City;
 
 import java.awt.*;
@@ -29,9 +30,9 @@ public class Nation implements AncapState {
         return this.id;
     }
 
-    private Database statesDB = Database.STATES_DATABASE;
+    private Database statesDB = AncapStates.getMainDatabase();
 
-    private Database idDB = Database.IDLINK_DATABASE;
+    private Database idDB = AncapStates.getAncapStatesDatabase(AncapStatesDatabaseType.IDLINK_DATABASE);
 
     public Nation(String id) {
         this.id = id;

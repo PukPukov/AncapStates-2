@@ -1,6 +1,6 @@
 name: AncapStates
 main: states.Main.AncapStates
-version: beta-2.3-SNAPSHOT.1
+version: beta.2.3-SNAPSHOT.2-alpha.1.2
 api-version: 1.16
 
 depend:
@@ -20,19 +20,11 @@ commands:
     permission:
     usage: "Usage: /<command>"
     aliases: [n]
-  war:
-    description:
-    permission:
-    usage: "Usage: /<command>"
   ancapstates:
     description:
     permission:
     usage: "Usage: /<command>"
     aliases: [as]
-  castle:
-    description:
-    permission:
-    usage: "Usage: /<command>"
   test:
     description:
     permission:
