@@ -22,8 +22,16 @@ public class AncapStatesEventsListener implements Listener {
         AncapStatesPlayer player = new AncapStatesPlayer(e.getPlayer().getName());
         Location loc = e.getLocation();
         if (!player.canInteract(loc)) {
-            e.setCancelled(true);
+            this.cancelInteract(e);
         }
+    }
+
+    private void cancelInteract(AncapWorldInteractEvent e) {
+        e.setCancelled(true);
+        this.removeProjectile(e);
+    }
+
+    private void removeProjectile(AncapWorldInteractEvent e) {
         Cancellable bukkitEvent = e.getBukkitEvent();
         if (bukkitEvent instanceof ProjectileHitEvent) {
             ((ProjectileHitEvent) bukkitEvent).getEntity().remove();

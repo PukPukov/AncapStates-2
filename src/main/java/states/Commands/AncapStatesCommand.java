@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import states.Dynmap.DynmapDrawer;
+import states.ID.ID;
 import states.Main.AncapStates;
 import states.Message.ErrorMessage;
 import states.Message.StateMessage;
@@ -119,6 +120,40 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             if (args[0].equals("savedb")) {
+                AncapStates.getMainDatabase().save();
+            }
+            if (args[0].equals("admin")) {
+                if (args.length == 1) {
+                    return true;
+                }
+                if (args[1].equals("city")) {
+                    City city = new City(ID.getCityID(args[2]));
+                    if (args[3].equals("addresident")) {
+                        AncapStatesPlayer ancapStatesPlayer = new AncapStatesPlayer(args[4]);
+                        city.addResident(ancapStatesPlayer);
+                    }
+                    if (args[3].equals("mayor")) {
+                        AncapStatesPlayer ancapStatesPlayer = new AncapStatesPlayer(args[4]);
+                        city.setMayor(ancapStatesPlayer);
+                    }
+                    if (args[3].equals("delete")) {
+                        city.remove();
+                    }
+                }
+                if (args[1].equals("city")) {
+                    Nation nation = new Nation(ID.getNationID(args[2]));
+                    if (args[3].equals("addcity")) {
+                        City city = new City(ID.getCityID(args[4]));
+                        nation.addCity(city);
+                    }
+                    if (args[3].equals("capital")) {
+                        City city = new City(ID.getCityID(args[4]));
+                        nation.setCapital(city);
+                    }
+                    if (args[3].equals("delete")) {
+                        nation.remove();
+                    }
+                }
             }
         }
         if (args[0].equals("info")) {

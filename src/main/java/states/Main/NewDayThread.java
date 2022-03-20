@@ -18,6 +18,7 @@ public class NewDayThread extends Thread {
         AncapStates.collectTaxes();
         log.info("Grabbing taxes...");
         AncapStates.grabTaxes();
+        AncapStates.getMainDatabase().save();
         long time1 = System.currentTimeMillis();
         long estimatedTime = time1-time0;
         log.info("New day started. Estimated time: "+estimatedTime);
