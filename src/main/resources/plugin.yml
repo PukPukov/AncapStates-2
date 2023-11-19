@@ -1,0 +1,40 @@
+name: AncapStates
+main: ru.ancap.states.AncapStates
+version: '${project.version}'
+api-version: 1.16
+
+softdepend:
+  - dynmap
+
+commands:
+  city:
+    description:
+    permission:
+    usage: "Usage: /<command>"
+    aliases: [c]
+  nation:
+    description:
+    permission:
+    usage: "Usage: /<command>"
+    aliases: [n]
+  ancapstates:
+    description:
+    permission:
+    usage: "Usage: /<command>"
+    aliases: [as]
+  test:
+    description:
+    permission:
+    usage: "Usage: /<command>"
+  player:
+    description:
+    permission:
+    usage: "Usage: /<command>"
+  here:
+    description:
+    permission:
+    usage: "Usage: /<command>"
+  migration:
+    description:
+    permission:
+    usage: "Usage: /<command>"
