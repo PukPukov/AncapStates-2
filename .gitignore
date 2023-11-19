@@ -1,0 +1,12 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+/target/
+/.idea/
+/AncapStates.iml
+/**.yml
+**/*.iml
+**/.idea
+**/.idea/
+**/target/
+**/dependency-reduced-pom.xml
