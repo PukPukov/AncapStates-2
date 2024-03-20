@@ -1,6 +1,6 @@
 package ru.ancap.library;
 
-import ru.ancap.framework.communicate.message.ChatBook;
+import ru.ancap.framework.command.api.commands.operator.communicate.ChatBook;
 import ru.ancap.framework.communicate.message.ColoredMessage;
 import ru.ancap.framework.communicate.message.Message;
 import ru.ancap.framework.communicate.message.WrapperMessage;
