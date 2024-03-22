@@ -246,7 +246,7 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             caller.setBalance(balance);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:clear "+caller.getName()+" "+type+" "+count);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "essentials:clean "+caller.getName()+" "+type+" "+count);
             CallableMessage message = LStateMessage.DEPOSITED(String.valueOf(count), type);
             caller.sendMessage(message);
             return true;
@@ -328,7 +328,7 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
                 balance.remove(Balance.DIAMOND, amount);
             }
             caller.setBalance(balance);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "give "+caller.getName()+" "+type+" "+amount);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "essentials:give "+caller.getName()+" "+type+" "+amount);
             CallableMessage message = LStateMessage.WITHDRAWED(String.valueOf(amount), type);
             caller.sendMessage(message);
             return true;
