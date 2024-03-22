@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.ancap</groupId>
     <artifactId>AncapStates-2</artifactId>
-    <version>1.4.2</version>
+    <version>1.4.3</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -205,9 +205,9 @@
         
         <!-- COMMONS -->
         <dependency>
-            <groupId>com.github.ancap-kun</groupId>
+            <groupId>com.github.pukpukov</groupId>
             <artifactId>AncapCommons</artifactId>
-            <version>1.8.15</version>
+            <version>1.8.25</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
