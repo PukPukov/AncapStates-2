@@ -5,8 +5,8 @@ import java.util.Collections;
 
 public class Name {
 
-    public static boolean canBeDefinedWith(String str) {
-        return str.length() >= 1 && str.matches("[a-zA-Z0-9а-яА-Я-_]+") && (!str.startsWith("nation_") || !str.startsWith("city_"));
+    public static boolean canBeDefinedWith(String string) {
+        return !string.isEmpty() && string.matches("[a-zA-Z0-9а-яА-Я-_]+") && (!string.startsWith("nation_") || !string.startsWith("city_"));
     }
 
     public static String getName(String[] args) {
