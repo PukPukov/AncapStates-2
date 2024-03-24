@@ -463,6 +463,11 @@ public class AncapStatesPlayer extends AncapPlayer {
     }
 
     public boolean canInteract(Location loc) {
+        var online = this.online();
+        if (online != null && online.isOp()) {
+            online.sendMessage("Взаимодействие с защищённым блоком разрешено правами оператора");
+            return true;
+        }
         try {
             if (loc.getWorld().getName().equals("world_the_end") || 
                 loc.getWorld().getName().equals("world_nether")) return true;
