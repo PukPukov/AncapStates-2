@@ -462,12 +462,20 @@ public class AncapStatesPlayer extends AncapPlayer {
         return AncapStates.grid.hexagon(this);
     }
 
-    public boolean canInteract(Location loc) {
-        var online = this.online();
-        if (online != null && online.isOp()) {
-            online.sendMessage("Взаимодействие с защищённым блоком разрешено правами оператора");
-            return true;
-        }
+    public boolean canInteract(Location location) {
+        boolean canBasically = this.canInteract0(location);
+        if (!canBasically) {
+            var online = this.online();
+            if (online != null && online.isOp()) {
+                online.sendMessage("Взаимодействие с защищённым блоком разрешено правами оператора");
+                return true;
+            } else {
+                return false;
+            }
+        } else return true;
+    }
+    
+    public boolean canInteract0(Location loc) {
         try {
             if (loc.getWorld().getName().equals("world_the_end") || 
                 loc.getWorld().getName().equals("world_nether")) return true;
