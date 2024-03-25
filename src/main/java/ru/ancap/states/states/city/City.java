@@ -66,7 +66,10 @@ public class City implements State {
 
     @Override
     public void affiliate(@Nullable Subject affiliate) {
-        if (affiliate == null) this.leaveNation();
+        if (affiliate == null) {
+            this.leaveNation();
+            return;
+        }
         if (!(affiliate instanceof Nation nation)) throw new IllegalStateException();
         else nation.addCity(this);
     }
