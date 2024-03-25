@@ -479,6 +479,11 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             City city = caller.getCity();
+            if (!city.isFree()) {
+                CallableMessage message = ErrorMessage.CITY_IS_NOT_FREE;
+                caller.sendMessage(message);
+                return true;
+            }
             if (!caller.isMayor()) {
                 CallableMessage message = ErrorMessage.NO_PERMS;
                 caller.sendMessage(message);
