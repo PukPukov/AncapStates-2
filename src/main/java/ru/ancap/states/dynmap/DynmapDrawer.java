@@ -152,7 +152,7 @@ public class DynmapDrawer {
     }
 
     public static void redrawDynmap() {
-        new DynmapRedrawEvent().callEvent();
+//        new DynmapRedrawEvent().callEvent();
     }
 
 }
