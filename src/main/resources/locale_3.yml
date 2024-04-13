@@ -30,69 +30,69 @@ ru:
                 percent-from-land: "% от суши"
                 people: " чел."
                 percent-from-total-population: "% от общего числа населения"
-      city:
-        form:
-          - "<gold>Сведения о городе <u>%NAME%</u></gold>"
-          - ""
-          - "  <u>%BOARD%</u>"
-          - ""
-          - "%VALUES%"
-        values:
-          treasury: "Госказна"
-          taxes: "Налоговые сборы"
-          territory: "Занимаемая площадь"
-          nation: "Нация"
-          mayor: "Глава города"
-          residents: "Жители"
-          assistants: "Помощники"
-          allow-level: "Уровень разрешений"
+        city:
+          form:
+            - "<gold>Сведения о городе <u>%NAME%</u></gold>"
+            - ""
+            - "  <u>%BOARD%</u>"
+            - ""
+            - "%VALUES%"
+          values:
+            treasury: "Госказна"
+            taxes: "Налоговые сборы"
+            territory: "Занимаемая площадь"
+            nation: "Нация"
+            mayor: "Глава города"
+            residents: "Жители"
+            assistants: "Помощники"
+            allow-level: "Уровень разрешений"
 
-      nation:
-        form:
-          - "<gold>Сведения о нации <u>%NAME%</u></gold>"
-          - ""
-          - "  <u>%BOARD%</u>"
-          - ""
-          - "%VALUES%"
-        values:
-          treasury: "Госказна"
-          taxes: "Налоговые сборы"
-          territory: "Занимаемая площадь"
-          cities: "Города"
-          leader: "Предводитель"
-          capital: "Столица"
-          population: "Население"
-          ministers: "Министры"
+        nation:
+          form:
+            - "<gold>Сведения о нации <u>%NAME%</u></gold>"
+            - ""
+            - "  <u>%BOARD%</u>"
+            - ""
+            - "%VALUES%"
+          values:
+            treasury: "Госказна"
+            taxes: "Налоговые сборы"
+            territory: "Занимаемая площадь"
+            cities: "Города"
+            leader: "Предводитель"
+            capital: "Столица"
+            population: "Население"
+            ministers: "Министры"
 
-      player:
-        form:
-          - "<gold>Сведения об игроке <u>%NAME%</u></gold>"
-          - ""
-          - "%VALUES%"
-        values:
-          balance: "Состояние счета"
-          city: "Город"
-          nation: "Нация"
-          friends: "Друзья"
-          invites-to-cities: "Приглашения в города"
-          requests-to-cities: "Заявки в города"
+        player:
+          form:
+            - "<gold>Сведения об игроке <u>%NAME%</u></gold>"
+            - ""
+            - "%VALUES%"
+          values:
+            balance: "Состояние счета"
+            city: "Город"
+            nation: "Нация"
+            friends: "Друзья"
+            invites-to-cities: "Приглашения в города"
+            requests-to-cities: "Заявки в города"
 
-      here:
-        form:
-          - "<gold>Сведения о текущем местоположении</gold>"
-          - ""
-          - "%VALUES%"
-        values:
-          city: "Город"
-          private-chunk-status: "Статус частного участка"
-          outpost: "Статус внешнего участка"
+        here:
+          form:
+            - "<gold>Сведения о текущем местоположении</gold>"
+            - ""
+            - "%VALUES%"
+          values:
+            city: "Город"
+            private-chunk-status: "Статус частного участка"
+            outpost: "Статус внешнего участка"
 
-      ancap-states:
-        form:
-          - "%VALUES%"
-        values:
-          developer: "Разработчик"
-          version: "Версия"
+        ancap-states:
+          form:
+            - "%VALUES%"
+          values:
+            developer: "Разработчик"
+            version: "Версия"
 
       balance:
         empty: "<white>пусто</white>"
