@@ -1,0 +1,291 @@
+language: en
+version: 3
+
+ru:
+  ancap:
+    states:
+      fees:
+        city-creation: "City creation: %FEE%"
+        nation-creation: "Nation creation: %FEE%"
+        hexagon-claim: "Claiming a no-man's hexagon: %FEE%"
+        city-teleport: "Teleport to the city center: %FEE%"
+      
+      info:
+        main:
+          form:
+            - "<gray>--------------------------------------</gray>"
+            - "%DATA%"
+            - "<gray>--------------------------------------</gray>"
+          value-forms:
+            simple: "<gold>%VALUE_NAME%</gold><dark_gray>:</dark_gray> %VALUE%"
+            many: "<gold>%VALUE_NAME% (<white>%COUNT%</white>)</gold><dark_gray>:</dark_gray> %VALUES%"
+            unit:
+              simple: "<gold>%VALUE_NAME%</gold><dark_gray>:</dark_gray> %AMOUNT%<gray>%UNIT%</gray>"
+              many:
+                - "<gold>%VALUE_NAME%</gold><dark_gray>:</dark_gray>"
+                - "{VALUES:    %AMOUNT%<gray>%UNIT%</gray>}"
+              names:
+                hexagons: " hexagons"
+                kilometers-fact: " km² (actual)"
+                kilometers-territorial: " km² (territorial)"
+                percent-from-land: "% of the land"
+                people: " people"
+                percent-from-total-population: "% of the world's population"
+
+        city:
+          form:
+            - "<gold>City information <u>%NAME%</u></gold>"
+            - ""
+            - "  <u>%BOARD%</u>"
+            - ""
+            - "%VALUES%"
+          values:
+            treasury: "Treasury"
+            taxes: "Taxes"
+            territory: "Occupied territory"
+            nation: "Nation"
+            mayor: "Mayor"
+            residents: "Residents"
+            assistants: "Assistants"
+            allow-level: "Access level"
+
+        nation:
+          form:
+            - "<gold>Nation information <u>%NAME%</u></gold>"
+            - ""
+            - "  <u>%BOARD%</u>"
+            - ""
+            - "%VALUES%"
+          values:
+            treasury: "Treasury"
+            taxes: "Taxes"
+            territory: "Occupied territory"
+            cities: "Cities"
+            leader: "Leader"
+            capital: "Capital"
+            population: "Population"
+            ministers: "Ministers"
+
+        player:
+          form:
+            - "<gold>Player information <u>%NAME%</u></gold>"
+            - ""
+            - "%VALUES%"
+          values:
+            balance: "Balance"
+            city: "City"
+            nation: "Nation"
+            friends: "Friends"
+            invites-to-cities: "City invites"
+            requests-to-cities: "City requests"
+
+        here:
+          form:
+            - "<gold>Current location information</gold>"
+            - ""
+            - "%VALUES%"
+          values:
+            city: "City"
+            private-chunk-status: "Private chunk status"
+            outpost: "Outpost chunk status"
+
+        ancap-states:
+          form:
+            - "%VALUES%"
+          values:
+            developer: "Developer"
+            version: "Version"
+
+      balance:
+        empty: "<white>empty</white>"
+        form-entry: "    %NAME%<dark_gray>:</dark_gray> <white>%AMOUNT%</white>"
+        currencies:
+          netherite:
+            name: "Netherite"
+            color: "dark_gray"
+          diamond:
+            name: "Diamonds"
+            color: "aqua"
+          iron:
+            name: "Iron"
+            color: "gray"
+          copper:
+            name: "Copper"
+            color: "color:#b87333"
+
+      empty-many: "none"
+      empty-one: "none"
+
+      board:
+        not-setted: "Message not set"
+      
+      teleported-to-city-spawn:
+        by-first-free: "<#247de3>You have been teleported to the city spawn for free, using the option to teleport once for free."
+        for-free-by-permission: "<green>You have been teleported to the city spawn for free."
+        for-paid: "<#247de3>You have been teleported to the city spawn and paid half a diamond for it."
+
+      error:
+        form: "<red>%MESSAGE%</red>"
+        no-such-player: "<red>There is no player with the nickname %NICK%.</red>"
+        no_perms: "You do not have permission to do that."
+        not_free: "You are already in a city!"
+        free: "You are not in any city!"
+        city_doesnt_exist: "Such city does not exist"
+        no_city_creation_fee: "You do not have enough money to create a city"
+        capital_cant_be_deleted: "The nation's capital cannot be deleted! Transfer the management of the state to another city or disband the nation"
+        please_confirm: "Confirm that you want to do this. Type this command again, adding confirm at the end"
+        no_such_city: "Such city does not exist"
+        city_isnt_free_to_join: "This city is not free to join, and you are not invited to it."
+        mayor_cant_leave: "The mayor cannot leave the city. Delete the city or transfer the mayoralty to someone else"
+        city_is_free_to_join: "You do not need to apply to join this city, it is open for entry!"
+        you_not_asking_to_join_in_city: "You did not apply to join this city"
+        not_asking_to_join_in_city: "This player did not apply to join your city"
+        not_resident: "He is not a resident of this city"
+        cant_teleport_to_city_spawn: "You cannot teleport to the city spawn because you do not have the option to teleport for free, you have used your first free teleport, and you do not have enough money to pay for the paid teleport."
+        no_such_allow_level: "Such access level does not exist!"
+        illegal_args: "Invalid arguments. Check the guide on how to use this command"
+        illegal_args_number: "Wrong number of arguments. Check the guide on how to use this command"
+        private_chunk_is_already_claimed: "This private chunk is already claimed"
+        its_not_your_city: "You are not in your city lol"
+        cant_claim_new_private_chunk: "You cannot claim another private chunk. Apparently, all limits are exhausted."
+        private_chunk_isnt_claimed: "This private chunk is not claimed anyway"
+        its_not_your_chunk: "This is not your chunk"
+        outpost_chunk_is_already_claimed: "This chunk is already claimed"
+        cant_claim_new_outpost_chunk: "Your city can no longer privatize outposts. Apparently, there is not enough money or the limits are exhausted"
+        outpost_chunk_isnt_claimed: "This chunk is not privatized anyway"
+        not_enough_money: "Not enough money"
+        hexagon_is_already_claimed: "This hexagon is already privatized"
+        hexagon_isnt_connecting_to_city: "This hexagon is not connected to your city"
+        home_hexagon_cant_be_unclaimed: "Home hexagon cannot be unclaimed!"
+        not_inviting_in_nation: "Not invited to the nation"
+        city_is_free: "This city is not part of any nation"
+        city_is_not_free: "This city is already part of a nation"
+        no_nation_creation_fee: "You do not have enough money to create a nation."
+        illegal_name: "Invalid name. Use only normal characters, without any funny business with commas and Arabic hieroglyphs"
+        city_exists: "Such city already exists"
+        nation_exists: "Such nation already exists"
+        nation_doesnt_exists: "Such nation does not exist"
+        no_such_nation: "No such nation"
+        he_isnt_free: "He is already in a city"
+        he_isnt_invited: "He was not invited anywhere"
+        city_doesnt_invited: "This city was not invited anywhere"
+        city_doesnt_requesting: "This city is not requesting anywhere"
+        he_isnt_citizen_of_your_nation: "He is not a citizen of your nation"
+        he_is_already_minister: "He is already a minister"
+        he_isnt_resident_of_your_city: "He is not a resident of your city"
+        he_is_already_assistant: "He is already an assistant"
+        he_isnt_assistant: "He is not an assistant anyway"
+        he_isnt_minister: "He is not a minister anyway"
+        you_not_requesting_to_integrate_in_this_nation: "Your city did not offer integration to this nation."
+        its_not_your_city_chunk: "This chunk does not belong to your city"
+        its_not_your_city_hexagon: "This hexagon does not belong to your city"
+        nation_isnt_free_to_join: "The nation is not open for integration and your city was not sent any invitations"
+        cant_interact_this_block: "You cannot interact with this block"
+        here_is_other_city: "You are on the territory of some city."
+        you_are_already_requesting_to_that_city: "You have already requested to join this city."
+        he_is_already_invited_to_your_city: "This player is already invited to your city."
+        your_city_is_already_requesting_to_that_nation: "Your city has already requested integration into this nation."
+        that_city_is_already_invited_to_your_nation: "This city is already invited to your nation."
+        not_inviting_in_city: "This city did not send you any invitations"
+        cant_send_to_offline_player: "You cannot make bank transfers to offline players"
+        cant_send_so_far: "The maximum distance for a bank transfer is 10 blocks"
+      state:
+        # modern
+        form: "<gold><bold>States >></bold></gold> %MESSAGE%"
+        affiliation:
+          PLAYER-CITY:
+            join:
+              subject: "You joined the city %AFFILIATE%."
+              affiliate: "%SUBJECT% joined your city."
+            leave:
+              subject: "You left the city %AFFILIATE%."
+              affiliate: "%SUBJECT% left your city."
+          CITY-NATION:
+            JOIN:
+              subject: "Your city was integrated into the nation %AFFILIATE%."
+              affiliate: "The city %SUBJECT% was integrated into your nation."
+            LEAVE:
+              subject: "Your city left the nation %AFFILIATE%."
+              affiliate: "The city %SUBJECT% left your nation."
+        
+        # legacy
+        messages:
+          new_day: "A new day dawns..."
+          city_create: "%s has established the city %s."
+          city_remove: "The city %s was destroyed."
+          city_new_name: "Your city has been renamed! Now you live in %s."
+          city_new_assistant: "Player %s became an assistant in your city."
+          city_removed_assistant: "Player %s is no longer an assistant in your city."
+          city_new_mayor: "Your city has a new mayor. The new mayor is %s"
+          allow_level_changed: "The access level of your city has changed to %s."
+          city_joined_nation: "Your city was integrated into the nation %s."
+          city_new_board: "Your city has set a new announcement - %s."
+          city_player_joined: "%s joined your city."
+          city_player_leaved: "%s left your city."
+          player_invited_to_city: "The city %s sent you an invitation to join."
+          city_invited_player: "%s was invited to your city."
+          player_removed_invite_to_city: "The city %s revoked its invitation to you."
+          city_removed_invite_to_player: "Your city revoked the invitation to player %s."
+          city_requested_to_nation: "Your city proposed to the nation %s to integrate into its fold."
+          nation_recieved_request: "The city %s proposed integration to your nation."
+          city_removed_request_to_nation: "Your city revoked its proposal to the nation %s for integration."
+          nation_city_removed_request: "The city %s revoked its proposal for integration to your nation."
+          player_city_declined_request: "The city %s declined your join request."
+          city_declined_request: "Your city declined the join request of player %s."
+          city_declined_nation_invite: "Your city declined the invitation from nation %s."
+          nation_city_declined_invite: "The city %s declined the invitation from your nation."
+          city_new_personal_limit: "Your city set a new personal chunk limit for player %s to %s."
+          city_new_limit: "Your city set a new personal chunk limit for the group %s to %s."
+          city_private_chunk_claimed: "%s made the chunk %s private."
+          city_private_chunk_unclaimed: "%s relinquished rights to the chunk %s."
+          city_claimed_new_outpost_chunk: "Your city privatized the chunk %s."
+          city_claimed_new_hexagon: "Your city captured the hexagon %s."
+          city_unclaimed_hexagon: "Your city abandoned the hexagon %s."
+          city_leaved_nation: "Your city de-integrated from the nation %s."
+          nation_city_leaved: "The city %s declared separatism from your nation."
+          nation_create: "The population of the city %s founded a new nation - %s."
+          nation_new_name: "Your nation changed its name. Now your city is part of %s."
+          nation_new_minister: "Player %s became a minister in your nation."
+          nation_removed_minister: "Player %s lost the status of minister in your nation."
+          nation_new_capital: "The capital of your nation has been moved to the city %s."
+          nation_new_board: "Your nation has set a new announcement - %s."
+          nation_city_joined: "The city %s was integrated into your nation."
+          nation_remove: "The nation %s ceased to exist."
+          city_added_flag: "Your city set a new flag - %s."
+          city_removed_flag: "The flag %s was removed from your city."
+          city_nation_revoked_invite: "The nation %s revoked its invitation to you."
+          nation_revoked_invite_to_city: "Your nation revoked the invitation to the city %s."
+          city_nation_invited: "The nation %s invites your city to integrate into its fold."
+          nation_invited_city: "Your nation sent an invitation for integration to the city %s."
+          nation_setted_color: "Your nation chose a new color - %s."
+          player_requested_to_city: "You sent a request to join the city %s."
+          city_player_requested: "Your city received a request from player %s to join."
+          player_revoke_request_to_city: "You revoked your request to join the city %s."
+          city_player_revoke_request: "Player %s revoked his request to join your city."
+          player_teleported_to_city_spawn: "You were teleported to the city spawn."
+          player_new_friend: "You added player %s to your friends."
+          player_friend_removed: "You removed %s from your friends list."
+          player_declined_city_invite: "You declined the city %s's invitation."
+          city_player_declined_invite: "Player %s declined your city's invitation."
+          player_deposited: "You deposited %s %s to your account."
+          player_withdrawed: "You withdrew %s %s in fiat."
+          city_player_deposited: "Player %s deposited %s %s to your city's account."
+          city_player_withdrawed: "Player %s withdrew %s %s from your city's account."
+          nation_player_deposited: "Player %s deposited %s %s to your nation's account."
+          nation_player_withdrawed: "Player %s withdrew %s %s from your nation's account."
+          city_player_kicked: "Player %s was banished from your city."
+          nation_removed_flag: "Your nation renounced the flag %s."
+          nation_added_flag: "Your nation set the flag %s."
+          nation_city_kicked: "Your nation abandoned the city %s."
+          city_nation_declined_request: "The nation %s rejected your integration proposal."
+          nation_declined_city_request: "Your nation rejected the integration proposal of the city %s."
+          player_recieved_money: "Player %s transferred to you %s %s."
+          player_sended_money: "You transferred to player %s %s %s."
+          player_cant_pay_taxes_and_kicked: "Player %s could not pay taxes and was banished from the city."
+          city_cant_pay_taxes_and_kicked: "The city %s could not contribute national dues and was abandoned by the nation."
+          city_destroyed_by_taxes: "The city %s went bankrupt."
+          city_destroyed_by_corruption: "The city %s sank into corruption and could not continue to exist."
+          nation_destroyed_by_taxes: "The nation %s went bankrupt."
+          nation_destroyed_by_corruption: "The nation %s sank into corruption and could not continue to exist."
+          new_nation_tax: "The leader of your nation set new taxes for cities."
+          new_city_tax: "The mayor of your city set new taxes on residents."

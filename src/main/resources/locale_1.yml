@@ -1,0 +1,291 @@
+language: uk
+version: 3
+
+ru:
+  ancap:
+    states:
+      fees:
+        city-creation: "Створення міста: %FEE%"
+        nation-creation: "Створення нації: %FEE%"
+        hexagon-claim: "Захоплення нічийного гексагона: %FEE%"
+        city-teleport: "Телепорт в центр міста: %FEE%"
+      
+      info:
+        main:
+          form:
+            - "<gray>--------------------------------------</gray>"
+            - "%DATA%"
+            - "<gray>--------------------------------------</gray>"
+          value-forms:
+            simple: "<gold>%VALUE_NAME%</gold><dark_gray>:</dark_gray> %VALUE%"
+            many: "<gold>%VALUE_NAME% (<white>%COUNT%</white>)</gold><dark_gray>:</dark_gray> %VALUES%"
+            unit:
+              simple: "<gold>%VALUE_NAME%</gold><dark_gray>:</dark_gray> %AMOUNT%<gray>%UNIT%</gray>"
+              many:
+                - "<gold>%VALUE_NAME%</gold><dark_gray>:</dark_gray>"
+                - "{VALUES:    %AMOUNT%<gray>%UNIT%</gray>}"
+              names:
+                hexagons: " гексагонів"
+                kilometers-fact: " км² (факт.)"
+                kilometers-territorial: " км² (тер.)"
+                percent-from-land: "% від суші"
+                people: " люд."
+                percent-from-total-population: "% від населення світу"
+
+        city:
+          form:
+            - "<gold>Інформація про місто <u>%NAME%</u></gold>"
+            - ""
+            - "  <u>%BOARD%</u>"
+            - ""
+            - "%VALUES%"
+          values:
+            treasury: "Скарбниця"
+            taxes: "Податки"
+            territory: "Займана територія"
+            nation: "Нація"
+            mayor: "Мер"
+            residents: "Жителі"
+            assistants: "Асистенти"
+            allow-level: "Рівень доступу"
+
+        nation:
+          form:
+            - "<gold>Інформація про націю <u>%NAME%</u></gold>"
+            - ""
+            - "  <u>%BOARD%</u>"
+            - ""
+            - "%VALUES%"
+          values:
+            treasury: "Скарбниця"
+            taxes: "Податки"
+            territory: "Займана територія"
+            cities: "Міста"
+            leader: "Лідер"
+            capital: "Столиця"
+            population: "Населення"
+            ministers: "Міністри"
+
+        player:
+          form:
+            - "<gold>Інформація про гравця <u>%NAME%</u></gold>"
+            - ""
+            - "%VALUES%"
+          values:
+            balance: "Баланс"
+            city: "Місто"
+            nation: "Нація"
+            friends: "Друзі"
+            invites-to-cities: "Запрошення до міст"
+            requests-to-cities: "Запит до міста"
+
+        here:
+          form:
+            - "<gold>Інформація про поточне місцезнаходження</gold>"
+            - ""
+            - "%VALUES%"
+          values:
+            city: "Місто"
+            private-chunk-status: "Статус приватного чанка"
+            outpost: "Статус зовнішнього чанка"
+
+        ancap-states:
+          form:
+            - "%VALUES%"
+          values:
+            developer: "Розробник"
+            version: "Версія"
+
+      balance:
+        empty: "<white>порожньо</white>"
+        form-entry: "    %NAME%<dark_gray>:</dark_gray> <white>%AMOUNT%</white>"
+        currencies:
+          netherite:
+            name: "Незериту"
+            color: "dark_gray"
+          diamond:
+            name: "Алмазів"
+            color: "aqua"
+          iron:
+            name: "Заліза"
+            color: "gray"
+          copper:
+            name: "Міді"
+            color: "color:#b87333"
+
+      empty-many: "відсутні"
+      empty-one: "відсутній"
+
+      board:
+        not-setted: "Повідомлення не встановлено"
+      
+      teleported-to-city-spawn:
+        by-first-free: "<#247de3>Ти безкоштовно телепортований на спавн міста, використовуючи можливість телепортуватися один раз безкоштовно."
+        for-free-by-permission: "<green>Ти безкоштовно телепортований на спавн міста."
+        for-paid: "<#247de3>Ти телепортований на спавн міста і заплатив за це половину алмаза."
+
+      error:
+        form: "<red>%MESSAGE%</red>"
+        no-such-player: "<red>Гравця під ніком %NICK% не існує.</red>"
+        no_perms: "У тебе немає прав для виконання цієї дії."
+        not_free: "Ти вже перебуваєш у місті!"
+        free: "Ти не перебуваєш у жодному місті!"
+        city_doesnt_exist: "Такого міста не існує"
+        no_city_creation_fee: "У тебе не вистачає грошей для створення міста"
+        capital_cant_be_deleted: "Столицю нації видалити не можна! Передай владу іншому місту або розформуй націю"
+        please_confirm: "Підтверди, що ти хочеш це зробити. Напиши цю команду ще раз, в кінці додавши confirm"
+        no_such_city: "Такого міста не існує"
+        city_isnt_free_to_join: "До цього міста вхід закритий, і ти не запрошений."
+        mayor_cant_leave: "Мер не може покинути місто. Видаліть місто або передайте мерство комусь іншому"
+        city_is_free_to_join: "До цього міста вільний вхід!"
+        you_not_asking_to_join_in_city: "Ти не подавав запитів на вступ до цього міста"
+        not_asking_to_join_in_city: "Цей гравець не подавав запитів на вступ до вашого міста"
+        not_resident: "Він не є жителем цього міста"
+        cant_teleport_to_city_spawn: "Ти не можеш телепортуватися на спавн міста, тому що у тебе немає можливості безкоштовно телепортуватися, ти витратив свій перший безкоштовний телепорт і у тебе недостатньо грошей, щоб оплатити платний телепорт."
+        no_such_allow_level: "Такого рівня доступу не існує!"
+        illegal_args: "Невірні аргументи. Дивись у гайді, як користуватися цією командою"
+        illegal_args_number: "Невірна кількість аргументів. Дивись у гайді, як користуватися цією командою"
+        private_chunk_is_already_claimed: "Цей приватний чанк вже зайнято"
+        its_not_your_city: "Ти не в своєму місті лол"
+        cant_claim_new_private_chunk: "Ти не можеш приватизувати ще один приватний чанк. Мабуть, всі ліміти вичерпано."
+        private_chunk_isnt_claimed: "Цей приватний чанк і так не зайнято"
+        its_not_your_chunk: "Це не твій чанк"
+        outpost_chunk_is_already_claimed: "Цей чанк вже зайнято"
+        cant_claim_new_outpost_chunk: "Ваше місто більше не може приватизувати аутпости. Мабуть, не вистачає грошей або ліміти вичерпано"
+        outpost_chunk_isnt_claimed: "Цей чанк і так не приватизовано"
+        not_enough_money: "Недостатньо грошей"
+        hexagon_is_already_claimed: "Цей гексагон вже приватизовано"
+        hexagon_isnt_connecting_to_city: "Цей гексагон не приєднаний до вашого міста"
+        home_hexagon_cant_be_unclaimed: "Домашній гексагон не може бути розприватизований!"
+        not_inviting_in_nation: "Не запрошений до нації"
+        city_is_free: "Це місто не входить до складу жодної нації"
+        city_is_not_free: "Це місто вже є частиною нації"
+        no_nation_creation_fee: "У тебе недостатньо грошей для створення нації."
+        illegal_name: "Невірне ім'я. Використовуй тільки нормальні символи, без всякої дурні з комами та арабськими ієрогліфами"
+        city_exists: "Таке місто вже існує"
+        nation_exists: "Така нація вже існує"
+        nation_doesnt_exists: "Такої нації не існує"
+        no_such_nation: "Немає такої нації"
+        he_isnt_free: "Він і так складається у місті"
+        he_isnt_invited: "Його ніхто не запрошував нікуди"
+        city_doesnt_invited: "Це місто нікого нікуди не запрошувало"
+        city_doesnt_requesting: "Це місто нікуди не проситься"
+        he_isnt_citizen_of_your_nation: "Він не є громадянином вашої нації"
+        he_is_already_minister: "Він і так міністр"
+        he_isnt_resident_of_your_city: "Він не є жителем твого міста"
+        he_is_already_assistant: "Він і так асистент"
+        he_isnt_assistant: "Він і так не асистент"
+        he_isnt_minister: "Він і так не міністр"
+        you_not_requesting_to_integrate_in_this_nation: "Твоє місто і не пропонувало цій нації інтеграцію."
+        its_not_your_city_chunk: "Цей чанк не належить твоєму місту"
+        its_not_your_city_hexagon: "Цей гексагон не належить твоєму місту"
+        nation_isnt_free_to_join: "Нація не є вільною для інтеграції і ваше місто ніхто не запрошував"
+        cant_interact_this_block: "Ти не можеш взаємодіяти з цим блоком"
+        here_is_other_city: "Ти перебуваєш на території якогось міста."
+        you_are_already_requesting_to_that_city: "Ти вже подав запит до цього міста."
+        he_is_already_invited_to_your_city: "Цей гравець уже запрошений до твого міста."
+        your_city_is_already_requesting_to_that_nation: "Твоє місто вже подало запит на інтеграцію в цю націю."
+        that_city_is_already_invited_to_your_nation: "Це місто вже запрошене до вашої нації."
+        not_inviting_in_city: "Це місто не відсилало тобі запрошень"
+        cant_send_to_offline_player: "Неможливо здійснити банківські перекази оффлайн-гравцям"
+        cant_send_so_far: "Максимальна відстань банківського переказу — 10 блоків"
+      state:
+        # modern
+        form: "<gold><bold>Держави >></bold></gold> %MESSAGE%"
+        affiliation:
+          PLAYER-CITY:
+            join:
+              subject: "Ви вступили до міста %AFFILIATE%."
+              affiliate: "До вашого міста вступив %SUBJECT%."
+            leave:
+              subject: "Ви покинули місто %AFFILIATE%."
+              affiliate: "Ваше місто покинув %SUBJECT%."
+          CITY-NATION:
+            JOIN:
+              subject: "Ваше місто інтегровано в націю %AFFILIATE%."
+              affiliate: "До вашої нації було інтегровано місто %SUBJECT%."
+            LEAVE:
+              subject: "Ваше місто покинуло націю %AFFILIATE%."
+              affiliate: "Місто %SUBJECT% покинуло вашу націю."
+        
+        # legacy
+        messages:
+          new_day: "Настає новий день..."
+          city_create: "%s звів місто %s."
+          city_remove: "Місто %s було знищено."
+          city_new_name: "У вашого міста змінилося назву! Тепер ви проживаєте в %s."
+          city_new_assistant: "Гравець %s став асистентом у вашому місті."
+          city_removed_assistant: "Гравець %s перестав бути асистентом у вашому місті."
+          city_new_mayor: "У вашому місті змінився мер. Новий мер - %s"
+          allow_level_changed: "Рівень доступу вашого міста змінився на %s."
+          city_joined_nation: "Ваше місто інтегровано в націю %s."
+          city_new_board: "У вашому місті встановлено нове оголошення - %s."
+          city_player_joined: "%s вступив до вашого міста."
+          city_player_leaved: "%s покинув ваше місто."
+          player_invited_to_city: "Місто %s відправило тобі запрошення про вступ."
+          city_invited_player: "%s запрошений до вашого міста."
+          player_removed_invite_to_city: "Місто %s відкликало своє запрошення для вас."
+          city_removed_invite_to_player: "Ваше місто відкликало запрошення гравцеві %s."
+          city_requested_to_nation: "Ваше місто запропонувало нації %s інтегруватися до її складу."
+          nation_recieved_request: "Місто %s запропонувало вашій нації інтеграцію."
+          city_removed_request_to_nation: "Ваше місто відкликало пропозицію нації %s про інтеграцію."
+          nation_city_removed_request: "Місто %s відкликало свою пропозицію вашій нації про інтеграцію."
+          player_city_declined_request: "Місто %s відхилило ваш запит на вступ."
+          city_declined_request: "Ваше місто відхилило пропозицію гравця %s про вступ до нього."
+          city_declined_nation_invite: "Ваше місто відхилило запрошення нації %s."
+          nation_city_declined_invite: "Місто %s відхилило запрошення вашої нації."
+          city_new_personal_limit: "У вашому місті встановлено новий ліміт персональних чанків для гравця %s у розмірі %s."
+          city_new_limit: "У вашому місті встановлено новий ліміт персональних чанків для групи %s у розмірі %s."
+          city_private_chunk_claimed: "%s зробив чанк %s приватним."
+          city_private_chunk_unclaimed: "%s відмовився від прав на чанк %s."
+          city_claimed_new_outpost_chunk: "Ваше місто заприватило чанк %s."
+          city_claimed_new_hexagon: "Ваше місто захопило гексагон %s."
+          city_unclaimed_hexagon: "Ваше місто відмовилося від гексагону %s."
+          city_leaved_nation: "Ваше місто деінтегрувалося з нації %s."
+          nation_city_leaved: "Місто %s оголосило сепаратизм від вашої нації."
+          nation_create: "Населення міста %s заснувало нову націю - %s."
+          nation_new_name: "Ваша нація змінила свою назву. Тепер ваше місто входить до %s."
+          nation_new_minister: "Гравець %s став міністром у вашій нації."
+          nation_removed_minister: "Гравець %s втратив статус міністра у вашій нації."
+          nation_new_capital: "Столицю вашої нації перенесено до міста %s."
+          nation_new_board: "У вашій нації встановлено нове оголошення - %s."
+          nation_city_joined: "Місто %s інтегровано до складу вашої нації."
+          nation_remove: "Нація %s припинила своє існування."
+          city_added_flag: "У вашому місті встановлено новий прапор - %s."
+          city_removed_flag: "Прапор %s знято з вашого міста."
+          city_nation_revoked_invite: "Нація %s відкликала своє запрошення до вас."
+          nation_revoked_invite_to_city: "Ваша нація відкликала запрошення місту %s."
+          city_nation_invited: "Нація %s запрошує ваше місто інтегруватися до її складу."
+          nation_invited_city: "Ваша нація надіслала запрошення місту %s про інтеграцію."
+          nation_setted_color: "Ваша нація обрала новий колір - %s."
+          player_requested_to_city: "Ти надіслав місту %s запит прийняти тебе до свого складу."
+          city_player_requested: "Вашому місту надійшов запит від гравця %s прийняти його до вашого міста."
+          player_revoke_request_to_city: "Ти відкликав свій запит на вступ до міста %s."
+          city_player_revoke_request: "Гравець %s відкликав свій запит на входження до вашого міста."
+          player_teleported_to_city_spawn: "Ти телепортований на спавн міста."
+          player_new_friend: "Ти додав в друзі гравця %s."
+          player_friend_removed: "Ти видалив %s зі списку друзів."
+          player_declined_city_invite: "Ти відхилив запрошення міста %s."
+          city_player_declined_invite: "Гравець %s відхилив запрошення вашого міста."
+          player_deposited: "Ти поклав на свій рахунок %s %s."
+          player_withdrawed: "Ти вивів у фіат %s %s."
+          city_player_deposited: "Гравець %s поклав на рахунок вашого міста %s %s."
+          city_player_withdrawed: "Гравець %s зняв з рахунку вашого міста %s %s."
+          nation_player_deposited: "Гравець %s поклав на рахунок вашої нації %s %s."
+          nation_player_withdrawed: "Гравець %s зняв з рахунку вашої нації %s %s."
+          city_player_kicked: "Гравець %s був вигнаний з вашого міста."
+          nation_removed_flag: "Ваша нація відмовилася від прапора %s."
+          nation_added_flag: "Ваша нація встановила прапор %s."
+          nation_city_kicked: "Ваша нація відкинула місто %s."
+          city_nation_declined_request: "Нація %s відхилила вашу пропозицію інтеграції."
+          nation_declined_city_request: "Ваша нація відхилила пропозицію міста %s про інтеграцію."
+          player_recieved_money: "Гравець %s передав тобі %s %s."
+          player_sended_money: "Ти передав гравцю %s %s %s."
+          player_cant_pay_taxes_and_kicked: "Гравець %s не зміг заплатити податки і був вигнаний з міста."
+          city_cant_pay_taxes_and_kicked: "Місто %s не змогло внести національні внески і було залишене нацією."
+          city_destroyed_by_taxes: "Місто %s збанкрутувало."
+          city_destroyed_by_corruption: "Місто %s погрузло в корупції і не змогло продовжити існування."
+          nation_destroyed_by_taxes: "Нація %s збанкрутувала."
+          nation_destroyed_by_corruption: "Нація %s погрузла в корупції і не змогла продовжити існування."
+          new_nation_tax: "Лідер вашої нації встановив нові податки для міст."
+          new_city_tax: "Мер вашого міста встановив нові податки на жителів."
