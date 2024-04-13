@@ -1,10 +1,13 @@
 package ru.ancap.states.player;
 
+import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
+import ru.ancap.framework.communicate.communicator.util.CMMSerializer;
+import ru.ancap.framework.communicate.message.Message;
 import ru.ancap.framework.communicate.modifier.Placeholder;
 import ru.ancap.framework.database.nosql.PathDatabase;
 import ru.ancap.framework.identifier.Identifier;
@@ -23,6 +26,8 @@ import ru.ancap.states.states.Nation.Nation;
 import ru.ancap.states.states.city.City;
 import ru.ancap.states.states.city.LimitType;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -377,14 +382,33 @@ public class AncapStatesPlayer extends AncapPlayer {
 
     private void sendCityJoinTitle(City city) {
         String board = city.getBoard();
+        String identifier = Identifier.of(this.online());
         if (board == null) {
-            board = "Сообщение не установлено";
+            board = new LAPIMessage(AncapStates.class, "board.not-setted").call(identifier);
         }
-        this.online().sendTitle("Ты зашёл в город §b"+city.getName(), "§o"+board, 30, 30, 30);
+        board = "<italic>"+board+"</italic>";
+        this.online().showTitle(Title.title(
+            CMMSerializer.serialize(new LAPIMessage(AncapStates.class, "notify.entered-city").call(identifier)), 
+            CMMSerializer.serialize(new Message(board).call(identifier)),
+            Title.Times.times(
+                Duration.of(30, ChronoUnit.SECONDS),
+                Duration.of(30, ChronoUnit.SECONDS),
+                Duration.of(30, ChronoUnit.SECONDS)
+            )
+        ));
     }
 
     private void sendWildernessTitle() {
-        this.online().sendTitle("Ты забрёл в ничейные земли","Осторожно, тут опасно.", 30, 30, 30);
+        String identifier = Identifier.of(this.online());
+        this.online().showTitle(Title.title(
+            CMMSerializer.serialize(new LAPIMessage(AncapStates.class, "notify.entered-wilderness.title").call(identifier)),
+            CMMSerializer.serialize(new LAPIMessage(AncapStates.class, "notify.entered-wilderness.subtitle").call(identifier)),
+            Title.Times.times(
+                Duration.of(30, ChronoUnit.SECONDS),
+                Duration.of(30, ChronoUnit.SECONDS),
+                Duration.of(30, ChronoUnit.SECONDS)
+            )
+        ));
     }
 
     public void transferMoney(AncapStatesPlayer recipient, double amount, String type) {

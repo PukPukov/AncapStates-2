@@ -88,6 +88,11 @@ ru:
             city: "City"
             private-chunk-status: "Private chunk status"
             outpost: "Outpost chunk status"
+          domain: "domain"
+          wilderness: "wilderness"
+          outer-possessions: "outer possessions"
+          city-chunk: "city chunk"
+          private-chunk: "owned by player %PLAYER%"
 
         ancap-states:
           form:
@@ -119,12 +124,28 @@ ru:
       board:
         not-setted: "Message not set"
       
+      stats:
+        global:
+          - "<dark_gray>-------------------------------------------------------</dark_gray>"
+          - "<gold>Statistics of the States</gold>"
+          - ""
+          - "<gold>Total cities<dark_gray>:</dark_gray> <gray>%CITIES%</gray></gold>"
+          - "<gold>Total Nations<dark_gray>:<dark_gray> <gray>%NATIONS%</gray></gold>"
+          - "<dark_gray>-------------------------------------------------------</dark_gray>"
+      
       teleported-to-city-spawn:
         by-first-free: "<#247de3>You have been teleported to the city spawn for free, using the option to teleport once for free."
         for-free-by-permission: "<green>You have been teleported to the city spawn for free."
         for-paid: "<#247de3>You have been teleported to the city spawn and paid half a diamond for it."
+        
+      notify:
+        entered-wilderness:
+          title: "You've wandered into no man's land."
+          subtitle: "Careful, it's dangerous here."
+        entered-city: "You have entered the <aqua>%NAME%</aqua>"
 
       error:
+        cant-claim-sea: "<red>You can't capture hexagons in the seas!</red>"
         form: "<red>%MESSAGE%</red>"
         no-such-player: "<red>There is no player with the nickname %NICK%.</red>"
         no_perms: "You do not have permission to do that."

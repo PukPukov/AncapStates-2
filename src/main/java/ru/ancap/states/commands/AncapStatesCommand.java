@@ -337,13 +337,11 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
             return true;
         }
         if (args[0].equals("stats")) {
-            String border = "§8-------------------------------------------------------";
-            player.sendMessage(border);
-            player.sendMessage("§6Статистика государств");
-            player.sendMessage("");
-            player.sendMessage("§6Всего городов§8: §7"+AncapStates.getCityMap().getCities().size());
-            player.sendMessage("§6Всего наций§8: §7"+AncapStates.getCityMap().getNations().size());
-            player.sendMessage(border);
+            Communicator.of(player).message(new LAPIMessage(
+                AncapStates.class, "stats.global",
+                new Placeholder("cities",  AncapStates.getCityMap().getCities().size()),
+                new Placeholder("nations", AncapStates.getCityMap().getNations().size())
+            ));
             return true;
         }
         if (args[0].equals("top")) {

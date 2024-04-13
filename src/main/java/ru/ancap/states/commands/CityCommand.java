@@ -11,7 +11,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import ru.ancap.framework.communicate.communicator.Communicator;
 import ru.ancap.framework.communicate.message.CallableMessage;
+import ru.ancap.framework.language.additional.LAPIMessage;
 import ru.ancap.hexagon.Hexagon;
 import ru.ancap.library.AncapChunk;
 import ru.ancap.library.Balance;
@@ -402,7 +404,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 playerLoc.getZ()
             );
             if (Ocean.isOcean(world.getBiome(highestBlockAt))) {
-                caller.sendMessage("Нельзя захватывать гексы в морях!");
+                Communicator.of(caller.online()).message(new LAPIMessage("error.cant-claim-sea"));
                 return true;
             }
             caller.grabCityCreationFee();
@@ -1173,7 +1175,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                     playerLoc.getZ()
             );
             if (Ocean.isOcean(world.getBiome(highestBlockAt))) {
-                caller.sendMessage("Нельзя захватывать гексы в морях!");
+                Communicator.of(caller.online()).message(new LAPIMessage(AncapStates.class, "error.cant-claim-sea"));
                 return true;
             }
             city.event().claim(caller.online(), hexagon, RequestState.REQUEST(caller.online()));
