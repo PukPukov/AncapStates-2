@@ -388,12 +388,15 @@ public class AncapStatesPlayer extends AncapPlayer {
         }
         board = "<italic>"+board+"</italic>";
         this.online().showTitle(Title.title(
-            CMMSerializer.serialize(new LAPIMessage(AncapStates.class, "notify.entered-city").call(identifier)), 
+            CMMSerializer.serialize(new LAPIMessage(
+                AncapStates.class, "notify.entered-city",
+                new Placeholder("name", city.getName())
+            ).call(identifier)), 
             CMMSerializer.serialize(new Message(board).call(identifier)),
             Title.Times.times(
-                Duration.of(30, ChronoUnit.SECONDS),
-                Duration.of(30, ChronoUnit.SECONDS),
-                Duration.of(30, ChronoUnit.SECONDS)
+                Duration.of(1500, ChronoUnit.MILLIS),
+                Duration.of(1500, ChronoUnit.MILLIS),
+                Duration.of(1500, ChronoUnit.MILLIS)
             )
         ));
     }
@@ -404,9 +407,9 @@ public class AncapStatesPlayer extends AncapPlayer {
             CMMSerializer.serialize(new LAPIMessage(AncapStates.class, "notify.entered-wilderness.title").call(identifier)),
             CMMSerializer.serialize(new LAPIMessage(AncapStates.class, "notify.entered-wilderness.subtitle").call(identifier)),
             Title.Times.times(
-                Duration.of(30, ChronoUnit.SECONDS),
-                Duration.of(30, ChronoUnit.SECONDS),
-                Duration.of(30, ChronoUnit.SECONDS)
+                Duration.of(1500, ChronoUnit.MILLIS),
+                Duration.of(1500, ChronoUnit.MILLIS),
+                Duration.of(1500, ChronoUnit.MILLIS)
             )
         ));
     }
