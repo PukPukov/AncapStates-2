@@ -187,6 +187,8 @@ public class AncapStates extends AncapPlugin {
         this.getServer().getPluginCommand("test").setExecutor(new TestCommand());
         this.getServer().getPluginCommand("player").setExecutor(new PlayerCommand());
         this.getServer().getPluginCommand("here").setExecutor(new HereCommand());
+        
+        this.commandRegistrar().register("ancap-states-2", new AncapStates2Input(this.localeHandle()));
     }
 
     public boolean isTest() {
