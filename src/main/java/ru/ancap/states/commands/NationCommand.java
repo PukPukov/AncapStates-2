@@ -1,6 +1,7 @@
 package ru.ancap.states.commands;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -326,7 +327,8 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             caller.depositNation(nation, amount, type);
-            CallableMessage message = LStateMessage.NATION_PLAYER_DEPOSITED(caller.getName(), amount, type);
+            //noinspection deprecation fuck paper
+            CallableMessage message = LStateMessage.NATION_PLAYER_DEPOSITED(caller.getName(), amount, "<lang:"+ Material.valueOf(type).getTranslationKey()+">");
             nation.sendMessage(message);
             return true;
         }
@@ -371,7 +373,8 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             caller.withdrawNation(nation, amount, type);
-            CallableMessage message = LStateMessage.NATION_PLAYER_WITHDRAWED(caller.getName(), amount, type);
+            //noinspection deprecation fuck paper
+            CallableMessage message = LStateMessage.NATION_PLAYER_WITHDRAWED(caller.getName(), amount, "<lang:"+ Material.valueOf(type).getTranslationKey()+">");
             nation.sendMessage(message);
             return true;
         }

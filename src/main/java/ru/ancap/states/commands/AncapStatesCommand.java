@@ -247,7 +247,8 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
             }
             caller.setBalance(balance);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "essentials:clean "+caller.getName()+" "+type+" "+count);
-            CallableMessage message = LStateMessage.DEPOSITED(String.valueOf(count), type);
+            //noinspection deprecation fuck paper
+            CallableMessage message = LStateMessage.DEPOSITED(String.valueOf(count), "<lang:"+material.getTranslationKey()+">");
             caller.sendMessage(message);
             return true;
         }
@@ -326,10 +327,12 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
             }
             if (type.equals("diamond")) {
                 balance.remove(Balance.DIAMOND, amount);
+              //type = "diamond";
             }
             caller.setBalance(balance);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "essentials:give "+caller.getName()+" "+type+" "+amount);
-            CallableMessage message = LStateMessage.WITHDRAWED(String.valueOf(amount), type);
+            //noinspection deprecation fuck paper
+            CallableMessage message = LStateMessage.WITHDRAWED(String.valueOf(amount), "<lang:"+Material.valueOf(type).getTranslationKey()+">");
             caller.sendMessage(message);
             return true;
         }

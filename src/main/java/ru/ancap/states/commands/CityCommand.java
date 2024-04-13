@@ -3,6 +3,7 @@ package ru.ancap.states.commands;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -462,7 +463,8 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             caller.depositCity(city, amount, type);
-            CallableMessage cityMessage = LStateMessage.CITY_PLAYER_DEPOSITED(caller.getName(), amount, type);
+            //noinspection deprecation fuck paper
+            CallableMessage cityMessage = LStateMessage.CITY_PLAYER_DEPOSITED(caller.getName(), amount, "<lang:"+ Material.valueOf(type).getTranslationKey()+">");
             city.sendMessage(cityMessage);
             return true;
         }
@@ -501,7 +503,8 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             caller.withdrawCity(city, amount, type);
-            CallableMessage cityMessage = LStateMessage.CITY_PLAYER_WITHDRAWED(caller.getName(), amount, type);
+            //noinspection deprecation fuck paper
+            CallableMessage cityMessage = LStateMessage.CITY_PLAYER_WITHDRAWED(caller.getName(), amount, "<lang:"+ Material.valueOf(type).getTranslationKey()+">");
             city.sendMessage(cityMessage);
             return true;
         }
