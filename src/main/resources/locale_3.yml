@@ -30,6 +30,7 @@ ru:
                 percent-from-land: "% от суши"
                 people: " чел."
                 percent-from-total-population: "% от общего числа населения"
+
         city:
           form:
             - "<gold>Сведения о городе <u>%NAME%</u></gold>"
@@ -86,6 +87,11 @@ ru:
             city: "Город"
             private-chunk-status: "Статус частного участка"
             outpost: "Статус внешнего участка"
+          domain: "домен"
+          wilderness: "пустошь"
+          outer-possessions: "внешние владения"
+          city-chunk: "народный чанк"
+          private-chunk: "эксплуатируется игроком %PLAYER%"
 
         ancap-states:
           form:
@@ -116,13 +122,29 @@ ru:
 
       board:
         not-setted: "Сообщение не установлено"
+      
+      stats:
+        global:
+          - "<dark_gray>-------------------------------------------------------</dark_gray>"
+          - "<gold>Статистика государств</gold>"
+          - ""
+          - "<gold>Количество городов<dark_gray>:</dark_gray> <gray>%CITIES%</gray></gold>"
+          - "<gold>Количество наций<dark_gray>:<dark_gray> <gray>%NATIONS%</gray></gold>"
+          - "<dark_gray>-------------------------------------------------------</dark_gray>"
 
       teleported-to-city-spawn:
         by-first-free: "<#247de3>Вы были бесплатно телепортированы на спавн города, используя возможность однократной бесплатной телепортации."
         for-free-by-permission: "<green>Вы были бесплатно телепортированы на спавн города."
         for-paid: "<#247de3>Вы телепортированы на спавн города, стоимость услуги - половина алмаза."
+      
+      notify:
+        entered-wilderness:
+          title: "Ты забрёл в ничейные земли"
+          subtitle: "Осторожно, тут враги на каждом шагу."
+        entered-city: "Ты зашёл в город <aqua>%NAME%</aqua>"
 
       error:
+        cant-claim-sea: "<red>Захват гексагонов в морях запрещён!</red>"
         form: "<red>%MESSAGE%</red>"
         no-such-player: "<red>Игрок с ником %NICK% не найден.</red>"
         no_perms: "У вас нет прав для выполнения данного действия."

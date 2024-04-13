@@ -88,6 +88,11 @@ ru:
             city: "Город"
             private-chunk-status: "Статус приватного чанка"
             outpost: "Статус внешнего чанка"
+          domain: "домен"
+          wilderness: "пустошь"
+          outer-possessions: "внешние владения"
+          city-chunk: "городской чанк"
+          private-chunk: "принадлежит игроку %PLAYER%"
 
         ancap-states:
           form:
@@ -118,13 +123,29 @@ ru:
 
       board:
         not-setted: "Сообщение не установлено"
-        
+      
+      stats:
+        global:
+          - "<dark_gray>-------------------------------------------------------</dark_gray>"
+          - "<gold>Статистика государств</gold>"
+          - ""
+          - "<gold>Всего городов<dark_gray>:</dark_gray> <gray>%CITIES%</gray></gold>"
+          - "<gold>Всего наций<dark_gray>:<dark_gray> <gray>%NATIONS%</gray></gold>"
+          - "<dark_gray>-------------------------------------------------------</dark_gray>"
+      
       teleported-to-city-spawn:
         by-first-free: "<#247de3>Ты бесплатно телепортирован на спавн города, использовав возможность телепортироваться один раз бесплатно."
         for-free-by-permission: "<green>Ты бесплатно телепортирован на спавн города."
         for-paid: "<#247de3>Ты телепортирован на спавн города и заплатил за это пол-алмаза."
 
+      notify:
+        entered-wilderness:
+          title: "Ты забрёл в ничейные земли"
+          subtitle: "Осторожно, тут опасно."
+        entered-city: "Ты зашёл в город <aqua>%NAME%</aqua>"
+
       error:
+        cant-claim-sea: "<red>Нельзя захватывать гексагоны в морях!</red>"
         form: "<red>%MESSAGE%</red>"
         no-such-player: "<red>Игрока под ником %NICK% не существует.</red>"
         no_perms: "У тебя нет прав для выполнения этого действия."
