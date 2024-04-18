@@ -19,6 +19,7 @@ import ru.ancap.framework.database.nosql.PathDatabase;
 import ru.ancap.framework.language.additional.LAPIMessage;
 import ru.ancap.library.Balance;
 import ru.ancap.library.BalanceMessage;
+import ru.ancap.library.InventoryUtil;
 import ru.ancap.states.AncapStates;
 import ru.ancap.states.dynmap.DynmapDrawer;
 import ru.ancap.states.fees.ASFees;
@@ -233,13 +234,13 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
             String type;
             if (material.equals(Material.DIAMOND)) {
                 balance.add(Balance.DIAMOND, count);
-                type = "diamond";
+                type = "DIAMOND";
             } else if (material.equals(Material.NETHERITE_INGOT)) {
                 balance.add(Balance.NETHERITE, count);
-                type = "netherite_ingot";
+                type = "NETHERITE_INGOT";
             } else if (material.equals(Material.IRON_INGOT)) {
                 balance.add(Balance.IRON, count);
-                type = "iron_ingot";
+                type = "IRON_INGOT";
             } else {
                 CallableMessage message = ErrorMessage.YOU_CANT_DEPOSIT_THIS_TYPE;
                 caller.sendMessage(message);
@@ -319,18 +320,19 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
             Balance balance = caller.getBalance();
             if (type.equals("iron")) {
                 balance.remove(Balance.IRON, amount);
-                type = "iron_ingot";
+                type = "IRON_INGOT";
             }
             if (type.equals("netherite")) {
                 balance.remove(Balance.NETHERITE, amount);
-                type = "netherite_ingot";
+                type = "NETHERITE_INGOT";
             }
             if (type.equals("diamond")) {
                 balance.remove(Balance.DIAMOND, amount);
-              //type = "diamond";
+                type = "DIAMOND";
             }
             caller.setBalance(balance);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "essentials:give "+caller.getName()+" "+type+" "+amount);
+            
+            InventoryUtil.drop(amount, Material.valueOf(type), player.getLocation());
             //noinspection deprecation fuck paper
             CallableMessage message = LStateMessage.WITHDRAWED(String.valueOf(amount), "<lang:"+Material.valueOf(type).getTranslationKey()+">");
             caller.sendMessage(message);
