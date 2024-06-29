@@ -1,7 +1,7 @@
 name: AncapStates
 main: ru.ancap.states.AncapStates
 version: '${project.version}'
-api-version: 1.16
+api-version: 1.20.6
 
 depend:
   - Artifex

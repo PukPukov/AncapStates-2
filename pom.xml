@@ -149,6 +149,11 @@
             <id>MikeRepo</id>
             <url>https://repo.mikeprimm.com/</url>
         </repository>
+
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -227,13 +232,13 @@
         <dependency>
             <groupId>ru.ancap</groupId>
             <artifactId>Artifex</artifactId>
-            <version>1.7-dev.4+legacy_support.6</version>
+            <version>1.7-pre</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version>
+            <version>1.20.6-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         
