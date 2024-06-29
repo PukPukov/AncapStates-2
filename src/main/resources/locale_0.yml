@@ -204,7 +204,7 @@ ru:
         cant_interact_this_block: "Ты не можешь взаимодействовать с этим блоком"
         here_is_other_city: "Ты находишься на территории какого-то города."
         you_are_already_requesting_to_that_city: "Ты уже подал запрос в этот город."
-        he_is_already_invited_to_your_city: "Этот игрок уже приглашён в твой горож."
+        he_is_already_invited_to_your_city: "Этот игрок уже приглашён в твой город."
         your_city_is_already_requesting_to_that_nation: "Твой город уже и так подал запрос на интеграцию в эту нацию."
         that_city_is_already_invited_to_your_nation: "Этот город уже и так приглашён в твою нацию."
         not_inviting_in_city: "Этот город не отсылал тебе приглашений"
