@@ -29,7 +29,7 @@ import ru.ancap.states.states.Subject;
 import ru.ancap.states.states.city.City;
 import ru.ancap.states.states.event.SubjectChangeAffiliationEvent;
 
-public class AncapStatesEventsListener implements Listener {
+public class ProtectListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void on(WorldInteractEvent event) {
