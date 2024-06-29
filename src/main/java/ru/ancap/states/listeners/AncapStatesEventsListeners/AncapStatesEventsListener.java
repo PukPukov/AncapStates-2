@@ -32,7 +32,7 @@ import ru.ancap.states.states.event.SubjectChangeAffiliationEvent;
 public class AncapStatesEventsListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onWorldInteract(WorldInteractEvent event) {
+    public void on(WorldInteractEvent event) {
         if (event.consumed()) return;
         else event.consume();
         AncapStatesPlayer player = AncapStatesPlayer.get(event.player());
@@ -53,7 +53,7 @@ public class AncapStatesEventsListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPVP(PVPEvent event) {
+    public void on(PVPEvent event) {
         if (event.consumed()) return;
         else event.consume();
         for (Player attacked : event.attacked()) if (AncapStates.getCityMap().isAtCity(attacked.getLocation())) {
@@ -62,7 +62,7 @@ public class AncapStatesEventsListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onExplode(BlockExplodeEvent event) {
+    public void on(BlockExplodeEvent event) {
         if (AncapStates.getCityMap().getCity(event.getBlock().getLocation()) != null) {
             event.setCancelled(true);
         }
@@ -76,7 +76,7 @@ public class AncapStatesEventsListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onSelfDestruct(WorldSelfDestructEvent event) {
+    public void on(WorldSelfDestructEvent event) {
         if (event.consumed()) return;
         else event.consume();
         if (!AncapStates.getCityMap().isAtSameCity(event.active(), event.passive())) event.setCancelled(true);
