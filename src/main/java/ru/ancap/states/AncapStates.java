@@ -16,7 +16,9 @@ import ru.ancap.hexagon.common.Point;
 import ru.ancap.states.commands.*;
 import ru.ancap.states.dynmap.DynmapDrawer;
 import ru.ancap.states.hexagons.AncapHexagonalGrid;
+import ru.ancap.states.listeners.AncapStatesEventsListeners.CityMoveListener;
 import ru.ancap.states.listeners.AncapStatesEventsListeners.ProtectListener;
+import ru.ancap.states.listeners.AncapStatesEventsListeners.StateFormationsListener;
 import ru.ancap.states.listeners.StatesListener;
 import ru.ancap.states.listeners.TimerListeners.TimerListener;
 import ru.ancap.states.main.AncapStatesDatabaseType;
@@ -170,6 +172,8 @@ public class AncapStates extends AncapPlugin {
 
     private void registerEventsListeners() {
         this.getServer().getPluginManager().registerEvents(new ProtectListener(), this);
+        this.registerEventsListener(new CityMoveListener());
+        this.registerEventsListener(new StateFormationsListener());
         this.getServer().getPluginManager().registerEvents(new TimerListener(), this);
         this.getServer().getPluginManager().registerEvents(new StatesListener(), this);
     }
