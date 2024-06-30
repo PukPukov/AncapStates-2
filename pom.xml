@@ -149,11 +149,6 @@
             <id>MikeRepo</id>
             <url>https://repo.mikeprimm.com/</url>
         </repository>
-
-        <repository>
-            <id>papermc</id>
-            <url>https://repo.papermc.io/repository/maven-public/</url>
-        </repository>
     </repositories>
 
     <dependencies>
