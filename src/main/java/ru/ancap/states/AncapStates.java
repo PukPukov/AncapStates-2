@@ -131,7 +131,7 @@ public class AncapStates extends AncapPlugin {
     public void onEnable() {
         super.onEnable();
         this.setInstance();
-        CONFIGURATION = this.getConfiguration();
+        CONFIGURATION = this.configuration();
         this.setUpDBs();
         this.setUpConfig();
         this.registerCommands();
