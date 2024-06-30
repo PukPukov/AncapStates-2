@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import ru.ancap.framework.api.event.events.wrapper.PVPEvent;
 import ru.ancap.framework.api.event.events.wrapper.WorldInteractEvent;
 import ru.ancap.framework.api.event.events.wrapper.WorldSelfDestructEvent;
@@ -23,6 +24,7 @@ public class ProtectListener implements Listener {
         if (event.consumed()) return;
         else event.consume();
         AncapStatesPlayer player = AncapStatesPlayer.get(event.player());
+        if (event.bukkit() instanceof PlayerInteractEvent) return;
         for (Location location : event.locations()) if (!player.canInteract(location)) {
             this.cancelInteract(event);
             CallableMessage message = ErrorMessage.CANT_INTERACT_THIS_BLOCK;
