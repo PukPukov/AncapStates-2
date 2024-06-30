@@ -201,7 +201,7 @@ ru:
         its_not_your_city_chunk: "Цей чанк не належить твоєму місту"
         its_not_your_city_hexagon: "Цей гексагон не належить твоєму місту"
         nation_isnt_free_to_join: "Нація не є вільною для інтеграції і ваше місто ніхто не запрошував"
-        cant_interact_this_block: "Ти не можеш взаємодіяти з цим блоком"
+        region_protection_forbidden_action: "Взаємодія була заборонена приватом."
         here_is_other_city: "Ти перебуваєш на території якогось міста."
         you_are_already_requesting_to_that_city: "Ти вже подав запит до цього міста."
         he_is_already_invited_to_your_city: "Цей гравець уже запрошений до твого міста."

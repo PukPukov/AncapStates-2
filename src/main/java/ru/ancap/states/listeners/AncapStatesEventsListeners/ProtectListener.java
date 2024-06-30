@@ -27,7 +27,7 @@ public class ProtectListener implements Listener {
         if (event.bukkit() instanceof PlayerInteractEvent) return;
         for (Location location : event.locations()) if (!player.canInteract(location)) {
             this.cancelInteract(event);
-            CallableMessage message = ErrorMessage.CANT_INTERACT_THIS_BLOCK;
+            CallableMessage message = ErrorMessage.REGION_PROTECTION_FORBIDDEN_ACTION;
             player.sendMessage(message);
         }
     }
