@@ -550,7 +550,6 @@ public class AncapStatesPlayer extends AncapPlayer {
         return this.isMayor();
     }
 
-
     public Nation createTestNation() {
         Balance bigBalance = new Balance(10000, 10000, 10000);
         City city = this.createTestCity();
