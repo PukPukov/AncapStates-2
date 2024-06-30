@@ -33,6 +33,7 @@ import ru.ancap.states.states.city.RequestState;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class AncapStatesCommand implements CommandExecutor, TabCompleter {
 
@@ -160,7 +161,7 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
     /**
      * You can add to this list anything
      */
-    public static final List<CallableMessage> feesMessages = new ArrayList<>(List.of(
+    public static final List<CallableMessage> feesMessages = new CopyOnWriteArrayList<>(List.of(
         new LAPIMessage(AncapStates.class, "fees.city-creation", new Placeholder("fee", new BalanceMessage(ASFees.CITY_CREATION))),
         new LAPIMessage(AncapStates.class, "fees.nation-creation", new Placeholder("fee", new BalanceMessage(ASFees.NATION_CREATION))),
         new LAPIMessage(AncapStates.class, "fees.hexagon-claim", new Placeholder("fee", new BalanceMessage(ASFees.HEXAGON_CLAIM))),
@@ -175,9 +176,9 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
             caller.sendMessage(AncapStates.getInfo().getMessage());
             return true;
         }
-        if (args[0].equals("fees")) { synchronized (feesMessages) {
+        if (args[0].equals("fees")) {
             Communicator.of(sender_).message(new MultilineMessage(feesMessages.toArray(new CallableMessage[0])));
-        }}
+        }
         if (player.isOp()) {
             if (args[0].equals("redraw")) {
                 DynmapDrawer.redrawDynmap();
