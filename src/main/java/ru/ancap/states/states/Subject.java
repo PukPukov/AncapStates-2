@@ -8,7 +8,7 @@ public interface Subject {
     String type();
     String id();
 
-    void affiliate(@Nullable Subject affilator);
+    void affiliate(@Nullable Subject affiliate);
     Subject affiliate();
     void sendMessage(CallableMessage message);
     String simpleName();

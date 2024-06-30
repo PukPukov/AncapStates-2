@@ -26,7 +26,7 @@ public class CityEventAPI {
         new HexagonClaimEvent(claimer, this.city, hexagon, requestState).callEvent();
     }
     
-    public void affilate(@Nullable Nation nation, RequestState<Player> requestState) {
+    public void affiliate(@Nullable Nation nation, RequestState<Player> requestState) {
         new SubjectChangeAffiliationEvent(this.city, nation, requestState).callEvent();
     }
     

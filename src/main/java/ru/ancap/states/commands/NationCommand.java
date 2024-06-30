@@ -436,7 +436,7 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
                 caller.sendMessage(message);
                 return true;
             }
-            city.event().affilate(nation, RequestState.REQUEST(caller.online()));
+            city.event().affiliate(nation, RequestState.REQUEST(caller.online()));
             return true;
         }
         if (args[0].equals("declineinvite")) {
@@ -562,7 +562,7 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
             CallableMessage message = LStateMessage.NATION_CITY_LEAVED(city.getName());
             Nation nation = city.getNation();
             nation.sendMessage(message);
-            city.event().affilate(null, RequestState.REQUEST(caller.online()));
+            city.event().affiliate(null, RequestState.REQUEST(caller.online()));
             return true;
         }
         if (args[0].equals("kick")) {
@@ -589,7 +589,7 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
             }
             String name = args[1];
             City kicked = new City(ID.getCityID(name));
-            kicked.event().affilate(null, RequestState.REQUEST(caller.online()));
+            kicked.event().affiliate(null, RequestState.REQUEST(caller.online()));
             return true;
         }
         if (args[0].equals("invite")) {
@@ -701,7 +701,7 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
                 caller.sendMessage(message);
                 return true;
             }
-            accepted.event().affilate(nation, RequestState.REQUEST(caller.online()));
+            accepted.event().affiliate(nation, RequestState.REQUEST(caller.online()));
             return true;
         }
         if (args[0].equals("declinerequest")) {
