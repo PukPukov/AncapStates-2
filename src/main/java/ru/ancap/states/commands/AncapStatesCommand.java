@@ -249,7 +249,7 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
             }
             caller.setBalance(balance);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "essentials:clean "+caller.getName()+" "+type+" "+count);
-            //noinspection deprecation fuck paper
+            @SuppressWarnings("removal")
             CallableMessage message = LStateMessage.DEPOSITED(String.valueOf(count), "<lang:"+material.getTranslationKey()+">");
             caller.sendMessage(message);
             return true;
@@ -334,7 +334,7 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
             caller.setBalance(balance);
             
             InventoryUtil.drop(amount, Material.valueOf(type), player.getLocation());
-            //noinspection deprecation fuck paper
+            @SuppressWarnings("removal")
             CallableMessage message = LStateMessage.WITHDRAWED(String.valueOf(amount), "<lang:"+Material.valueOf(type).getTranslationKey()+">");
             caller.sendMessage(message);
             return true;
