@@ -502,7 +502,7 @@ public class AncapStatesPlayer extends AncapPlayer {
         } else return true;
     }
     
-    public boolean canInteract0(Location loc) {
+    private boolean canInteract0(Location loc) {
         try {
             if (loc.getWorld().getName().equals("world_the_end") || 
                 loc.getWorld().getName().equals("world_nether")) return true;
