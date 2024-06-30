@@ -147,6 +147,7 @@ public class AncapStates extends AncapPlugin {
 
     @Override
     public void onDisable() {
+        super.onDisable();
         Bukkit.getScheduler().cancelTasks(this);
         idDB.save();
         statesDB.save();
