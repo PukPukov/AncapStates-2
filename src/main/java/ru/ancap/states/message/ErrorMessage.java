@@ -62,7 +62,7 @@ public class ErrorMessage extends WrapperMessage {
     public static final CallableMessage ITS_NOT_YOUR_CITY_CHUNK = new ErrorMessage("its_not_your_city_chunk");
     public static final CallableMessage ITS_NOT_YOUR_CITY_HEXAGON = new ErrorMessage("its_not_your_city_hexagon");
     public static final CallableMessage NATION_ISNT_FREE_TO_JOIN = new ErrorMessage("nation_isnt_free_to_join");
-    public static final CallableMessage CANT_INTERACT_THIS_BLOCK = new ErrorMessage("cant_interact_this_block");
+    public static final CallableMessage REGION_PROTECTION_FORBIDDEN_ACTION = new ErrorMessage("region_protection_forbidden_action");
     public static final CallableMessage HERE_IS_OTHER_CITY = new ErrorMessage("here_is_other_city");
     public static final CallableMessage YOU_CANT_DEPOSIT_THIS_TYPE = new ErrorMessage("you_cant_deposit_this_type");
     public static final CallableMessage YOU_ARE_ALREADY_REQUESTING_TO_THAT_CITY = new ErrorMessage("you_are_already_requesting_to_that_city");
