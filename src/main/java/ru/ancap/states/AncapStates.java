@@ -171,11 +171,11 @@ public class AncapStates extends AncapPlugin {
     }
 
     private void registerEventsListeners() {
-        this.getServer().getPluginManager().registerEvents(new ProtectListener(), this);
+        this.registerEventsListener(new ProtectListener());
         this.registerEventsListener(new CityMoveListener());
         this.registerEventsListener(new StateFormationsListener());
-        this.getServer().getPluginManager().registerEvents(new TimerListener(), this);
-        this.getServer().getPluginManager().registerEvents(new StatesListener(), this);
+        this.registerEventsListener(new TimerListener());
+        this.registerEventsListener(new StatesListener());
     }
 
     private void registerCommands() {
