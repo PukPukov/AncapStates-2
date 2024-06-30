@@ -61,11 +61,13 @@ public class ProtectListener implements Listener {
                                 OAK_DOOR, SPRUCE_DOOR, BIRCH_DOOR, JUNGLE_DOOR, ACACIA_DOOR, DARK_OAK_DOOR, MANGROVE_DOOR,
                                 CHERRY_DOOR, BAMBOO_DOOR, CRIMSON_DOOR, WARPED_DOOR,
                                  
-                                 
                                 IRON_TRAPDOOR, COPPER_TRAPDOOR, EXPOSED_COPPER_TRAPDOOR, OXIDIZED_COPPER_TRAPDOOR, WAXED_COPPER_TRAPDOOR,
                                 WAXED_EXPOSED_COPPER_TRAPDOOR, WAXED_OXIDIZED_COPPER_TRAPDOOR, WAXED_WEATHERED_COPPER_TRAPDOOR,
                                 WEATHERED_COPPER_TRAPDOOR, OAK_TRAPDOOR, SPRUCE_TRAPDOOR, BIRCH_TRAPDOOR, JUNGLE_TRAPDOOR, ACACIA_TRAPDOOR,
                                 DARK_OAK_TRAPDOOR, MANGROVE_TRAPDOOR, CHERRY_TRAPDOOR, BAMBOO_TRAPDOOR, CRIMSON_TRAPDOOR, WARPED_TRAPDOOR,
+                                
+                                ACACIA_FENCE_GATE, BAMBOO_FENCE_GATE, BIRCH_FENCE_GATE, CHERRY_FENCE_GATE, CRIMSON_FENCE_GATE, DARK_OAK_FENCE_GATE,
+                                JUNGLE_FENCE_GATE, MANGROVE_FENCE_GATE, OAK_FENCE_GATE, SPRUCE_FENCE_GATE, WARPED_FENCE_GATE,
                                  
                                 STONE_BUTTON, POLISHED_BLACKSTONE_BUTTON, OAK_BUTTON, SPRUCE_BUTTON, BIRCH_BUTTON, JUNGLE_BUTTON, ACACIA_BUTTON,
                                 DARK_OAK_BUTTON, MANGROVE_BUTTON, CHERRY_BUTTON, BAMBOO_BUTTON, CRIMSON_BUTTON, WARPED_BUTTON,
@@ -75,8 +77,7 @@ public class ProtectListener implements Listener {
                                 DARK_OAK_PRESSURE_PLATE, MANGROVE_PRESSURE_PLATE, CHERRY_PRESSURE_PLATE, BAMBOO_PRESSURE_PLATE, 
                                 CRIMSON_PRESSURE_PLATE, WARPED_PRESSURE_PLATE,
                                 
-                                ACACIA_FENCE_GATE, BAMBOO_FENCE_GATE, BIRCH_FENCE_GATE, CHERRY_FENCE_GATE, CRIMSON_FENCE_GATE, DARK_OAK_FENCE_GATE,
-                                JUNGLE_FENCE_GATE, MANGROVE_FENCE_GATE, OAK_FENCE_GATE, SPRUCE_FENCE_GATE, WARPED_FENCE_GATE,
+                                LEVER,
                                 
                                 DECORATED_POT,
                                 
