@@ -212,7 +212,7 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
                     Nation nation = new Nation(ID.getNationID(args[2]));
                     if (args[3].equals("addcity")) {
                         City city = new City(ID.getCityID(args[4]));
-                        city.event().affilate(nation, RequestState.REQUEST(caller.online()));
+                        city.event().affiliate(nation, RequestState.REQUEST(caller.online()));
                     }
                     if (args[3].equals("capital")) {
                         City city = new City(ID.getCityID(args[4]));
