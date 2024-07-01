@@ -54,8 +54,8 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
                 "taxes"
         ));
         List<AncapStatesPlayer> onlinePlayers = List.of(AncapStates.getPlayerMap().getOnlinePlayers());
-        List<City> cities = AncapStates.getCityMap().getCities();
-        List<Nation> nations = AncapStates.getCityMap().getNations();
+        List<City> cities = AncapStates.cityMap().cities();
+        List<Nation> nations = AncapStates.cityMap().getNations();
         List<String> citiesNames = new ArrayList<>();
         List<String> nationsNames = new ArrayList<>();
         List<String> onlinePlayersNames = new ArrayList<>();

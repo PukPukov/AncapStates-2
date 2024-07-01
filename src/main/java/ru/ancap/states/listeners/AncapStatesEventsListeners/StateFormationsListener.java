@@ -21,7 +21,7 @@ public class StateFormationsListener implements Listener {
     
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void on(HexagonOwnerChangeEvent event) {
-        City city = AncapStates.getCityMap().getCity(event.hexagon());
+        City city = AncapStates.cityMap().getCity(event.hexagon());
         if (city != null) {
             city.removeHexagon(event.hexagon());
             city.sendMessage(LStateMessage.CITY_UNCLAIMED_HEXAGON(this.toReadable(event.hexagon())));

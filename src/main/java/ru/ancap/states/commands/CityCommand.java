@@ -10,7 +10,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.codehaus.plexus.util.ExceptionUtils;
 import org.jetbrains.annotations.NotNull;
+import ru.ancap.commons.debug.AncapDebug;
 import ru.ancap.framework.communicate.communicator.Communicator;
 import ru.ancap.framework.communicate.message.CallableMessage;
 import ru.ancap.framework.language.additional.LAPIMessage;
@@ -32,6 +34,7 @@ import ru.ancap.states.states.city.AllowLevel;
 import ru.ancap.states.states.city.City;
 import ru.ancap.states.states.city.LimitType;
 import ru.ancap.states.states.city.RequestState;
+import ru.ancap.states.util.DummyException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,8 +79,8 @@ public class CityCommand implements CommandExecutor, TabCompleter {
             "color"
         );
         List<AncapStatesPlayer> onlinePlayers = List.of(AncapStates.getPlayerMap().getOnlinePlayers());
-        List<City> cities = AncapStates.getCityMap().getCities();
-        List<Nation> nations = AncapStates.getCityMap().getNations();
+        List<City> cities = AncapStates.cityMap().cities();
+        List<Nation> nations = AncapStates.cityMap().getNations();
         List<String> citiesNames = new ArrayList<>();
         List<String> nationsNames = new ArrayList<>();
         List<String> onlinePlayersNames = new ArrayList<>();
@@ -88,7 +91,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
             nationsNames.add(nation.getName());
         }
         for (AncapStatesPlayer ancapStatesPlayer : onlinePlayers) {
-            onlinePlayersNames.add(ancapStatesPlayer.getID());
+            onlinePlayersNames.add(ancapStatesPlayer.id());
         }
         if (args.length == 1) {
             return subcommands;
@@ -292,7 +295,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
             for (AncapStatesPlayer resident : cityResidents) {
                 residentsNames.add(resident.getName());
             }
-            residentsNames.remove(caller.getCity().getMayor().getName());
+            residentsNames.remove(caller.getCity().mayor().getName());
             return residentsNames;
         }
         if (args[0].equals("taxes")) {
@@ -1155,7 +1158,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             Hexagon hexagon = AncapStates.grid.hexagon(caller);
-            if (AncapStates.getCityMap().getCity(hexagon) != null) {
+            if (AncapStates.cityMap().getCity(hexagon) != null) {
                 CallableMessage message = ErrorMessage.HEXAGON_IS_ALREADY_CLAIMED;
                 caller.sendMessage(message);
                 return true;
@@ -1193,7 +1196,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             Hexagon hexagon = AncapStates.grid.hexagon(caller);
-            if (!Objects.equals(AncapStates.getCityMap().getCity(hexagon), caller.getCity())) {
+            if (!Objects.equals(AncapStates.cityMap().getCity(hexagon), caller.getCity())) {
                 CallableMessage message = ErrorMessage.ITS_NOT_YOUR_CITY_HEXAGON;
                 caller.sendMessage(message);
                 return true;
@@ -1241,6 +1244,11 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 caller.sendMessage(message);
                 return true;
             }
+            AncapDebug.debug(
+                "MAYOR DEBUG: calling setMayor() from command /city mayor",
+                "caller", caller.id(), "new mayor", mayor.id(), "\n",
+                ExceptionUtils.getStackTrace(new DummyException())
+            );
             city.setMayor(mayor);
             CallableMessage message = LStateMessage.CITY_NEW_MAYOR(mayor.getName());
             city.sendMessage(message);

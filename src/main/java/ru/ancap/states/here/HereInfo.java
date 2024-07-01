@@ -38,7 +38,7 @@ public class HereInfo {
         this.caller = player;
         String identifier = Identifier.of(player);
         Location location = player.getLocation();
-        CityMap cityMap = AncapStates.getCityMap();
+        CityMap cityMap = AncapStates.cityMap();
         Chunk hereChunk = location.getChunk();
         this.chunk = hereChunk.getX()+";"+hereChunk.getZ();
         this.city = cityMap.getCity(location);

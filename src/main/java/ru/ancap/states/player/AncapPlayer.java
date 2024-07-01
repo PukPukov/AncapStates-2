@@ -41,12 +41,12 @@ public class AncapPlayer implements BalanceHolder {
     }
     
     public void setMeta(String field, String str) {
-        this.statesDB.write("states.player." + this.getID() + "." + field, str);
+        this.statesDB.write("states.player." + this.id() + "." + field, str);
     }
     
     public String getMeta(String field) {
         PathDatabase var10000 = this.statesDB;
-        String var10001 = this.getID();
+        String var10001 = this.id();
         return var10000.readString("states.player." + var10001 + "." + field);
     }
     
@@ -55,7 +55,7 @@ public class AncapPlayer implements BalanceHolder {
     }
     
     public void setBalance(Balance balance) {
-        this.statesDB.write("states.player." + this.getID() + ".balance", balance, Balance.SERIALIZE_WORKER);
+        this.statesDB.write("states.player." + this.id() + ".balance", balance, Balance.SERIALIZE_WORKER);
     }
     
     public Location getLocation() {
@@ -94,7 +94,7 @@ public class AncapPlayer implements BalanceHolder {
         if (this.realName != null) {
             return this.realName;
         }
-        Player player = Bukkit.getPlayer(this.getID());
+        Player player = Bukkit.getPlayer(this.id());
         if (player != null) {
             return player.getName();
         }
@@ -134,8 +134,13 @@ public class AncapPlayer implements BalanceHolder {
         return this.statesDB.readBoolean("states.player." + this.id + ".real-name");
     }
 
-    public String getID() {
+    public String id() {
         return this.id;
+    }
+    
+    @Deprecated
+    public String getID() {
+        return this.id();
     }
     
     public boolean created() {
@@ -147,7 +152,7 @@ public class AncapPlayer implements BalanceHolder {
     }
     
     public String toString() {
-        return "AncapPlayer{" + this.getID() + "}";
+        return "AncapPlayer{" + this.id() + "}";
     }
     
     public boolean equals(Object obj) {
@@ -157,17 +162,17 @@ public class AncapPlayer implements BalanceHolder {
             return false;
         } else {
             AncapPlayer other = (AncapPlayer)obj;
-            return other.getID().equals(this.getID());
+            return other.id().equals(this.id());
         }
     }
     
     public boolean haveFlag(String string) {
-        return this.statesDB.contains("states.player."+this.getID()+".flags", string, true);
+        return this.statesDB.contains("states.player."+this.id()+".flags", string, true);
     }
 
     @Override
     public PathDatabase database() {
-        return this.statesDB.inner("states.player."+this.getID());
+        return this.statesDB.inner("states.player."+this.id());
     }
 
     @Override

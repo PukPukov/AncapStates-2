@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.jetbrains.annotations.Nullable;
+import ru.ancap.commons.debug.AncapDebug;
 import ru.ancap.framework.communicate.message.CallableMessage;
 import ru.ancap.framework.database.nosql.PathDatabase;
 import ru.ancap.hexagon.Hexagon;
@@ -97,13 +98,14 @@ public class City implements State {
 
     public void initialize(AncapStatesPlayer creator, String name) {
         creator.prepareToJoinInCity();
-        String mayorName = creator.getID();
-        this.statesDB.write("states.player."+creator.getID()+".city", this.id);
+        String mayorID = creator.id();
+        this.statesDB.write("states.player."+creator.id()+".city", this.id);
         this.statesDB.write("states.city."+this.id+".balance", new Balance(new HashMap<>()), Balance.SERIALIZE_WORKER);
         this.statesDB.write("states.city."+this.id+".tax", new Balance(new HashMap<>()), Balance.SERIALIZE_WORKER);
         this.statesDB.write("states.city."+this.id+".name", name);
-        this.statesDB.write("states.city."+this.id+".mayor", mayorName);
-        this.statesDB.write("states.city."+this.id+".residents", List.of(mayorName));
+        AncapDebug.debug("MAYOR DEBUG: writing mayor in City#initialize()", mayorID);
+        this.statesDB.write("states.city."+this.id+".mayor", mayorID);
+        this.statesDB.write("states.city."+this.id+".residents", List.of(mayorID));
         this.statesDB.write("states.city."+this.id+".home", creator.online().getLocation(), LocationSerializeWorker.INSTANCE);
         Hexagon core = AncapStates.grid.hexagon(creator);
         this.statesDB.write("states.city."+this.id+".hexagons", List.of(core.code()+""));
@@ -185,19 +187,26 @@ public class City implements State {
     }
 
     public void addAssistant(AncapStatesPlayer ancapStatesPlayer) {
-        this.statesDB.add("states.city."+this.id+".assistants", ancapStatesPlayer.getID(), true);
+        this.statesDB.add("states.city."+this.id+".assistants", ancapStatesPlayer.id(), true);
     }
 
     public void removeAssistant(AncapStatesPlayer ancapStatesPlayer) {
-        this.statesDB.remove("states.city."+this.id+".assistants", ancapStatesPlayer.getID(), true);
+        this.statesDB.remove("states.city."+this.id+".assistants", ancapStatesPlayer.id(), true);
     }
 
-    public AncapStatesPlayer getMayor() {
+    public AncapStatesPlayer mayor() {
         return AncapStatesPlayer.findByID(this.statesDB.readString("states.city."+this.id+".mayor"));
+    }
+    
+    @Deprecated
+    public AncapStatesPlayer getMayor() {
+        return this.mayor();
     }
 
     public void setMayor(AncapStatesPlayer ancapStatesPlayer) {
-        this.statesDB.write("states.city."+this.id+".mayor", ancapStatesPlayer.getID());
+        String id = ancapStatesPlayer.id();
+        AncapDebug.debug("MAYOR DEBUG: writing mayor in City#setMayor()", id);
+        this.statesDB.write("states.city."+this.id+".mayor", id);
     }
 
     public Balance getBalance() {
@@ -272,14 +281,14 @@ public class City implements State {
 
     public void addResident(AncapStatesPlayer player) {
         player.prepareToJoinInCity();
-        this.statesDB.add("states.city."+this.id+".residents", player.getID(), true);
-        this.statesDB.write("states.player."+player.getID()+".city", this.id);
+        this.statesDB.add("states.city."+this.id+".residents", player.id(), true);
+        this.statesDB.write("states.player."+player.id()+".city", this.id);
         AncapStates.incrementGlobalPopulation();
     }
 
     public void removeResident(AncapStatesPlayer player) {
         this.prepareToRemoveResident(player);
-        this.statesDB.remove("states.city."+this.id+".residents", player.getID(), true);
+        this.statesDB.remove("states.city."+this.id+".residents", player.id(), true);
         AncapStates.decrementGlobalPopulation();
     }
 
@@ -290,18 +299,18 @@ public class City implements State {
     }
 
     public void removeResidentNoChecks(AncapStatesPlayer player) {
-        this.statesDB.remove("states.city."+this.id+".residents", player.getID(), true);
-        this.statesDB.delete("states.player."+player.getID()+".city");
+        this.statesDB.remove("states.city."+this.id+".residents", player.id(), true);
+        this.statesDB.delete("states.player."+player.id()+".city");
     }
 
     public void addInviteTo(AncapStatesPlayer player) {
-        this.statesDB.add("states.city."+this.id+".invitesToPlayers", player.getID(), true);
-        this.statesDB.add("states.player."+player.getID()+".invitesFromCities", this.getID(), true);
+        this.statesDB.add("states.city."+this.id+".invitesToPlayers", player.id(), true);
+        this.statesDB.add("states.player."+player.id()+".invitesFromCities", this.getID(), true);
     }
 
     public void removeInviteTo(AncapStatesPlayer player) {
-        this.statesDB.remove("states.city."+this.id+".invitesToPlayers", player.getID(), true);
-        this.statesDB.remove("states.player."+player.getID()+".invitesFromCities", this.id, true);
+        this.statesDB.remove("states.city."+this.id+".invitesToPlayers", player.id(), true);
+        this.statesDB.remove("states.player."+player.id()+".invitesFromCities", this.id, true);
     }
 
     public void addRequestTo(Nation nation) {
@@ -315,8 +324,8 @@ public class City implements State {
     }
 
     public void declineRequestFrom(AncapStatesPlayer player) {
-        this.statesDB.remove("states.city."+this.id+".requestsFromPlayers", player.getID(), true);
-        this.statesDB.remove("states.player."+player.getID()+".requestsToCities", this.id, true);
+        this.statesDB.remove("states.city."+this.id+".requestsFromPlayers", player.id(), true);
+        this.statesDB.remove("states.player."+player.id()+".requestsToCities", this.id, true);
     }
 
     public void declineInviteFrom(Nation nation) {
@@ -354,7 +363,7 @@ public class City implements State {
     }
 
     public void setLimit(AncapStatesPlayer limited, int limit) {
-        this.statesDB.write("states.city."+this.id+".limit.personal."+limited.getID(), String.valueOf(limit));
+        this.statesDB.write("states.city."+this.id+".limit.personal."+limited.id(), String.valueOf(limit));
     }
 
     public void setLimit(LimitType limitType, int limit) {
@@ -362,7 +371,7 @@ public class City implements State {
     }
 
     public void addPrivateChunk(AncapStatesPlayer player, AncapChunk ancapChunk) {
-        this.statesDB.write("states.city."+this.id+".chunks."+ancapChunk.toString(), player.getID());
+        this.statesDB.write("states.city."+this.id+".chunks."+ancapChunk.toString(), player.id());
     }
     public void removePrivateChunk(AncapChunk ancapChunk) {
         this.statesDB.delete("states.city."+this.id+".chunks."+ancapChunk.toString());
@@ -396,7 +405,7 @@ public class City implements State {
 
     public boolean canAttach(Hexagon hexagon) {
         for (Hexagon neighbor : hexagon.neighbors(1)) {
-            if (Objects.equals(AncapStates.getCityMap().getCity(neighbor), this)) return true;
+            if (Objects.equals(AncapStates.cityMap().getCity(neighbor), this)) return true;
         }
         return false;
     }
@@ -438,7 +447,7 @@ public class City implements State {
 
     public int getRemoteness(AncapStatesPlayer player) {
         City playerCity = player.getCity();
-        AncapStatesPlayer cityLeader = this.getMayor();
+        AncapStatesPlayer cityLeader = this.mayor();
         if (player.equals(cityLeader)) {
             return 1;
         }
@@ -542,7 +551,7 @@ public class City implements State {
         String icon = "blueflag";
         if (this.isFree()) {
             icon = "greenflag";
-        } else if (this.getMayor().isLeader()) {
+        } else if (this.mayor().isLeader()) {
             icon = "king";
         }
         return icon;
@@ -645,7 +654,7 @@ public class City implements State {
     }
 
     public void askForResque() {
-        AncapStatesPlayer mayor = this.getMayor();
+        AncapStatesPlayer mayor = this.mayor();
         mayor.resqueCity();
     }
 

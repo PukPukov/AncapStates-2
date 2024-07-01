@@ -38,7 +38,7 @@ public class NationInfo {
         this.name = nation.getName();
         this.board = nation.getBoard();
         this.capitalName = nation.getCapital().getName();
-        this.leaderName = nation.getCapital().getMayor().getName();
+        this.leaderName = nation.getCapital().mayor().getName();
         this.citiesNames = nation.getCities().stream()
             .map(City::getName)
             .reduce((one, two) -> one + ", " +two)
