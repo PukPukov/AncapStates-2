@@ -9,8 +9,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.codehaus.plexus.util.ExceptionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.ancap.commons.debug.AncapDebug;
 import ru.ancap.framework.communicate.communicator.Communicator;
 import ru.ancap.framework.communicate.message.CallableMessage;
 import ru.ancap.framework.communicate.message.MultilineMessage;
@@ -30,6 +32,7 @@ import ru.ancap.states.player.AncapStatesPlayer;
 import ru.ancap.states.states.Nation.Nation;
 import ru.ancap.states.states.city.City;
 import ru.ancap.states.states.city.RequestState;
+import ru.ancap.states.util.DummyException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +46,8 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         List<AncapStatesPlayer> onlinePlayers = List.of(AncapStates.getPlayerMap().getOnlinePlayers());
-        List<City> cities = AncapStates.getCityMap().getCities();
-        List<Nation> nations = AncapStates.getCityMap().getNations();
+        List<City> cities = AncapStates.cityMap().cities();
+        List<Nation> nations = AncapStates.cityMap().getNations();
         List<String> citiesNames = new ArrayList<>();
         List<String> nationsNames = new ArrayList<>();
         List<String> onlinePlayersNames = new ArrayList<>();
@@ -162,10 +165,10 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
      * You can add to this list anything
      */
     public static final List<CallableMessage> feesMessages = new CopyOnWriteArrayList<>(List.of(
-        new LAPIMessage(AncapStates.class, "fees.city-creation", new Placeholder("fee", new BalanceMessage(ASFees.CITY_CREATION))),
+        new LAPIMessage(AncapStates.class, "fees.city-creation",   new Placeholder("fee", new BalanceMessage(ASFees.CITY_CREATION))),
         new LAPIMessage(AncapStates.class, "fees.nation-creation", new Placeholder("fee", new BalanceMessage(ASFees.NATION_CREATION))),
-        new LAPIMessage(AncapStates.class, "fees.hexagon-claim", new Placeholder("fee", new BalanceMessage(ASFees.HEXAGON_CLAIM))),
-        new LAPIMessage(AncapStates.class, "fees.city-teleport", new Placeholder("fee", new BalanceMessage(ASFees.CITY_TELEPORT)))
+        new LAPIMessage(AncapStates.class, "fees.hexagon-claim",   new Placeholder("fee", new BalanceMessage(ASFees.HEXAGON_CLAIM))),
+        new LAPIMessage(AncapStates.class, "fees.city-teleport",   new Placeholder("fee", new BalanceMessage(ASFees.CITY_TELEPORT)))
     ));
 
     @Override
@@ -202,6 +205,11 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
                     }
                     if (args[3].equals("mayor")) {
                         AncapStatesPlayer ancapStatesPlayer = AncapStatesPlayer.findByNameFor(args[4], caller);
+                        AncapDebug.debug(
+                            "MAYOR DEBUG: calling setMayor() from command /city mayor",
+                            "caller", caller.id(), "new mayor", ancapStatesPlayer.id(), "\n",
+                            ExceptionUtils.getStackTrace(new DummyException())
+                        );
                         city.setMayor(ancapStatesPlayer);
                     }
                     if (args[3].equals("delete")) {
@@ -342,8 +350,8 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
         if (args[0].equals("stats")) {
             Communicator.of(player).message(new LAPIMessage(
                 AncapStates.class, "stats.global",
-                new Placeholder("cities",  AncapStates.getCityMap().getCities().size()),
-                new Placeholder("nations", AncapStates.getCityMap().getNations().size())
+                new Placeholder("cities",  AncapStates.cityMap().cities().size()),
+                new Placeholder("nations", AncapStates.cityMap().getNations().size())
             ));
             return true;
         }

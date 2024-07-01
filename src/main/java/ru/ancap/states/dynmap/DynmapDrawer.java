@@ -7,13 +7,11 @@ import org.dynmap.markers.AreaMarker;
 import org.dynmap.markers.Marker;
 import org.dynmap.markers.MarkerSet;
 import org.dynmap.markers.PolyLineMarker;
-import ru.ancap.commons.Pair;
 import ru.ancap.hexagon.Hexagon;
 import ru.ancap.hexagon.HexagonSide;
 import ru.ancap.hexagon.HexagonVertex;
 import ru.ancap.hexagon.common.Point;
 import ru.ancap.states.AncapStates;
-import ru.ancap.states.event.events.DynmapRedrawEvent;
 import ru.ancap.states.states.city.City;
 
 import java.util.List;
@@ -30,10 +28,10 @@ public class DynmapDrawer {
         }
     }
 
-    public void drawLine(Pair<HexagonVertex, HexagonVertex> points, DynmapDescription description) {
-        double[] x = new double[] {points.getKey().position().x(), points.getValue().position().x()};
+    public void drawLine(HexagonVertex first, HexagonVertex second, DynmapDescription description) {
+        double[] x = new double[] {first.position().x(), second.position().x()};
         double[] y = new double[] {64, 64};
-        double[] z = new double[] {points.getKey().position().y(), points.getValue().position().y()};
+        double[] z = new double[] {first.position().y(), second.position().y()};
         String id = Generators.timeBasedGenerator().generate().toString();
         MarkerSet m = AncapStates.getDynmapMarkerSet();
         PolyLineMarker pl = m.createPolyLineMarker(id, description.name(), true, "world", x, y, z, false);
@@ -42,8 +40,7 @@ public class DynmapDrawer {
     }
 
     public void draw(HexagonSide side, DynmapDescription description) {
-        var points = side.ends();
-        this.drawLine(points, description);
+        this.drawLine(side.start(), side.end(), description);
     }
 
     public void draw(Set<HexagonSide> sides, DynmapDescription description) {
@@ -105,7 +102,7 @@ public class DynmapDrawer {
     }
 
     public void drawAllCities() {
-        List<City> cities = AncapStates.getCityMap().getCities();
+        List<City> cities = AncapStates.cityMap().cities();
         for (City city : cities) try {
             city.draw();
         } catch (Exception e) {

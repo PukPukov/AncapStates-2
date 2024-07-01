@@ -81,11 +81,11 @@ public class Nation implements State {
     }
 
     public void addMinister(AncapStatesPlayer ancapStatesPlayer) {
-        this.statesDB.add("states.nation."+this.id+".ministers", ancapStatesPlayer.getID(), true);
+        this.statesDB.add("states.nation."+this.id+".ministers", ancapStatesPlayer.id(), true);
     }
 
     public void removeMinister(AncapStatesPlayer ancapStatesPlayer) {
-        this.statesDB.remove("states.nation."+this.id+".ministers", ancapStatesPlayer.getID(), true);
+        this.statesDB.remove("states.nation."+this.id+".ministers", ancapStatesPlayer.id(), true);
     }
 
     public City getCapital() {

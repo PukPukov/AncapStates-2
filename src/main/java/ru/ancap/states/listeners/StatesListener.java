@@ -19,7 +19,7 @@ public class StatesListener implements Listener {
     public void on(CityFoundEvent event) {
         event.getHost().initialize(event.getCreator(), event.getName());
         for (Hexagon hexagon : event.getHost().getHomeHexagon().neighbors(1)){
-            if (AncapStates.getCityMap().getCity(hexagon) != null) continue;
+            if (AncapStates.cityMap().getCity(hexagon) != null) continue;
             event.getHost().addHexagon(hexagon);
             break; // claim only one
         }

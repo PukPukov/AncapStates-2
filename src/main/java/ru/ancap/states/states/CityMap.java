@@ -57,8 +57,13 @@ public class CityMap {
         }
         return new City(cityIDString);
     }
-
+    
+    @Deprecated
     public List<City> getCities() {
+        return this.cities();
+    }
+
+    public List<City> cities() {
         return this.statesDB.inner("states.city").keys().stream()
             .filter(id -> this.statesDB.isSet("states.city."+id+".name"))
             .map(City::new)

@@ -142,21 +142,21 @@ public class ProtectListener implements Listener {
     public void on(PVPEvent event) {
         if (event.consumed()) return;
         else event.consume();
-        for (Player attacked : event.attacked()) if (AncapStates.getCityMap().isAtCity(attacked.getLocation())) {
+        for (Player attacked : event.attacked()) if (AncapStates.cityMap().isAtCity(attacked.getLocation())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void on(BlockExplodeEvent event) {
-        if (AncapStates.getCityMap().getCity(event.getBlock().getLocation()) != null) {
+        if (AncapStates.cityMap().getCity(event.getBlock().getLocation()) != null) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void on(EntityExplodeEvent event) {
-        if (AncapStates.getCityMap().getCity(event.getEntity().getLocation()) != null) {
+        if (AncapStates.cityMap().getCity(event.getEntity().getLocation()) != null) {
             event.setCancelled(true);
         }
     }
@@ -165,7 +165,7 @@ public class ProtectListener implements Listener {
     public void on(WorldSelfDestructEvent event) {
         if (event.consumed()) return;
         else event.consume();
-        if (!AncapStates.getCityMap().isAtSameCity(event.active(), event.passive())) event.setCancelled(true);
+        if (!AncapStates.cityMap().isAtSameCity(event.active(), event.passive())) event.setCancelled(true);
     }
     
 }

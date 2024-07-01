@@ -5,7 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.codehaus.plexus.util.ExceptionUtils;
 import org.jetbrains.annotations.Nullable;
+import ru.ancap.commons.debug.AncapDebug;
 import ru.ancap.framework.communicate.communicator.util.CMMSerializer;
 import ru.ancap.framework.communicate.message.Message;
 import ru.ancap.framework.communicate.modifier.Placeholder;
@@ -25,6 +27,7 @@ import ru.ancap.states.id.ID;
 import ru.ancap.states.states.Nation.Nation;
 import ru.ancap.states.states.city.City;
 import ru.ancap.states.states.city.LimitType;
+import ru.ancap.states.util.DummyException;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -80,7 +83,7 @@ public class AncapStatesPlayer extends AncapPlayer {
     }
 
     public City getCity() {
-        String cityID = this.statesDB.readString("states.player."+this.getID()+".city");
+        String cityID = this.statesDB.readString("states.player."+this.id()+".city");
         if (cityID == null) return null;
         return new City(cityID);
     }
@@ -97,17 +100,17 @@ public class AncapStatesPlayer extends AncapPlayer {
     }
 
     public void addRequestTo(City city) {
-        this.statesDB.add("states.city."+city.getID()+".requestsFromPlayers", this.getID());
-        this.statesDB.add("states.player."+this.getID()+".requestsToCities", city.getID());
+        this.statesDB.add("states.city."+city.getID()+".requestsFromPlayers", this.id());
+        this.statesDB.add("states.player."+this.id()+".requestsToCities", city.getID());
     }
 
     public void removeRequestTo(City city) {
-        this.statesDB.remove("states.city."+city.getID()+".requestsFromPlayers", this.getID());
-        this.statesDB.remove("states.player."+this.getID()+".requestsToCities", city.getID());
+        this.statesDB.remove("states.city."+city.getID()+".requestsFromPlayers", this.id());
+        this.statesDB.remove("states.player."+this.id()+".requestsToCities", city.getID());
     }
 
     public boolean isFree() {
-        return !statesDB.isSet("states.player."+this.getID()+".city");
+        return !statesDB.isSet("states.player."+this.id()+".city");
     }
 
     public boolean haveCityCreationFee() {
@@ -126,11 +129,11 @@ public class AncapStatesPlayer extends AncapPlayer {
     }
 
     public boolean isInvitedTo(City city) {
-        return this.statesDB.contains("states.player."+this.getID()+".invitesFromCities", city.getID());
+        return this.statesDB.contains("states.player."+this.id()+".invitesFromCities", city.getID());
     }
 
     public boolean isAskingToJoinIn(City city) {
-        return this.statesDB.contains("states.city."+city.getID()+".requestsFromPlayers", this.getID());
+        return this.statesDB.contains("states.city."+city.getID()+".requestsFromPlayers", this.id());
     }
 
     public void leaveCity() {
@@ -150,6 +153,11 @@ public class AncapStatesPlayer extends AncapPlayer {
                 if (newMayor.equals(this)) {
                     newMayor = players.get(1);
                 }
+                AncapDebug.debug(
+                    "MAYOR DEBUG: calling setMayor() from dropCityMayoring()",
+                    "current mayor", city.mayor().id(), "new mayor", newMayor.id(), "\n",
+                    ExceptionUtils.getStackTrace(new DummyException())
+                );
                 city.setMayor(newMayor);
             }
         }
@@ -157,11 +165,11 @@ public class AncapStatesPlayer extends AncapPlayer {
 
     public boolean isAssistant() {
         City city = this.getCity();
-        return this.statesDB.contains("states.city."+city.getID()+".assistants", this.getID(), true);
+        return this.statesDB.contains("states.city."+city.getID()+".assistants", this.id(), true);
     }
 
     public boolean isResidentOf(City city) {
-        return this.statesDB.contains("states.city."+city.getID()+".residents", this.getID(), true);
+        return this.statesDB.contains("states.city."+city.getID()+".residents", this.id(), true);
     }
 
     public boolean canTeleportToCitySpawn() {
@@ -169,7 +177,7 @@ public class AncapStatesPlayer extends AncapPlayer {
     }
 
     public boolean haveFreeTeleport() {
-        return !this.statesDB.isSet("states.player."+this.getID()+".freeTeleportUsed");
+        return !this.statesDB.isSet("states.player."+this.id()+".freeTeleportUsed");
     }
 
     public void tryCitySpawn() throws NotEnoughMoneyException {
@@ -178,7 +186,7 @@ public class AncapStatesPlayer extends AncapPlayer {
         String teleportReason;
         if (!this.online().hasPermission("ru.ancap.states.free-city-spawn")) {
             if (this.haveFreeTeleport()) {
-                this.statesDB.write("states.player."+this.getID()+".freeTeleportUsed", "true");
+                this.statesDB.write("states.player."+this.id()+".freeTeleportUsed", "true");
                 teleportReason = "by-first-free";
             } else {
                 if (this.getBalance().get(Balance.DIAMOND) < 0.5) throw new NotEnoughMoneyException();
@@ -198,7 +206,7 @@ public class AncapStatesPlayer extends AncapPlayer {
 
     @Override
     public String toString() {
-        return "AncapStatesPlayer{"+this.getID()+"}";
+        return "AncapStatesPlayer{"+this.id()+"}";
     }
 
     @Override
@@ -210,7 +218,7 @@ public class AncapStatesPlayer extends AncapPlayer {
             return false;
         }
         AncapStatesPlayer other = (AncapStatesPlayer) obj;
-        return other.getID().equals(this.getID());
+        return other.id().equals(this.id());
     }
 
     public boolean canClaimPrivateChunks() {
@@ -231,7 +239,7 @@ public class AncapStatesPlayer extends AncapPlayer {
     @Nullable
     public City getCityAtPosition() {
         Location loc = this.online().getLocation();
-        return AncapStates.getCityMap().getCity(loc);
+        return AncapStates.cityMap().getCity(loc);
     }
 
     public List<PrivateChunk> getPrivateChunks() {
@@ -261,7 +269,7 @@ public class AncapStatesPlayer extends AncapPlayer {
             type = new LimitType("assistants");
         }
         String rangLimitString = this.statesDB.readString("states.city."+city.getID()+".limit."+type);
-        String personalLimitString = this.statesDB.readString("states.city."+city.getID()+".limit.personal."+this.getID());
+        String personalLimitString = this.statesDB.readString("states.city."+city.getID()+".limit.personal."+this.id());
         int rangLimit = 3;
         int personalLimit = 0;
         if (rangLimitString != null) {
@@ -281,11 +289,11 @@ public class AncapStatesPlayer extends AncapPlayer {
     }
 
     public void addFriend(AncapStatesPlayer friend) {
-        this.statesDB.add("states.player."+this.getID()+".friends", friend.getID(), true);
+        this.statesDB.add("states.player."+this.id()+".friends", friend.id(), true);
     }
 
     public void removeFriend(AncapStatesPlayer friend) {
-        this.statesDB.add("states.player."+this.getID()+".friends", friend.getID(), true);
+        this.statesDB.add("states.player."+this.id()+".friends", friend.id(), true);
     }
 
     public AncapStatesPlayerInfo getInfo() {
@@ -293,7 +301,7 @@ public class AncapStatesPlayer extends AncapPlayer {
     }
 
     public boolean isLeader() {
-        return this.getCity().getNation().getCapital().getMayor().equals(this);
+        return this.getCity().getNation().getCapital().mayor().equals(this);
     }
 
     public void prepareToJoinInCity() {
@@ -302,7 +310,7 @@ public class AncapStatesPlayer extends AncapPlayer {
     }
 
     public void cancelAllInvitesFromCities() {
-        List<String> invitesFromCities = this.statesDB.readStrings("states.player."+this.getID()+".invitesFromCities", true);
+        List<String> invitesFromCities = this.statesDB.readStrings("states.player."+this.id()+".invitesFromCities", true);
         for (String invite : invitesFromCities) {
             City city = new City(invite);
             this.declineInviteFrom(city);
@@ -310,7 +318,7 @@ public class AncapStatesPlayer extends AncapPlayer {
     }
 
     public void revokeAllRequestsToCities() {
-        List<String> requestsFromCities = this.statesDB.readStrings("states.player."+this.getID()+".requestsFromCities", true);
+        List<String> requestsFromCities = this.statesDB.readStrings("states.player."+this.id()+".requestsFromCities", true);
         for (String request : requestsFromCities) {
             City city = new City(request);
             this.declineInviteFrom(city);
@@ -319,7 +327,7 @@ public class AncapStatesPlayer extends AncapPlayer {
 
     public boolean isMinister() {
         Nation nation = this.getCity().getNation();
-        return this.statesDB.contains("states.nation."+nation.getIDString()+".ministers", this.getID(), true);
+        return this.statesDB.contains("states.nation."+nation.getIDString()+".ministers", this.id(), true);
     }
 
     public boolean isCitizenOf(Nation nation) {
@@ -340,36 +348,36 @@ public class AncapStatesPlayer extends AncapPlayer {
     }
 
     public void declineInviteFrom(City city) {
-        this.statesDB.remove("states.player."+this.getID()+".invitesFromCities", city.getID(), true);
-        this.statesDB.remove("states.city."+city.getID()+".invitesToPlayers", this.getID(), true);
+        this.statesDB.remove("states.player."+this.id()+".invitesFromCities", city.getID(), true);
+        this.statesDB.remove("states.city."+city.getID()+".invitesToPlayers", this.id(), true);
     }
 
     public List<AncapStatesPlayer> getFriends() {
-        return this.statesDB.readStrings("states.player."+this.getID()+".friends", true).stream()
+        return this.statesDB.readStrings("states.player."+this.id()+".friends", true).stream()
             .map(AncapStatesPlayer::findByID)
             .toList();
     }
 
     public List<City> getInviting() {
-        return this.statesDB.readStrings("states.player."+this.getID()+".invitesFromCities", true).stream()
+        return this.statesDB.readStrings("states.player."+this.id()+".invitesFromCities", true).stream()
             .map(City::new).toList();
     }
 
     public List<City> getRequesting() {
-        return this.statesDB.readStrings("states.player."+this.getID()+".requestsToCities", true).stream()
+        return this.statesDB.readStrings("states.player."+this.id()+".requestsToCities", true).stream()
             .map(City::new).toList();
     }
 
     public String getFriendsNames() {
-        return String.join(", ", this.statesDB.readStrings("states.player."+this.getID()+".friends", true));
+        return String.join(", ", this.statesDB.readStrings("states.player."+this.id()+".friends", true));
     }
 
     public String getInvitingNames() {
-        return String.join(", ", this.statesDB.readStrings("states.player."+this.getID()+".invitesFromCities", true));
+        return String.join(", ", this.statesDB.readStrings("states.player."+this.id()+".invitesFromCities", true));
     }
 
     public String getRequestingNames() {
-        return String.join(", ", this.statesDB.readStrings("states.player."+this.getID()+".requestsToCities", true));
+        return String.join(", ", this.statesDB.readStrings("states.player."+this.id()+".requestsToCities", true));
     }
 
     public void sendJoinTitle(City city) {
@@ -478,9 +486,9 @@ public class AncapStatesPlayer extends AncapPlayer {
 
     public void checkCityMove() {
         City city = this.getCityAtPosition();
-        City cityLast = AncapStates.getCityMap().getPositionsMap().get(this.getID());
+        City cityLast = AncapStates.cityMap().getPositionsMap().get(this.id());
         if (!Objects.equals(city,cityLast)) {
-            AncapStates.getCityMap().getPositionsMap().put(this.getID(), city);
+            AncapStates.cityMap().getPositionsMap().put(this.id(), city);
             new CityMoveEvent(this, city).callEvent();
         }
     }
@@ -506,7 +514,7 @@ public class AncapStatesPlayer extends AncapPlayer {
         try {
             if (loc.getWorld().getName().equals("world_the_end") || 
                 loc.getWorld().getName().equals("world_nether")) return true;
-            City city = AncapStates.getCityMap().getCity(loc);
+            City city = AncapStates.cityMap().getCity(loc);
             if (city == null) {
                 return true;
             }
@@ -542,7 +550,7 @@ public class AncapStatesPlayer extends AncapPlayer {
     }
 
     public void removeCityJoining() {
-        this.statesDB.delete("states.player."+this.getID()+".city");
+        this.statesDB.delete("states.player."+this.id()+".city");
     }
 
     public boolean isMayorOf(City city) {

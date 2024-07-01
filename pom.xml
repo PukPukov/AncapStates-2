@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.ancap</groupId>
     <artifactId>AncapStates-2</artifactId>
-    <version>1.4.15</version>
+    <version>1.4.17</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -59,10 +59,6 @@
                         <relocation>
                             <pattern>org.bstats</pattern>
                             <shadedPattern>ru.ancap.states.shaded.bstats</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>ru.ancap.commons</pattern>
-                            <shadedPattern>ru.ancap.states.shaded.ancap_commons</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -121,6 +117,11 @@
 
     <repositories>
         <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        
+        <repository>
             <id>papermc</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
@@ -128,11 +129,6 @@
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
         </repository>
 
         <repository>
@@ -154,9 +150,9 @@
     <dependencies>
         <!-- LOGIC -->
         <dependency>
-            <groupId>com.github.ancap-kun</groupId>
-            <artifactId>HexagonLibrary</artifactId>
-            <version>1.2-beta.6</version>
+            <groupId>com.github.PukPukov.HexagonLibrary</groupId>
+            <artifactId>Core</artifactId>
+            <version>1.2-beta.9</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -205,12 +201,6 @@
         
         <!-- COMMONS -->
         <dependency>
-            <groupId>com.github.pukpukov</groupId>
-            <artifactId>AncapCommons</artifactId>
-            <version>1.9.3</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
             <version>3.6.1</version>
@@ -222,12 +212,18 @@
             <version>3.12.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.2.1-jre</version>
+            <scope>compile</scope>
+        </dependency>
         
         <!-- PARENT -->
         <dependency>
             <groupId>ru.ancap</groupId>
             <artifactId>Artifex</artifactId>
-            <version>1.7-pre</version>
+            <version>1.7-pre.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

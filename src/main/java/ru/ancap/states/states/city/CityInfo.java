@@ -39,7 +39,7 @@ public class CityInfo {
         this.name = city.getName();
         this.residentsAmount = city.getResidents().size();
         this.nationName = SafeNull.function(city.getNation(), Nation::getName);
-        this.mayorName = city.getMayor().getName();
+        this.mayorName = city.mayor().getName();
         String residentsNames = this.mayorName;
         List<AncapStatesPlayer> residents = city.getResidents();
         for (int i=1; i<residents.size(); i++) {
