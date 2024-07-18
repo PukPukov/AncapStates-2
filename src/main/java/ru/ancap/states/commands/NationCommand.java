@@ -329,6 +329,7 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
             caller.depositNation(nation, amount, type);
             //noinspection deprecation fuck paper
             CallableMessage message = LStateMessage.NATION_PLAYER_DEPOSITED(caller.getName(), amount, "<lang:"+ Material.valueOf(type).getTranslationKey()+">");
+            @SuppressWarnings("deprecation") // fuck paper
             nation.sendMessage(message);
             return true;
         }
@@ -375,6 +376,7 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
             caller.withdrawNation(nation, amount, type);
             //noinspection deprecation fuck paper
             CallableMessage message = LStateMessage.NATION_PLAYER_WITHDRAWED(caller.getName(), amount, "<lang:"+ Material.valueOf(type).getTranslationKey()+">");
+            @SuppressWarnings("deprecation") // fuck paper
             nation.sendMessage(message);
             return true;
         }
