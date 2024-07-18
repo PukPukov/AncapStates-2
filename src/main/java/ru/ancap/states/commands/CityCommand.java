@@ -468,7 +468,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             caller.depositCity(city, amount, type);
-            //noinspection deprecation fuck paper
+            @SuppressWarnings("removal") // fuck paper
             CallableMessage cityMessage = LStateMessage.CITY_PLAYER_DEPOSITED(caller.getName(), amount, "<lang:"+ Material.valueOf(type).getTranslationKey()+">");
             city.sendMessage(cityMessage);
             return true;
@@ -508,7 +508,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             caller.withdrawCity(city, amount, type);
-            //noinspection deprecation fuck paper
+            @SuppressWarnings("removal") // fuck paper
             CallableMessage cityMessage = LStateMessage.CITY_PLAYER_WITHDRAWED(caller.getName(), amount, "<lang:"+ Material.valueOf(type).getTranslationKey()+">");
             city.sendMessage(cityMessage);
             return true;
