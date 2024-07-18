@@ -327,9 +327,8 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             caller.depositNation(nation, amount, type);
-            //noinspection deprecation fuck paper
-            CallableMessage message = LStateMessage.NATION_PLAYER_DEPOSITED(caller.getName(), amount, "<lang:"+ Material.valueOf(type).getTranslationKey()+">");
             @SuppressWarnings("deprecation") // fuck paper
+            CallableMessage message = LStateMessage.NATION_PLAYER_DEPOSITED(caller.getName(), amount, "<lang:"+ Material.valueOf(type.toUpperCase()).getTranslationKey()+">");
             nation.sendMessage(message);
             return true;
         }
@@ -374,9 +373,8 @@ public class  NationCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             caller.withdrawNation(nation, amount, type);
-            //noinspection deprecation fuck paper
-            CallableMessage message = LStateMessage.NATION_PLAYER_WITHDRAWED(caller.getName(), amount, "<lang:"+ Material.valueOf(type).getTranslationKey()+">");
             @SuppressWarnings("deprecation") // fuck paper
+            CallableMessage message = LStateMessage.NATION_PLAYER_WITHDRAWED(caller.getName(), amount, "<lang:"+ Material.valueOf(type.toUpperCase()).getTranslationKey()+">");
             nation.sendMessage(message);
             return true;
         }

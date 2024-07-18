@@ -469,7 +469,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
             }
             caller.depositCity(city, amount, type);
             @SuppressWarnings("removal") // fuck paper
-            CallableMessage cityMessage = LStateMessage.CITY_PLAYER_DEPOSITED(caller.getName(), amount, "<lang:"+ Material.valueOf(type).getTranslationKey()+">");
+            CallableMessage cityMessage = LStateMessage.CITY_PLAYER_DEPOSITED(caller.getName(), amount, "<lang:"+ Material.valueOf(type.toUpperCase()).getTranslationKey()+">");
             city.sendMessage(cityMessage);
             return true;
         }
@@ -509,7 +509,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
             }
             caller.withdrawCity(city, amount, type);
             @SuppressWarnings("removal") // fuck paper
-            CallableMessage cityMessage = LStateMessage.CITY_PLAYER_WITHDRAWED(caller.getName(), amount, "<lang:"+ Material.valueOf(type).getTranslationKey()+">");
+            CallableMessage cityMessage = LStateMessage.CITY_PLAYER_WITHDRAWED(caller.getName(), amount, "<lang:"+ Material.valueOf(type.toUpperCase()).getTranslationKey()+">");
             city.sendMessage(cityMessage);
             return true;
         }
