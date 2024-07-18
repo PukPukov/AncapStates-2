@@ -203,8 +203,8 @@ public class City implements State {
         return this.mayor();
     }
 
-    public void setMayor(AncapStatesPlayer ancapStatesPlayer) {
-        String id = ancapStatesPlayer.id();
+    public void setMayor(AncapStatesPlayer newMayor) {
+        String id = newMayor.id();
         AncapDebug.debug("MAYOR DEBUG: writing mayor in City#setMayor()", id);
         this.statesDB.write("states.city."+this.id+".mayor", id);
     }
