@@ -135,7 +135,7 @@ public class AncapStates extends AncapPlugin {
         return INSTANCE;
     }
     
-    private Map<String, String> mayors;
+    private Map<String, String> debugMayors;
 
     @Override
     public void onEnable() {
@@ -144,7 +144,6 @@ public class AncapStates extends AncapPlugin {
         CONFIGURATION = this.configuration();
         this.setUpDBs();
         this.setUpConfig();
-        this.registerCommands();
         this.registerEventsListeners();
         this.registerCityMap();
         this.drawDynMap();
@@ -155,29 +154,31 @@ public class AncapStates extends AncapPlugin {
         double purpose: prefill map with mayors to save them in load message and
         prefill map to catch city creations in timer debug method
         */
-        this.rewriteMayorMap();
+        this.rewriteDebugMayorMap();
         
-        this.dumpMayorsMap("Running AncapStates with following mayors: ");
+        this.dumpDebugMayorMap("Running AncapStates with following mayors: ");
         
         Bukkit.getScheduler().runTaskTimer(this, () -> { for (City city : AncapStates.cityMap().cities()) {
             String cityId = city.id();
             String currentMayor = city.mayor().id();
             if (currentMayor == null) throw new IllegalStateException();
-            String oldMayor = this.mayors.get(cityId);
-            this.mayors.put(cityId, currentMayor);
+            String oldMayor = this.debugMayors.get(cityId);
+            this.debugMayors.put(cityId, currentMayor);
             if (oldMayor == null) continue;
             if (!Objects.equals(oldMayor, currentMayor)) AncapDebug.debug(
                 "MAYOR DEBUG: mayor changed", "in city", cityId,
                 "from", oldMayor, "to", currentMayor
             );
         }}, 5, mayorRecheckPeriodTicks);
+        
+        this.registerCommands();
         this.log.info("Done!");
     }
     
-    private void rewriteMayorMap() {
+    private void rewriteDebugMayorMap() {
         Map<String, String> mayors = new HashMap<>();
         for (City city : AncapStates.cityMap().cities()) mayors.put(city.id(), city.mayor().id());
-        this.mayors = mayors;
+        this.debugMayors = mayors;
     }
     
     private void drawDynMap() {
@@ -194,12 +195,12 @@ public class AncapStates extends AncapPlugin {
     }
     
     private void dumpMayors(String text) {
-        this.rewriteMayorMap();
-        this.dumpMayorsMap(text);
+        this.rewriteDebugMayorMap();
+        this.dumpDebugMayorMap(text);
     }
     
-    private void dumpMayorsMap(String text) {
-        AncapDebug.debug("MAYOR DEBUG: " + text + this.defaultMapJoiner.join(this.mayors));
+    private void dumpDebugMayorMap(String text) {
+        AncapDebug.debug("MAYOR DEBUG: " + text + this.defaultMapJoiner.join(this.debugMayors));
     }
     
     private void registerCityMap() {
