@@ -1,0 +1,310 @@
+language: zh
+version: 3
+
+ru:
+  ancap:
+    states:
+      fees:
+        city-creation: "创建城市: %FEE%"
+        nation-creation: "创建国家: %FEE%"
+        hexagon-claim: "占领无主六边形: %FEE%"
+        city-teleport: "传送至城市中心: %FEE%"
+      
+      info:
+        main:
+          form:
+            - "<gray>--------------------------------------</gray>"
+            - "%DATA%"
+            - "<gray>--------------------------------------</gray>"
+          value-forms:
+            simple: "<gold>%VALUE_NAME%</gold><dark_gray>:</dark_gray> %VALUE%"
+            many: "<gold>%VALUE_NAME% (<white>%COUNT%</white>)</gold><dark_gray>:</dark_gray> %VALUES%"
+            unit:
+              simple: "<gold>%VALUE_NAME%</gold><dark_gray>:</dark_gray> %AMOUNT%<gray>%UNIT%</gray>"
+              many:
+                - "<gold>%VALUE_NAME%</gold><dark_gray>:</dark_gray>"
+                - "{VALUES:    %AMOUNT%<gray>%UNIT%</gray>}"
+              names:
+                hexagons: " 个六边形"
+                kilometers-fact: " 平方公里 (实际)"
+                kilometers-territorial: " 平方公里 (领土)"
+                percent-from-land: "% 陆地占比"
+                people: " 人"
+                percent-from-total-population: "% 世界人口占比"
+
+        city:
+          form:
+            - "<gold>城市 <u>%NAME%</u> 信息</gold>"
+            - ""
+            - "  <u>%BOARD%</u>"
+            - ""
+            - "%VALUES%"
+          values:
+            treasury: "国库"
+            taxes: "税收"
+            territory: "领土面积"
+            nation: "所属国家"
+            mayor: "市长"
+            residents: "居民"
+            assistants: "助手"
+            allow-level: "访问权限等级"
+
+        nation:
+          form:
+            - "<gold>国家 <u>%NAME%</u> 信息</gold>"
+            - ""
+            - "  <u>%BOARD%</u>"
+            - ""
+            - "%VALUES%"
+          values:
+            treasury: "国库"
+            taxes: "税收"
+            territory: "领土面积"
+            cities: "所属城市"
+            leader: "领袖"
+            capital: "首都"
+            population: "人口"
+            ministers: "部长"
+
+        player:
+          form:
+            - "<gold>玩家 <u>%NAME%</u> 信息</gold>"
+            - ""
+            - "%VALUES%"
+          values:
+            balance: "余额"
+            city: "所属城市"
+            nation: "所属国家"
+            friends: "好友"
+            invites-to-cities: "城市邀请"
+            requests-to-cities: "入城申请"
+
+        here:
+          form:
+            - "<gold>当前位置信息</gold>"
+            - ""
+            - "%VALUES%"
+          values:
+            city: "所属城市"
+            private-chunk-status: "私有区块状态"
+            outpost: "前哨站状态"
+          domain: "主城区"
+          wilderness: "荒野"
+          outer-possessions: "外部属地"
+          city-chunk: "城市区块"
+          private-chunk: "属于玩家 %PLAYER%"
+
+        ancap-states:
+          form:
+            - "%VALUES%"
+          values:
+            developer: "开发者"
+            version: "版本"
+
+      balance:
+        empty: "<white>空</white>"
+        form-entry: "    %NAME%<dark_gray>:</dark_gray> <white>%AMOUNT%</white>"
+        currencies:
+          netherite:
+            name: "下界合金"
+            color: "dark_gray"
+          diamond:
+            name: "钻石"
+            color: "aqua"
+          iron:
+            name: "铁"
+            color: "gray"
+          copper:
+            name: "铜"
+            color: "color:#b87333"
+
+      empty-many: "无"
+      empty-one: "无"
+
+      board:
+        not-setted: "未设置公告"
+      
+      stats:
+        global:
+          - "<dark_gray>-------------------------------------------------------</dark_gray>"
+          - "<gold>国家统计</gold>"
+          - ""
+          - "<gold>总城市数<dark_gray>:</dark_gray> <gray>%CITIES%</gray></gold>"
+          - "<gold>总国家数<dark_gray>:</dark_gray> <gray>%NATIONS%</gray></gold>"
+          - "<dark_gray>-------------------------------------------------------</dark_gray>"
+      
+      teleported-to-city-spawn:
+        by-first-free: "<#247de3>你已免费传送至城市出生点，使用了首次免费传送机会。"
+        for-free-by-permission: "<green>你已免费传送至城市出生点。"
+        for-paid: "<#247de3>你已支付半颗钻石传送至城市出生点。"
+
+      notify:
+        entered-wilderness:
+          title: "你进入了无主之地"
+          subtitle: "注意，这里很危险。"
+        entered-city: "你进入了城市 <aqua>%NAME%</aqua>"
+
+      error:
+        cant-claim-sea: "<red>无法在海洋中占领六边形！</red>"
+        form: "<red>%MESSAGE%</red>"
+        no-such-player: "<red>玩家 %NICK% 不存在。</red>"
+        no_perms: "你没有执行此操作的权限。"
+        not_free: "你已属于某个城市！"
+        free: "你不属于任何城市！"
+        city_doesnt_exist: "城市不存在"
+        no_city_creation_fee: "创建城市的资金不足"
+        capital_cant_be_deleted: "无法删除首都！请先移交国家领导权或解散国家"
+        please_confirm: "请确认操作，再次输入命令并在末尾添加 confirm"
+        no_such_city: "城市不存在"
+        city_isnt_free_to_join: "该城市需要邀请才能加入"
+        mayor_cant_leave: "市长不能离开城市。请转让市长职位或解散城市"
+        city_is_free_to_join: "该城市可自由加入！"
+        you_not_asking_to_join_in_city: "你未申请加入该城市"
+        not_asking_to_join_in_city: "该玩家未申请加入你的城市"
+        not_resident: "他不是城市居民"
+        cant_teleport_to_city_spawn: "无法传送：免费次数已用尽且资金不足支付传送费用"
+        no_such_allow_level: "无效的权限等级"
+        illegal_args: "参数错误，请查看命令指南"
+        illegal_args_number: "参数数量错误，请查看命令指南"
+        private_chunk_is_already_claimed: "该区块已被私有化"
+        its_not_your_city: "这不是你所属的城市"
+        cant_claim_new_private_chunk: "私有区块数量已达上限"
+        private_chunk_isnt_claimed: "该区块未被私有化"
+        its_not_your_chunk: "这不是你的区块"
+        outpost_chunk_is_already_claimed: "该区块已被设为前哨站"
+        cant_claim_new_outpost_chunk: "无法建立新前哨站（资金或数量限制）"
+        outpost_chunk_isnt_claimed: "该区块未被设为前哨站"
+        not_enough_money: "资金不足"
+        hexagon_is_already_claimed: "该六边形已被占领"
+        hexagon_isnt_connecting_to_city: "该六边形未与城市接壤"
+        home_hexagon_cant_be_unclaimed: "主六边形不可放弃"
+        not_inviting_in_nation: "未收到国家邀请"
+        city_is_free: "该城市未加入任何国家"
+        city_is_not_free: "该城市已属于某个国家"
+        no_nation_creation_fee: "创建国家资金不足"
+        illegal_name: "名称含非法字符"
+        city_exists: "城市已存在"
+        nation_exists: "国家已存在"
+        nation_doesnt_exists: "国家不存在"
+        no_such_nation: "国家不存在"
+        he_isnt_free: "该玩家已有所属城市"
+        he_isnt_invited: "该玩家未收到邀请"
+        city_doesnt_invited: "该城市未发出邀请"
+        city_doesnt_requesting: "该城市未发送请求"
+        he_isnt_citizen_of_your_nation: "他不是国家公民"
+        he_is_already_minister: "他已是部长"
+        he_isnt_resident_of_your_city: "他不是城市居民"
+        he_is_already_assistant: "他已是助手"
+        he_isnt_assistant: "他不是助手"
+        he_isnt_minister: "他不是部长"
+        you_not_requesting_to_integrate_in_this_nation: "你的城市未申请加入该国家"
+        its_not_your_city_chunk: "这不是你城市的区块"
+        its_not_your_city_hexagon: "这不是你城市的六边形"
+        nation_isnt_free_to_join: "该国家未开放自由加入"
+        region_protection_forbidden_action: "操作被领地保护禁止"
+        here_is_other_city: "你位于其他城市领地"
+        you_are_already_requesting_to_that_city: "你已发送加入该城市的申请"
+        he_is_already_invited_to_your_city: "该玩家已被邀请"
+        your_city_is_already_requesting_to_that_nation: "你的城市已发送加入申请"
+        that_city_is_already_invited_to_your_nation: "该城市已被邀请"
+        not_inviting_in_city: "未收到该城市邀请"
+        cant_send_to_offline_player: "无法向离线玩家转账"
+        cant_send_so_far: "最大转账距离为10格"
+      state:
+        form: "<gold><bold>国家系统 >></bold></gold> %MESSAGE%"
+        affiliation:
+          PLAYER-CITY:
+            join:
+              subject: "你已加入城市 %AFFILIATE%。"
+              affiliate: "%SUBJECT% 加入了你的城市。"
+            leave:
+              subject: "你已离开城市 %AFFILIATE%。"
+              affiliate: "%SUBJECT% 离开了你的城市。"
+          CITY-NATION:
+            JOIN:
+              subject: "你的城市已加入 %AFFILIATE% 国家。"
+              affiliate: "城市 %SUBJECT% 加入了你的国家。"
+            LEAVE:
+              subject: "你的城市已退出 %AFFILIATE% 国家。"
+              affiliate: "城市 %SUBJECT% 退出了你的国家。"
+        
+        messages:
+          new_day: "新的一天开始了..."
+          city_create: "%s 建立了城市 %s。"
+          city_remove: "城市 %s 已被摧毁。"
+          city_new_name: "城市更名为 %s。"
+          city_new_assistant: "%s 成为城市助手。"
+          city_removed_assistant: "%s 不再担任助手。"
+          city_new_mayor: "新市长上任：%s"
+          allow_level_changed: "城市权限等级变更为 %s。"
+          city_joined_nation: "城市已加入 %s 国家。"
+          city_new_board: "城市公告更新：%s"
+          city_player_joined: "%s 加入了城市。"
+          city_player_leaved: "%s 离开了城市。"
+          player_invited_to_city: "你收到 %s 城市的邀请。"
+          city_invited_player: "已邀请 %s 加入城市。"
+          player_removed_invite_to_city: "%s 城市收回了邀请。"
+          city_removed_invite_to_player: "已撤回对 %s 的邀请。"
+          city_requested_to_nation: "你的城市申请加入 %s 国家。"
+          nation_recieved_request: "%s 城市申请加入你的国家。"
+          city_removed_request_to_nation: "已撤回对 %s 国家的申请。"
+          nation_city_removed_request: "%s 城市撤回了加入申请。"
+          player_city_declined_request: "%s 城市拒绝了你的申请。"
+          city_declined_request: "已拒绝 %s 的入城申请。"
+          city_declined_nation_invite: "你的城市拒绝了 %s 国家的邀请。"
+          nation_city_declined_invite: "%s 城市拒绝了国家邀请。"
+          city_new_personal_limit: "%s 的私有区块上限设为 %s。"
+          city_new_limit: "用户组 %s 的区块上限设为 %s。"
+          city_private_chunk_claimed: "%s 私有化了 %s 区块。"
+          city_private_chunk_unclaimed: "%s 解除了 %s 区块的私有化。"
+          city_claimed_new_outpost_chunk: "城市建立了 %s 前哨站。"
+          city_claimed_new_hexagon: "城市占领了 %s 六边形。"
+          city_unclaimed_hexagon: "城市放弃了 %s 六边形。"
+          city_leaved_nation: "你的城市已退出 %s 国家。"
+          nation_city_leaved: "%s 城市宣布独立。"
+          nation_create: "%s 城市建立了新国家 %s。"
+          nation_new_name: "国家更名为 %s。"
+          nation_new_minister: "%s 成为国家部长。"
+          nation_removed_minister: "%s 不再担任部长。"
+          nation_new_capital: "首都迁至 %s 城市。"
+          nation_new_board: "国家公告更新：%s"
+          nation_city_joined: "%s 城市加入了国家。"
+          nation_remove: "国家 %s 已解散。"
+          city_added_flag: "城市新增旗帜：%s"
+          city_removed_flag: "移除了 %s 旗帜"
+          city_nation_revoked_invite: "%s 国家收回了邀请。"
+          nation_revoked_invite_to_city: "已撤回对 %s 城市的邀请。"
+          city_nation_invited: "%s 国家邀请你加入。"
+          nation_invited_city: "已向 %s 城市发送国家邀请。"
+          nation_setted_color: "国家颜色变更为 %s。"
+          player_requested_to_city: "你已申请加入 %s 城市。"
+          city_player_requested: "%s 申请加入你的城市。"
+          player_revoke_request_to_city: "你撤回了对 %s 城市的申请。"
+          city_player_revoke_request: "%s 撤回了入城申请。"
+          player_teleported_to_city_spawn: "你已传送至城市出生点。"
+          player_new_friend: "你添加了 %s 为好友。"
+          player_friend_removed: "你移除了好友 %s。"
+          player_declined_city_invite: "你拒绝了 %s 城市的邀请。"
+          city_player_declined_invite: "%s 拒绝了城市邀请。"
+          player_deposited: "你存入了 %s %s。"
+          player_withdrawed: "你提取了 %s %s。"
+          city_player_deposited: "%s 向城市存入了 %s %s。"
+          city_player_withdrawed: "%s 从城市提取了 %s %s。"
+          nation_player_deposited: "%s 向国家存入了 %s %s。"
+          nation_player_withdrawed: "%s 从国家提取了 %s %s。"
+          city_player_kicked: "%s 被驱逐出城。"
+          nation_removed_flag: "国家移除了 %s 旗帜。"
+          nation_added_flag: "国家新增旗帜 %s。"
+          nation_city_kicked: "国家驱逐了 %s 城市。"
+          city_nation_declined_request: "%s 国家拒绝了你的申请。"
+          nation_declined_city_request: "国家拒绝了 %s 城市的申请。"
+          player_recieved_money: "收到 %s 转账的 %s %s。"
+          player_sended_money: "你向 %s 转账了 %s %s。"
+          player_cant_pay_taxes_and_kicked: "%s 因欠税被驱逐。"
+          city_cant_pay_taxes_and_kicked: "%s 城市因欠税被移出国家。"
+          city_destroyed_by_taxes: "%s 城市因财政破产解散。"
+          city_destroyed_by_corruption: "%s 城市因腐败瓦解。"
+          nation_destroyed_by_taxes: "%s 国家因财政破产解散。"
+          nation_destroyed_by_corruption: "%s 国家因腐败瓦解。"
+          new_nation_tax: "国家领袖调整了税收政策。"
+          new_city_tax: "市长调整了城市税收。"
