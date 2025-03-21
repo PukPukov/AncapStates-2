@@ -145,8 +145,9 @@ ru:
         entered-city: "Ты зашёл в город <aqua>%NAME%</aqua>"
 
       error:
-        cant-claim-sea: "<red>Нельзя захватывать гексагоны в морях!</red>"
         form: "<red>%MESSAGE%</red>"
+        cant-claim-sea: "Нельзя захватывать гексагоны в морях!"
+        city-creation-disabled: "Создание городов отключено"
         no-such-player: "<red>Игрока под ником %NICK% не существует.</red>"
         no_perms: "У тебя нет прав для выполнения этого действия."
         not_free: "Ты уже состоишь в городе!"

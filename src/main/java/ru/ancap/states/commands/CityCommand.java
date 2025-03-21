@@ -369,6 +369,10 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 caller.sendMessage(message);
                 return true;
             }
+            if (AncapStates.CONFIGURATION.getBoolean("cityCreationDisabled")) {
+                Communicator.of(caller.online()).message(ErrorMessage.CITY_CREATION_DISABLED);
+                return true;
+            }
             if (!caller.isFree()) {
                 CallableMessage message = ErrorMessage.NOT_FREE;
                 caller.sendMessage(message);
@@ -407,7 +411,7 @@ public class CityCommand implements CommandExecutor, TabCompleter {
                 playerLoc.getZ()
             );
             if (Ocean.isOcean(world.getBiome(highestBlockAt))) {
-                Communicator.of(caller.online()).message(new LAPIMessage("error.cant-claim-sea"));
+                Communicator.of(caller.online()).message(ErrorMessage.CANT_CLAIM_SEA);
                 return true;
             }
             caller.grabCityCreationFee();
