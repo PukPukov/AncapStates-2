@@ -6,3 +6,4 @@ fastTimers:
   tenMinutesTimer:
     dynmapRedrawingTimerEnabled: true
     safeCityTimerCheckEnabled: true
+cityCreationDisabled: false

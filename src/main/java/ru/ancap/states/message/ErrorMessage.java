@@ -9,6 +9,8 @@ import ru.ancap.states.AncapStates;
 
 public class ErrorMessage extends WrapperMessage {
     
+    public static final CallableMessage CITY_CREATION_DISABLED = new ErrorMessage("city-creation-disabled");
+    public static final CallableMessage CANT_CLAIM_SEA = new ErrorMessage("cant-claim-sea");
     public static final CallableMessage NO_PERMS = new ErrorMessage("no_perms");
     public static final CallableMessage NOT_FREE = new ErrorMessage("not_free");
     public static final CallableMessage FREE = new ErrorMessage("free");

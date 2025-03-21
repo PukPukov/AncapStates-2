@@ -55,10 +55,6 @@ public class AncapStates extends AncapPlugin {
 
     private static AncapStates INSTANCE;
 
-    private static boolean isWarsInstalled = false;
-
-    private static String[] ancapAddons;
-
     private Logger log = Bukkit.getLogger();
 
     private static boolean test;
