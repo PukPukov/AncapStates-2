@@ -9,7 +9,6 @@ public class CityMoveListener implements Listener {
     @EventHandler
     public void on(CityMoveEvent event) {
         event.getPlayer().sendJoinTitle(event.getTo());
-        event.getPlayer().online().setCollidable(event.getTo() != null);
     }
     
 }
