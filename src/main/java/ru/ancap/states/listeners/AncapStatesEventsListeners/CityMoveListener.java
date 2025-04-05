@@ -2,14 +2,14 @@ package ru.ancap.states.listeners.AncapStatesEventsListeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import ru.ancap.states.event.events.CityMoveEvent;
+import ru.ancap.states.event.events.move.CityMoveEvent;
 
 public class CityMoveListener implements Listener {
     
     @EventHandler
     public void on(CityMoveEvent event) {
-        event.getPlayer().sendJoinTitle(event.getCity());
-        event.getPlayer().online().setCollidable(event.getCity() != null);
+        event.getPlayer().sendJoinTitle(event.getTo());
+        event.getPlayer().online().setCollidable(event.getTo() != null);
     }
     
 }

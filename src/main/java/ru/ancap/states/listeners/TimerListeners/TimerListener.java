@@ -13,7 +13,6 @@ public class TimerListener implements Listener {
         if (!AncapStates.CONFIGURATION.getBoolean("fastTimers.secondTimer.cityMoveTimerEnabled")) {
             return;
         }
-        AncapStates.getPlayerMap().checkCityMove();
     }
 
     @EventHandler

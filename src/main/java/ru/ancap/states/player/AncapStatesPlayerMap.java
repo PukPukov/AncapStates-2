@@ -20,11 +20,5 @@ public class AncapStatesPlayerMap extends AncapPlayerMap {
         }
         return players;
     }
-
-    public void checkCityMove() {
-        AncapStatesPlayer[] players = this.getOnlinePlayers();
-        for (AncapStatesPlayer player : players) {
-            player.checkCityMove();
-        }
-    }
+    
 }

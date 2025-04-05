@@ -1,4 +1,4 @@
-package ru.ancap.states.event.events;
+package ru.ancap.states.event.events.move;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,11 +12,10 @@ import ru.ancap.states.states.city.City;
 @Getter
 @RequiredArgsConstructor
 public class CityMoveEvent extends Event {
-
-    @NotNull
-    private final AncapStatesPlayer player;
-    @Nullable
-    private final City city;
+    
+    private final @NotNull AncapStatesPlayer player;
+    private final @Nullable City from;
+    private final @Nullable City to;
 
     private static final HandlerList handlers = new HandlerList();
     public @NotNull HandlerList getHandlers() {return getHandlerList();}

@@ -21,7 +21,6 @@ import ru.ancap.states.AncapStates;
 import ru.ancap.states.chunk.OutpostChunk;
 import ru.ancap.states.chunk.PrivateChunk;
 import ru.ancap.states.dynmap.DynmapDrawer;
-import ru.ancap.states.event.events.CityMoveEvent;
 import ru.ancap.states.fees.ASFees;
 import ru.ancap.states.id.ID;
 import ru.ancap.states.states.Nation.Nation;
@@ -34,7 +33,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 public class AncapStatesPlayer extends AncapPlayer {
@@ -482,15 +480,6 @@ public class AncapStatesPlayer extends AncapPlayer {
         }
         log.info("Player "+this.getName()+" rescuing "+city.getName());
         this.transferMoney(city, balance);
-    }
-
-    public void checkCityMove() {
-        City city = this.getCityAtPosition();
-        City cityLast = AncapStates.cityMap().getPositionsMap().get(this.id());
-        if (!Objects.equals(city,cityLast)) {
-            AncapStates.cityMap().getPositionsMap().put(this.id(), city);
-            new CityMoveEvent(this, city).callEvent();
-        }
     }
 
     public Hexagon getHexagon() {

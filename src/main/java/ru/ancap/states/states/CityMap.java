@@ -43,7 +43,7 @@ public class CityMap {
         return outpostChunk.getOwner();
     }
 
-    public City getCity(Hexagon hexagon) {
+    public @Nullable City getCity(Hexagon hexagon) {
         String idString = this.statesDB.readString("states.hexagons."+hexagon.code()+".owner");
         if (idString == null) {
             return null;
@@ -51,7 +51,7 @@ public class CityMap {
         return new City(idString);
     }
 
-    private City getCity(String cityIDString) {
+    private @Nullable City getCity(String cityIDString) {
         if (cityIDString == null) {
             return null;
         }
