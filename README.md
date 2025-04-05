@@ -38,3 +38,9 @@
 >хули так строго
 
 Ответ на оба вопроса: [https://lurkap.ru/Ересь_Кейсяна](https://lurkap.ru/Ересь_Кейсяна).
+
+## См. также
+
+[AncapWars](https://github.com/PukPukov/AncapWars)
+
+[AncapStatesPl3xMapDrawer](https://github.com/PukPukov/AncapStatesPl3xMapDrawer)
