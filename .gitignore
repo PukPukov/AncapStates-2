@@ -1,4 +1,5 @@
 # Default ignored files
+.vscode/
 /shelf/
 /workspace.xml
 /target/
