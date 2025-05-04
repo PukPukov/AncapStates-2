@@ -223,7 +223,7 @@
         <dependency>
             <groupId>ru.ancap</groupId>
             <artifactId>Artifex</artifactId>
-            <version>1.7-pre.3</version>
+            <version>1.7-pre.9.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
