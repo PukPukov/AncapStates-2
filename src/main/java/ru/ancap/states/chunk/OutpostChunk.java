@@ -30,7 +30,7 @@ public class OutpostChunk {
 
     @Nullable
     public City getOwner() {
-        PathDatabase statesBD = AncapStates.getMainDatabase();
+        PathDatabase statesBD = AncapStates.mainDatabase();
         String cityID = statesBD.readString("states.chunks."+this.id);
         if (cityID == null) {
             return null;

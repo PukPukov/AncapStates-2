@@ -20,7 +20,7 @@ public class PrivateChunk  {
         if (city == null) {
             return null;
         }
-        PathDatabase statesBD = AncapStates.getMainDatabase();
+        PathDatabase statesBD = AncapStates.mainDatabase();
         String ownerId = statesBD.readString("states.city."+this.city.getID()+".chunks."+this.id);
         if (ownerId == null) {
             return null;

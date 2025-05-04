@@ -22,7 +22,7 @@ public class AncapPlayer implements BalanceHolder {
     private final @NotNull  String id;
     private final @Nullable String realName;
     
-    private final PathDatabase statesDB = AncapStates.getMainDatabase();
+    private final PathDatabase statesDB = AncapStates.mainDatabase();
     
     @SneakyThrows
     public AncapPlayer(Player player) {

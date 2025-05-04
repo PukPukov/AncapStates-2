@@ -36,9 +36,9 @@ public class Nation implements State {
         return this.id;
     }
 
-    private PathDatabase statesDB = AncapStates.getMainDatabase();
+    private PathDatabase statesDB = AncapStates.mainDatabase();
 
-    private PathDatabase idDB = AncapStates.getAncapStatesDatabase(AncapStatesDatabaseType.IDLINK_DATABASE);
+    private PathDatabase idDB = AncapStates.ancapStatesDatabase(AncapStatesDatabaseType.IDLINK_DATABASE);
 
     public Nation(String id) {
         this.id = id;
@@ -179,7 +179,7 @@ public class Nation implements State {
     }
 
     public void remove() {
-        AncapStates.TEST = this;
+        AncapStates.ramData().TEST_NATION = this;
         AncapDebug.debug("before event, exists", this.exists());
         AncapDebug.debug("before event, cities", this.getCities());
         AncapDebug.debug("before event, name", this.getName());

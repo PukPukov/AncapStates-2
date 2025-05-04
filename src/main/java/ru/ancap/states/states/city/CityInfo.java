@@ -10,7 +10,6 @@ import ru.ancap.framework.communicate.modifier.Placeholder;
 import ru.ancap.framework.language.additional.LAPIMessage;
 import ru.ancap.library.Balance;
 import ru.ancap.states.AncapStates;
-import ru.ancap.states.dynmap.DynmapDescription;
 import ru.ancap.states.message.InfoMessage;
 import ru.ancap.states.message.LayeredModifies;
 import ru.ancap.states.player.AncapStatesPlayer;
@@ -89,22 +88,5 @@ public class CityInfo {
     
 // Спустя 1,5 года
 // Будет.
-
-    public DynmapDescription toDynmapFormat() {
-        String board = this.board != null ? this.board : "Сообщение не установлено";
-        String assistantsNames = this.assistantsNames != null ? this.assistantsNames : "отсутствуют";
-        String[] strings = new String[10];
-        strings[0] = "<center><strong>"+this.name+"</strong></center>";
-        strings[1] = "<center><i>"+DynmapDescription.removeHtmlTags(board)+"</i></center>";
-        strings[2] = "Мэр города: "+this.mayorName+"";
-        strings[3] = "Казна: ";
-        strings[4] = "       <span style=\"color: #333333;\">Незерита: <span style=\"color: #000000;\"><em>"+this.balance.getNetherite()+"</em></span></span>";
-        strings[5] = "       <span style=\"color: #34d4f7;\">Алмазов: <span style=\"color: #000000;\"><em>"+this.balance.getDiamond()+"</em></span></span>";
-        strings[6] = "       <span style=\"color: #c2c2c2;\">Железа: <span style=\"color: #000000;\"><em>"+this.balance.getIron()+"</em></span></span>";
-        strings[7] = "Нация: "+this.nationName;
-        strings[8] = "Ассистенты ("+this.assistantsAmount+"): "+assistantsNames;
-        strings[9] = "Жители ("+this.residentsAmount+"): "+this.residentsNames;
-        return new DynmapDescription(this.name, strings);
-    }
     
 }

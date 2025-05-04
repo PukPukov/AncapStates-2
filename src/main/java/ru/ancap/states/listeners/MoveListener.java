@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import ru.ancap.states.event.events.CityFoundEvent;
 import ru.ancap.states.event.events.move.CityMoveEvent;
 import ru.ancap.states.event.events.move.HexagonMoveEvent;
 import ru.ancap.states.hexagons.AncapHexagonalGrid;
@@ -32,7 +33,18 @@ public class MoveListener implements Listener {
         var from = this.cityMap.getCity(event.from());
         var to = this.cityMap.getCity(event.to());
         if (Objects.equals(from, to)) return;
+        
         Bukkit.getPluginManager().callEvent(new CityMoveEvent(AncapStatesPlayer.get(event.move().getPlayer()), from, to));
+    }
+    
+    @EventHandler
+    public void on(CityFoundEvent event) {
+        
+    }
+    
+    @EventHandler
+    public void on(CityMoveEvent event) {
+        event.getPlayer().sendJoinTitle(event.getTo());
     }
     
     

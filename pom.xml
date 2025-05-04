@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.ancap</groupId>
     <artifactId>AncapStates-2</artifactId>
-    <version>1.4.20</version>
+    <version>1.4.22</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -13,26 +13,6 @@
         <encoding>UTF-8</encoding>
         <jackson.version>2.15.0</jackson.version>
     </properties>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <releases>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <id>central</id>
-            <name>Maven Plugin Repository</name>
-            <url>http://repo1.maven.org/maven2</url>
-        </pluginRepository>
-
-        <pluginRepository>
-            <id>apache.snapshots</id>
-            <url>https://repository.apache.org/snapshots/</url>
-        </pluginRepository>
-
-    </pluginRepositories>
 
     <build>
         <plugins>
@@ -140,11 +120,6 @@
             <id>modrinth-repo</id>
             <url>https://api.modrinth.com/maven/</url>
         </repository>
-
-        <repository>
-            <id>MikeRepo</id>
-            <url>https://repo.mikeprimm.com/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -154,18 +129,6 @@
             <artifactId>Core</artifactId>
             <version>1.2-beta.9</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>us.dynmap</groupId>
-            <artifactId>DynmapCoreAPI</artifactId>
-            <version>3.6</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>us.dynmap</groupId>
-            <artifactId>dynmap-api</artifactId>
-            <version>3.6</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.uuid</groupId>
@@ -178,12 +141,6 @@
             <artifactId>jsoup</artifactId>
             <version>1.16.1</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>maven.modrinth</groupId>
-            <artifactId>pl3xmap</artifactId>
-            <version>1.20.2-475</version>
-            <scope>provided</scope>
         </dependency>
         <!-- LOGIC.JACKSON -->
         <dependency>
@@ -223,7 +180,7 @@
         <dependency>
             <groupId>ru.ancap</groupId>
             <artifactId>Artifex</artifactId>
-            <version>1.7-pre.3</version>
+            <version>1.7-pre.9.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

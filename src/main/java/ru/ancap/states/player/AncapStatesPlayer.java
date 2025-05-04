@@ -20,7 +20,6 @@ import ru.ancap.library.Balance;
 import ru.ancap.states.AncapStates;
 import ru.ancap.states.chunk.OutpostChunk;
 import ru.ancap.states.chunk.PrivateChunk;
-import ru.ancap.states.dynmap.DynmapDrawer;
 import ru.ancap.states.fees.ASFees;
 import ru.ancap.states.id.ID;
 import ru.ancap.states.states.Nation.Nation;
@@ -37,7 +36,7 @@ import java.util.logging.Logger;
 
 public class AncapStatesPlayer extends AncapPlayer {
 
-    private final PathDatabase statesDB = AncapStates.getMainDatabase();
+    private final PathDatabase statesDB = AncapStates.mainDatabase();
     public static Logger log = Bukkit.getLogger();
 
     public AncapStatesPlayer(String id) {
@@ -554,7 +553,6 @@ public class AncapStatesPlayer extends AncapPlayer {
         Nation nation = new Nation(ID.getNationID(nationName));
         nation.create(city, nationName);
         nation.setBalance(bigBalance);
-        DynmapDrawer.redrawDynmap();
         return nation;
     }
 
@@ -566,7 +564,6 @@ public class AncapStatesPlayer extends AncapPlayer {
         city.create(this, cityName);
         for (Hexagon neighbor : this.getHexagon().neighbors(2)) city.addHexagon(neighbor);
         city.setBalance(bigBalance);
-        DynmapDrawer.redrawDynmap();
         return city;
     }
     

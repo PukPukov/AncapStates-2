@@ -24,7 +24,7 @@ public class CityMap {
     private HashMap<String, City> positionsMap = new HashMap<>();
 
     public CityMap() {
-        statesDB = AncapStates.getMainDatabase();
+        statesDB = AncapStates.mainDatabase();
     }
 
     @Nullable

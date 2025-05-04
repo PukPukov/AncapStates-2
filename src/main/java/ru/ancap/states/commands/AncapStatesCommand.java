@@ -23,7 +23,6 @@ import ru.ancap.library.Balance;
 import ru.ancap.library.BalanceMessage;
 import ru.ancap.library.InventoryUtil;
 import ru.ancap.states.AncapStates;
-import ru.ancap.states.dynmap.DynmapDrawer;
 import ru.ancap.states.fees.ASFees;
 import ru.ancap.states.id.ID;
 import ru.ancap.states.message.ErrorMessage;
@@ -40,12 +39,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class AncapStatesCommand implements CommandExecutor, TabCompleter {
 
-    private PathDatabase statesDB = AncapStates.getMainDatabase();;
+    private PathDatabase statesDB = AncapStates.mainDatabase();;
 
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        List<AncapStatesPlayer> onlinePlayers = List.of(AncapStates.getPlayerMap().getOnlinePlayers());
+        List<AncapStatesPlayer> onlinePlayers = List.of(AncapStates.playerMap().getOnlinePlayers());
         List<City> cities = AncapStates.cityMap().cities();
         List<Nation> nations = AncapStates.cityMap().getNations();
         List<String> citiesNames = new ArrayList<>();
@@ -183,15 +182,11 @@ public class AncapStatesCommand implements CommandExecutor, TabCompleter {
             Communicator.of(sender_).message(new MultilineMessage(feesMessages.toArray(new CallableMessage[0])));
         }
         if (player.isOp()) {
-            if (args[0].equals("redraw")) {
-                DynmapDrawer.redrawDynmap();
-                return true;
-            }
             if (args[0].equals("newday")) {
                 return true;
             }
             if (args[0].equals("savedb")) {
-                AncapStates.getMainDatabase().save();
+                AncapStates.mainDatabase().save();
             }
             if (args[0].equals("admin")) {
                 if (args.length == 1) {

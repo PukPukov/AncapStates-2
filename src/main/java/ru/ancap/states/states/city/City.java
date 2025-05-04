@@ -8,15 +8,12 @@ import ru.ancap.commons.debug.AncapDebug;
 import ru.ancap.framework.communicate.message.CallableMessage;
 import ru.ancap.framework.database.nosql.PathDatabase;
 import ru.ancap.hexagon.Hexagon;
-import ru.ancap.hexagon.common.Point;
 import ru.ancap.library.AncapChunk;
 import ru.ancap.library.Balance;
 import ru.ancap.library.LocationSerializeWorker;
 import ru.ancap.states.AncapStates;
 import ru.ancap.states.chunk.OutpostChunk;
 import ru.ancap.states.chunk.PrivateChunk;
-import ru.ancap.states.dynmap.DynmapDescription;
-import ru.ancap.states.dynmap.DynmapDrawer;
 import ru.ancap.states.event.events.CityDeleteEvent;
 import ru.ancap.states.event.events.CityFoundEvent;
 import ru.ancap.states.fees.ASFees;
@@ -29,7 +26,9 @@ import ru.ancap.states.states.StateName;
 import ru.ancap.states.states.StateType;
 import ru.ancap.states.states.Subject;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class City implements State {
@@ -38,9 +37,9 @@ public class City implements State {
 
     public static Logger log = Bukkit.getLogger();
 
-    private PathDatabase statesDB = AncapStates.getMainDatabase();
+    private PathDatabase statesDB = AncapStates.mainDatabase();
 
-    private PathDatabase idDB = AncapStates.getAncapStatesDatabase(AncapStatesDatabaseType.IDLINK_DATABASE);
+    private PathDatabase idDB = AncapStates.ancapStatesDatabase(AncapStatesDatabaseType.IDLINK_DATABASE);
 
     public String getID() {
         return this.id;
@@ -555,19 +554,6 @@ public class City implements State {
             icon = "king";
         }
         return icon;
-    }
-
-    public void draw() {
-        String color = this.getColor();
-        String icon = this.getIcon();
-        DynmapDrawer drawer = new DynmapDrawer();
-        Set<Hexagon> territoriesSet = new HashSet<>(this.getTerritories());
-        drawer.drawFigure(territoriesSet, color, this.getDescription());
-        drawer.draw(new Point(this.getHome().getBlockX(), this.getHome().getBlockZ()), icon, this.getDescription());
-    }
-
-    public DynmapDescription getDescription() {
-        return this.getInfo().toDynmapFormat();
     }
 
     public String getColor() {
